@@ -1,0 +1,1 @@
+worker: python send_emails.py
