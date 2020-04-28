@@ -1,0 +1,13 @@
+cloudstore:
+- config:
+    api_key: changed_api
+  type: dropbox
+datastore:
+- config:
+    db_name: db3
+    hostname: changedhost
+    password: pass2
+    port: 3306
+    username: user1
+  type: mysql
+tag: production

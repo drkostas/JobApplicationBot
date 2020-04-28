@@ -1,0 +1,132 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "tag": {
+      "type": "string"
+    },
+    "datastore": {
+      "$ref": "#/definitions/datastore"
+    },
+    "cloudstore": {
+      "$ref": "#/definitions/cloudstore"
+    },
+    "email_app": {
+      "$ref": "#/definitions/email_app"
+    }
+  },
+  "required": [
+    "tag"
+  ],
+  "definitions": {
+    "datastore": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "config"
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "mysql",
+            "mongodb"
+          ]
+        },
+        "config": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "hostname",
+            "username",
+            "password",
+            "db_name"
+          ],
+          "properties": {
+            "hostname": {
+              "type": "string"
+            },
+            "username": {
+              "type": "string"
+            },
+            "password": {
+              "type": "string"
+            },
+            "db_name": {
+              "type": "string"
+            },
+            "port": {
+              "type": "integer"
+            }
+          }
+        }
+      }
+    },
+    "cloudstore": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
+      "additionalProperties": false,
+      "required": [
+        "config",
+        "type"
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "dropbox",
+            "s3"
+          ]
+        },
+        "config": {
+          "type": "object",
+          "properties": {
+            "api_key": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "email_app": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
+      "additionalProperties": false,
+      "required": [
+        "config",
+        "type"
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "gmail",
+            "hotmail"
+          ]
+        },
+        "config": {
+          "type": "object",
+          "properties": {
+            "email_address": {
+              "type": "string"
+            },
+            "api_key": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}
