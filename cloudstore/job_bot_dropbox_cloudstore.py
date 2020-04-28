@@ -7,6 +7,7 @@ from .dropbox_cloudstore import DropboxCloudstore
 
 logger = logging.getLogger('JobBotDropboxCloudstore')
 
+
 class JobBotDropboxCloudstore(DropboxCloudstore):
     __slots__ = ('_handler', 'base_folder')
 
@@ -73,3 +74,15 @@ class JobBotDropboxCloudstore(DropboxCloudstore):
         url_search_params_path = os.path.join(self.base_folder, 'stop_words.txt')
         url_search_params_file = bytes(url_search_params)
         self.upload_file(file_stream=url_search_params_file, upload_path=url_search_params_path)
+
+    def download_attachments(self, attachment_names: List[str], to_path: str = 'attachments') -> None:
+        for attachment_name in attachment_names:
+            attachment_local_path = os.path.join(self.base_folder, attachment_name)
+            self.download_file(frompath=attachment_local_path, tofile=os.path.join(to_path, attachment_name))
+
+    def upload_attachments(self, attachment_names: List[str], from_path: str = 'attachments') -> None:
+        for attachment_name in attachment_names:
+            attachment_upload_path = os.path.join(self.base_folder, attachment_name)
+            attachment_local_path = os.path.join(from_path, attachment_name)
+            with open(attachment_local_path, 'rb') as attachment_file:
+                self.upload_file(file_stream=attachment_file.read(), upload_path=attachment_upload_path)
