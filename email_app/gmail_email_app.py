@@ -4,12 +4,13 @@ from gmail import GMail, Message
 
 from .abstract_email_app import AbstractEmailApp
 
+logger = logging.getLogger('GmailEmailApp')
+
 
 class GmailEmailApp(AbstractEmailApp):
     __slots__ = ('_handler', 'email_address')
 
     _handler: GMail
-    logger = logging.getLogger('GmailEmailApp')
 
     def __init__(self, email_address: str, api_key: str) -> None:
         """
@@ -68,6 +69,7 @@ class GmailEmailApp(AbstractEmailApp):
                       attachments=attachments,
                       sender=sender,
                       reply_to=reply_to)
+        logger.debug("Sending email with Message: %s" % msg)
         self._handler.send(msg)
 
     def __exit__(self):

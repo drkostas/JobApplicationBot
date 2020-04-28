@@ -45,6 +45,7 @@ class DropboxCloudstore(AbstractCloudstore):
         """
 
         try:
+            logger.debug("Uploading file to path: %s" % upload_path)
             self._handler.files_upload(f=file_stream, path=upload_path, mode=files.WriteMode(write_mode))
         except exceptions.ApiError as err:
             logger.error('API error: %s' % err)
@@ -60,8 +61,10 @@ class DropboxCloudstore(AbstractCloudstore):
 
         try:
             if tofile is not None:
+                logger.debug("Downloading file from path: %s to path %s" % (frompath, tofile))
                 self._handler.files_download_to_file(download_path=tofile, path=frompath)
             else:
+                logger.debug("Downloading file from path: %s to variable" % frompath)
                 md, res = self._handler.files_download(path=frompath)
                 data = res.content  # The bytes of the file
                 return data
@@ -78,6 +81,7 @@ class DropboxCloudstore(AbstractCloudstore):
         """
 
         try:
+            logger.debug("Deleting file in path: %s to path %s" % file_path)
             self._handler.files_delete_v2(path=file_path)
         except exceptions.ApiError as err:
             logger.error('API error %s' % err)
