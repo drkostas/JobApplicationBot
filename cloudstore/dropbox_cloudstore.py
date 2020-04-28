@@ -4,12 +4,13 @@ from dropbox import Dropbox, files, exceptions
 
 from .abstract_cloudstore import AbstractCloudstore
 
+logger = logging.getLogger('DropboxCloudstore')
+
 
 class DropboxCloudstore(AbstractCloudstore):
     __slots__ = '_handler'
 
     _handler: Dropbox
-    logger = logging.getLogger('DropboxCloudstore')
 
     def __init__(self, api_key: str) -> None:
         """
@@ -46,7 +47,7 @@ class DropboxCloudstore(AbstractCloudstore):
         try:
             self._handler.files_upload(f=file_stream, path=upload_path, mode=files.WriteMode(write_mode))
         except exceptions.ApiError as err:
-            print('*** API error', err)
+            logger.error('API error: %s' % err)
 
     def download_file(self, frompath: str, tofile: str = None) -> Any:
         """
@@ -65,7 +66,7 @@ class DropboxCloudstore(AbstractCloudstore):
                 data = res.content  # The bytes of the file
                 return data
         except exceptions.HttpError as err:
-            print('*** HTTP error', err)
+            logger.error('HTTP error %s' % err)
             return None
 
     def delete_file(self, file_path: str) -> None:
@@ -79,7 +80,7 @@ class DropboxCloudstore(AbstractCloudstore):
         try:
             self._handler.files_delete_v2(path=file_path)
         except exceptions.ApiError as err:
-            print('*** API error', err)
+            logger.error('API error %s' % err)
 
     def ls(self, path: str = '') -> Dict:
         """
@@ -95,5 +96,5 @@ class DropboxCloudstore(AbstractCloudstore):
                 files_dict[entry.name] = entry
             return files_dict
         except exceptions.ApiError as err:
-            print('Folder listing failed for', path, '-- assumed empty:', err)
+            logger.error('Folder listing failed for %s -- assumed empty: %s' % (path, err))
             return {}

@@ -1,5 +1,6 @@
 import traceback
 import logging
+import logging.handlers
 import argparse
 import time
 import datetime
@@ -30,8 +31,7 @@ def _setup_log(log_path: str = 'logs/output.log', debug: bool = False) -> None:
                         format='%(asctime)s %(name)-12s %(levelname)-8s %(message)s',
                         datefmt='%Y-%m-%d %H:%M:%S',
                         handlers=[
-                            logging.FileHandler(log_filename),
-                            # logging.handlers.TimedRotatingFileHandler(log_filename, when='midnight', interval=1),
+                            logging.handlers.TimedRotatingFileHandler(log_filename, when='midnight', interval=1),
                             logging.StreamHandler()
                         ]
                         )
@@ -58,8 +58,11 @@ def _argparser() -> argparse.Namespace:
     optional.add_argument('--email-id', help='the id of the email you want to be deleted')
     optional.add_argument('-d', '--debug', action='store_true', help='enables the debug log messages')
     optional.add_argument("-h", "--help", action="help", help="Show this help message and exit")
-
-    return parser.parse_args()
+    # Parse args
+    parsed_args = parser.parse_args()
+    if parsed_args.email_id is None and parsed_args.run_mode == 'remove_email':
+        raise argparse.ArgumentTypeError('--run-mode = parsed_args requires --email-id to be set!')
+    return parsed_args
 
 
 def init_main() -> Tuple[argparse.Namespace, JobBotMySqlDatastore, JobBotDropboxCloudstore, GmailEmailApp]:
@@ -83,8 +86,8 @@ def show_ads_checked(ads: List[Dict]) -> None:
     print("{}".format("_" * 146))
     print("|{:-^6}|{:-^80}|{:-^40}|{:-^15}|".format('ID', 'Link', 'Email', 'Sent On'))
     for ad in ads:
-        print("|{:^6}|{:^80}|{:^40}|{:^15}|".format(ad['id'], ad['link'], str(ad['address']),
-                                                    arrow.get(ad['sent_on']).humanize()))
+        print("|{:^6}|{:^80}|{:^40}|{:^15}|".format(ad[0], ad[1], str(ad[2]),
+                                                    arrow.get(ad[3]).humanize()))
     print("|{}|".format("_" * 144))
 
 

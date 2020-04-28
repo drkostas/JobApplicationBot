@@ -8,8 +8,13 @@ from .abstract_ad_site_crawler import AbstractAdSiteCrawler
 
 logger = logging.getLogger('XeGrAdSiteCrawler')
 
+
 class XeGrAdSiteCrawler(AbstractAdSiteCrawler):
     def __init__(self, stop_words: List, url_search_params: Dict):
+        """
+        Tha basic constructor. Creates a new instance of AdSiteCrawler using the specified credentials
+        """
+
         self.stop_words = stop_words
         self.url_search_params = url_search_params
         super().__init__()
