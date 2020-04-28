@@ -57,6 +57,7 @@ def _argparser() -> argparse.Namespace:
     optional = parser.add_argument_group('optional arguments')
     optional.add_argument('--email-id', help='the id of the email you want to be deleted')
     optional.add_argument('-d', '--debug', action='store_true', help='enables the debug log messages')
+    optional.add_argument('--test-mode', action='store_true', help='enables the test mode which sends all emails to self')
     optional.add_argument("-h", "--help", action="help", help="Show this help message and exit")
     # Parse args
     parsed_args = parser.parse_args()
@@ -78,7 +79,8 @@ def init_main() -> Tuple[argparse.Namespace, JobBotMySqlDatastore, JobBotDropbox
     # Init the Email App
     gmail_configuration = configuration.get_email_apps()[0]
     gmail_app = GmailEmailApp(email_address=gmail_configuration['email_address'],
-                              api_key=gmail_configuration['api_key'])
+                              api_key=gmail_configuration['api_key'],
+                              test_mode=args.test_mode)
     return args, data_store, cloud_store, gmail_app
 
 

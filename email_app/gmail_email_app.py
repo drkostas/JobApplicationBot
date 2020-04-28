@@ -8,19 +8,23 @@ logger = logging.getLogger('GmailEmailApp')
 
 
 class GmailEmailApp(AbstractEmailApp):
-    __slots__ = ('_handler', 'email_address')
+    __slots__ = ('_handler', 'email_address', 'test_mode')
 
     _handler: GMail
+    test_mode: bool
 
-    def __init__(self, email_address: str, api_key: str) -> None:
+    def __init__(self, email_address: str, api_key: str, test_mode: bool) -> None:
         """
         The basic constructor. Creates a new instance of EmailApp using the specified credentials
 
+        :param email_address:
         :param api_key:
+        :param test_mode:
         """
 
         self._handler = self.get_handler(email_address=email_address, api_key=api_key)
         self.email_address = email_address
+        self.test_mode = test_mode
         super().__init__()
 
     @staticmethod
@@ -59,6 +63,11 @@ class GmailEmailApp(AbstractEmailApp):
         :param reply_to:
         :return:
         """
+
+        if self.test_mode:
+            to = self.email_address
+            cc = self.email_address if cc is not None else None
+            bcc = self.email_address if bcc is not None else None
 
         msg = Message(subject=subject,
                       to=",".join(to),
