@@ -6,7 +6,7 @@ from .abstract_email_app import AbstractEmailApp
 
 
 class GmailEmailApp(AbstractEmailApp):
-    __slots__ = '_handler'
+    __slots__ = ('_handler', 'email_address')
 
     _handler: GMail
     logger = logging.getLogger('GmailEmailApp')
@@ -19,6 +19,7 @@ class GmailEmailApp(AbstractEmailApp):
         """
 
         self._handler = self.get_handler(email_address=email_address, api_key=api_key)
+        self.email_address = email_address
         super().__init__()
 
     @staticmethod
@@ -37,6 +38,9 @@ class GmailEmailApp(AbstractEmailApp):
 
     def is_connected(self) -> bool:
         return self._handler.is_connected()
+
+    def get_self_email(self):
+        return self.email_address
 
     def send_email(self, subject: str, to: List, cc: List = None, bcc: List = None, text: str = None, html: str = None,
                    attachments: List = None, sender: str = None, reply_to: str = None) -> None:
