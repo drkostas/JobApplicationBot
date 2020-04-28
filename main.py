@@ -99,24 +99,23 @@ def crawl_and_send_loop(data_store: JobBotMySqlDatastore,
     ad_site_crawler = XeGrAdSiteCrawler(
         stop_words=stop_words,
         url_search_params=url_search_params)
-    application_subject, application_html = cloud_store.get_application_email()
-    inform_should_call_subject, inform_should_call_html = cloud_store.get_inform_should_call_email()
-    inform_success_subject, inform_success_html = cloud_store.get_inform_success_email()
+    application_sent_subject, application_sent_html = cloud_store.get_application_sent_email_data()
+    inform_should_call_subject, inform_should_call_html = cloud_store.get_inform_should_call_email_data()
+    inform_success_subject, inform_success_html = cloud_store.get_inform_success_email_data()
 
-    links_checked = [row["link"] for row in data_store.get_ads()]
-    emails_checked = [row["address"] for row in data_store.get_ads()]
+    links_checked = [row["link"] for row in data_store.get_applications_sent()]
     logger.info("Waiting for new ads..")
     while True:
         html_dumps = ad_site_crawler.crawl(links_checked)
         new_ads = ad_site_crawler.get_ads_list(html_dumps)
 
         if len(new_ads) > 0:
-            links_checked = [row["link"] for row in data_store.get_ads()]
-            emails_checked = [row["address"] for row in data_store.get_ads()]
+            links_checked = [row["link"] for row in data_store.get_applications_sent()]
+            emails_checked = [row["address"] for row in data_store.get_applications_sent()]
             for link, email in new_ads.items():
                 if link not in links_checked and (email not in emails_checked or email == "No_Email"):
                     if email == "No_Email":
-                        # Email Maria that it has no email
+                        # Email applicant that he/should call manually
                         logger.info("Link ({}) has no email. Inform Maria.".format(link))
                         gmail_app.send_email(subject=inform_should_call_subject,
                                              html=inform_should_call_html.format(link),
@@ -126,19 +125,19 @@ def crawl_and_send_loop(data_store: JobBotMySqlDatastore,
                         logger.info("Link ({}) has email we already found in the new ads list.".format(link))
                     else:
                         time.sleep(60)
-                        # Email to the ad
+                        # Send application
                         logger.info("Sending email to: {}. Ad Link: {}".format(email, link))
-                        gmail_app.send_email(subject=application_subject,
-                                             html=application_html.format(link),
+                        gmail_app.send_email(subject=application_sent_subject,
+                                             html=application_sent_html.format(link),
                                              to=email)
 
-                        # Inform Maria
+                        # Inform applicant that an application has been sent successfully
                         gmail_app.send_email(subject=inform_success_subject,
                                              html=inform_success_html.format(email, link),
                                              to=gmail_app.get_self_email())
 
-                    email_info = {"link": link, "address": email, "sent_on": datetime.utcnow().isoformat()}
-                    data_store.store_ads(email_info)
+                    email_info = {"link": link, "address": email, "sent_on": datetime.datetime.utcnow().isoformat()}
+                    data_store.save_sent_application(email_info)
                     logger.info("Waiting for new ads..")
 
 
@@ -155,7 +154,7 @@ def main():
 
     # Start in the specified mode
     if args.run_mode == 'list_emails':
-        show_ads_checked(data_store.get_ads())
+        show_ads_checked(data_store.get_applications_sent())
     elif args.run_mode == 'remove_email':
         data_store.remove_ad(args.email_id)
     elif args.run_mode == 'crawl_and_send':

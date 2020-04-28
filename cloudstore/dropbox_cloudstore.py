@@ -1,4 +1,4 @@
-from typing import Dict, Any
+from typing import Dict, Union
 import logging
 from dropbox import Dropbox, files, exceptions
 
@@ -49,7 +49,7 @@ class DropboxCloudstore(AbstractCloudstore):
         except exceptions.ApiError as err:
             logger.error('API error: %s' % err)
 
-    def download_file(self, frompath: str, tofile: str = None) -> Any:
+    def download_file(self, frompath: str, tofile: str = None) -> Union[bytes, None]:
         """
         Downloads a file from the Cloudstore
 
