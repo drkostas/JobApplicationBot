@@ -24,9 +24,8 @@ else:
 
 # Run the Setup
 setup(
-    name='template_python_project',
+    name='job_application_bot',
     version='0.1',
-    # package_dir={'': '.'},
     packages=['datastore', 'cloudstore', 'configuration'],
     py_modules=['main'],
     data_files=[('', ['configuration/yml_schema.json'])],
@@ -39,6 +38,6 @@ setup(
     license='GNU General Public License v3.0',
     author='drkostas',
     author_email='georgiou.kostas94@gmail.com',
-    description='A template for python projects.'
+    description='A bot that automatically applies to new job posts in xe.gr using your email address.'
 
 )

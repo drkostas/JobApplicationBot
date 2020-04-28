@@ -37,7 +37,6 @@ class Configuration:
                                                       env_pattern=self.env_variable_pattern)
         # Validate the config
         validate_json_schema(self.config, configuration_schema)
-        print(self.config)
         # Set the config properties as instance attributes
         self.tag = self.config['tag']
         all_config_attributes = ('datastore', 'cloudstore', 'email_app')
