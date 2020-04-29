@@ -1,26 +1,23 @@
 from abc import ABC, abstractmethod
-from typing import List
+from typing import List, Dict
 
 
 class AbstractDatastore(ABC):
     __slots__ = ('_connection', '_cursor')
 
     @abstractmethod
-    def __init__(self, username: str, password: str, hostname: str, db_name: str, port: int) -> None:
+    def __init__(self, config: Dict) -> None:
         """
         Tha basic constructor. Creates a new instance of Datastore using the specified credentials
 
-        :param username:
-        :param password:
-        :param hostname:
-        :param db_name:
-        :param port:
+        :param config:
         """
 
-        self._connection, self._cursor = self.get_connection(username=username, password=password,
-                                                             hostname=hostname,
-                                                             db_name=db_name,
-                                                             port=port)
+        self._connection, self._cursor = self.get_connection(username=config['username'],
+                                                             password=config['password'],
+                                                             hostname=config['hostname'],
+                                                             db_name=config['db_name'],
+                                                             port=config['port'])
 
     @staticmethod
     @abstractmethod

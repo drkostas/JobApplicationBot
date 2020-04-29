@@ -1,5 +1,5 @@
 import logging
-from typing import List, Tuple
+from typing import List, Tuple, Dict
 
 from mysql import connector as mysql_connector
 
@@ -14,19 +14,14 @@ class MySqlDatastore(AbstractDatastore):
     _connection: mysql_connector.connection_cext.CMySQLConnection
     _cursor: mysql_connector.connection_cext.CMySQLCursor
 
-    def __init__(self, username: str, password: str, hostname: str, db_name: str, port: int = 3306) -> None:
+    def __init__(self, config: Dict) -> None:
         """
         The basic constructor. Creates a new instance of Datastore using the specified credentials
 
-        :param username:
-        :param password:
-        :param hostname:
-        :param db_name:
-        :param port:
+        :param config:
         """
 
-        super().__init__(username=username, password=password,
-                         hostname=hostname, db_name=db_name, port=port)
+        super().__init__(config)
 
     @staticmethod
     def get_connection(username: str, password: str, hostname: str, db_name: str, port: int = 3306) \

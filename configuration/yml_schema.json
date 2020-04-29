@@ -13,9 +13,6 @@
     },
     "email_app": {
       "$ref": "#/definitions/email_app"
-    },
-    "attachments": {
-      "$ref": "#/definitions/attachments"
     }
   },
   "required": [
@@ -92,6 +89,30 @@
           "properties": {
             "api_key": {
               "type": "string"
+            },
+            "local_files_folder": {
+              "type": "string"
+            },
+            "attachments_names": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "update_stop_words": {
+              "type": "boolean"
+            },
+            "update_url_search_params": {
+              "type": "boolean"
+            },
+            "update_inform_should_call_email": {
+              "type": "boolean"
+            },
+            "update_application_sent_email": {
+              "type": "boolean"
+            },
+            "update_inform_success_email": {
+              "type": "boolean"
             }
           },
           "additionalProperties": true

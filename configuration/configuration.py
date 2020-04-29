@@ -12,7 +12,7 @@ logger = logging.getLogger('Configuration')
 
 
 class Configuration:
-    __slots__ = ('config', 'config_path', 'datastore', 'cloudstore', 'email_app', 'tag', 'attachments')
+    __slots__ = ('config', 'config_path', 'datastore', 'cloudstore', 'email_app', 'tag')
 
     config: Dict
     config_path: str
@@ -20,7 +20,6 @@ class Configuration:
     cloudstore: Dict
     email_app: Dict
     tag: str
-    attachments: List
     config_attributes: List = []
     env_variable_tag: str = '!ENV'
     env_variable_pattern: str = r'.*?\${(\w+)}.*?'  # ${var}
@@ -30,22 +29,20 @@ class Configuration:
         Tha basic constructor. Creates a new instance of a MySQL Datastore using the specified credentials
 
         :param config_src:
+        :param config_schema_path:
         """
 
         # Load the predefined schema of the configuration
         configuration_schema = self.load_configuration_schema(config_schema_path=config_schema_path)
         # Load the configuration
-        self.config, self.config_path = self.load_yml(config_src=config_src, env_tag=self.env_variable_tag,
+        self.config, self.config_path = self.load_yml(config_src=config_src,
+                                                      env_tag=self.env_variable_tag,
                                                       env_pattern=self.env_variable_pattern)
         logger.debug("Loaded config: %s" % self.config)
         # Validate the config
         validate_json_schema(self.config, configuration_schema)
         # Set the config properties as instance attributes
         self.tag = self.config['tag']
-        if 'attachments' in self.config:
-            self.attachments = self.config['attachments']
-        else:
-            self.attachments = []
         all_config_attributes = ('datastore', 'cloudstore', 'email_app')
         for config_attribute in all_config_attributes:
             if config_attribute in self.config.keys():
@@ -104,9 +101,6 @@ class Configuration:
             raise TypeError('Config file must be TextIOWrapper or path to a file')
         return config, config_path
 
-    def __getitem__(self, item):
-        return self.__getattribute__(item)
-
     def get_datastores(self) -> List:
         if 'datastore' in self.config_attributes:
             return [sub_config['config'] for sub_config in self.datastore]
@@ -138,8 +132,6 @@ class Configuration:
         for config_attribute in self.config_attributes:
             dict_conf[config_attribute] = getattr(self, config_attribute)
 
-        if self.attachments:
-            dict_conf['attachments'] = self.attachments
         if include_tag:
             dict_conf['tag'] = self.tag
 
@@ -158,9 +150,10 @@ class Configuration:
         for config_attribute in self.config_attributes:
             dict_conf[config_attribute] = getattr(self, config_attribute)
         dict_conf['tag'] = self.tag
-        if self.attachments:
-            dict_conf['attachments'] = self.attachments
         return dict_conf
+
+    def __getitem__(self, item):
+        return self.__getattribute__(item)
 
 
 class ConfigurationError(Exception):

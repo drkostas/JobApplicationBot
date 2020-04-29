@@ -3,6 +3,7 @@ import os
 import random
 import string
 import logging
+import copy
 from typing import Tuple
 from dropbox.exceptions import BadInputError
 
@@ -22,7 +23,7 @@ class TestDropboxCloudstore(unittest.TestCase):
     def test_connect(self):
         # Test the connection with the correct api key
         try:
-            cloud_store_correct_key = DropboxCloudstore(api_key=self.configuration.get_cloudstores()[0]['api_key'])
+            cloud_store_correct_key = DropboxCloudstore(config=self.configuration.get_cloudstores()[0])
             cloud_store_correct_key.ls()
         except BadInputError as e:
             logger.error('Error connecting with the correct credentials: %s', e)
@@ -31,12 +32,14 @@ class TestDropboxCloudstore(unittest.TestCase):
             logger.info('Connected with the correct credentials successfully.')
         # Test that the connection is failed with the wrong credentials
         with self.assertRaises(BadInputError):
-            cloud_store_wrong_key = DropboxCloudstore(api_key='wrong_key')
+            cloud_store_wrong_configuration = copy.deepcopy(self.configuration.get_cloudstores()[0])
+            cloud_store_wrong_configuration['api_key'] = 'wrong_key'
+            cloud_store_wrong_key = DropboxCloudstore(config=cloud_store_wrong_configuration)
             cloud_store_wrong_key.ls()
         logger.info("Loading Dropbox with wrong credentials failed successfully.")
 
     def test_upload_download(self):
-        cloud_store = DropboxCloudstore(api_key=self.configuration.get_cloudstores()[0]['api_key'])
+        cloud_store = DropboxCloudstore(config=self.configuration.get_cloudstores()[0])
         # Upload file
         logger.info('Uploading file..')
         file_to_upload = open(os.path.join(self.test_data_path, self.file_name), 'rb').read()
@@ -52,7 +55,7 @@ class TestDropboxCloudstore(unittest.TestCase):
                          open(os.path.join(self.test_data_path, 'actual_downloaded.txt'), 'rb').read())
 
     def test_upload_delete(self):
-        cloud_store = DropboxCloudstore(api_key=self.configuration.get_cloudstores()[0]['api_key'])
+        cloud_store = DropboxCloudstore(config=self.configuration.get_cloudstores()[0])
         # Upload file
         logger.info('Uploading file..')
         file_to_upload = open(os.path.join(self.test_data_path, self.file_name), 'rb').read()
@@ -100,7 +103,7 @@ class TestDropboxCloudstore(unittest.TestCase):
 
     @classmethod
     def tearDownClass(cls):
-        cloud_store = DropboxCloudstore(api_key=cls.configuration.get_cloudstores()[0]['api_key'])
+        cloud_store = DropboxCloudstore(config=cls.configuration.get_cloudstores()[0])
         cloud_store.delete_file('/tests')
 
 

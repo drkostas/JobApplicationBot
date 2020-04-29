@@ -3,6 +3,7 @@ import os
 import random
 import string
 import logging
+import copy
 from typing import Tuple
 from smtplib import SMTPAuthenticationError
 
@@ -23,7 +24,7 @@ class TestGmailEmailApp(unittest.TestCase):
         # Test the connection with the correct api key
         try:
             gmail_configuration = self.configuration.get_email_apps()[0]
-            GmailEmailApp(email_address=gmail_configuration['email_address'], api_key=gmail_configuration['api_key'])
+            GmailEmailApp(config=gmail_configuration)
         except SMTPAuthenticationError as e:
             logger.error('Error connecting with the correct credentials: %s', e)
             self.fail('Error connecting with the correct credentials')
@@ -31,13 +32,14 @@ class TestGmailEmailApp(unittest.TestCase):
             logger.info('Connected with the correct credentials successfully.')
         # Test that the connection is failed with the wrong credentials
         with self.assertRaises(SMTPAuthenticationError):
-            GmailEmailApp(email_address=gmail_configuration['email_address'], api_key='wrong_key')
+            gmail_wrong_configuration = copy.deepcopy(gmail_configuration)
+            gmail_wrong_configuration['api_key'] = 'wrong_key'
+            GmailEmailApp(config=gmail_wrong_configuration)
         logger.info("Loading Dropbox with wrong credentials failed successfully.")
 
     def test_is_connected_and_exit(self):
         gmail_configuration = self.configuration.get_email_apps()[0]
-        gmail_app = GmailEmailApp(email_address=gmail_configuration['email_address'],
-                                  api_key=gmail_configuration['api_key'])
+        gmail_app = GmailEmailApp(config=gmail_configuration)
         self.assertEqual(True, gmail_app.is_connected())
         gmail_app.__exit__()
         self.assertEqual(False, gmail_app.is_connected())
@@ -45,8 +47,7 @@ class TestGmailEmailApp(unittest.TestCase):
     def test_send_email_with_all_args(self):
         try:
             gmail_configuration = self.configuration.get_email_apps()[0]
-            gmail_app = GmailEmailApp(email_address=gmail_configuration['email_address'],
-                                      api_key=gmail_configuration['api_key'])
+            gmail_app = GmailEmailApp(config=gmail_configuration)
 
             gmail_app.send_email(subject='test_send_email_with_all_args',
                                  to=[gmail_configuration['email_address']],
@@ -65,8 +66,7 @@ class TestGmailEmailApp(unittest.TestCase):
     def test_send_email_with_required_args(self):
         try:
             gmail_configuration = self.configuration.get_email_apps()[0]
-            gmail_app = GmailEmailApp(email_address=gmail_configuration['email_address'],
-                                      api_key=gmail_configuration['api_key'])
+            gmail_app = GmailEmailApp(config=gmail_configuration)
 
             gmail_app.send_email(subject='test_send_email_with_required_args',
                                  to=[gmail_configuration['email_address']]
@@ -78,8 +78,7 @@ class TestGmailEmailApp(unittest.TestCase):
     def test_send_email_with_html(self):
         try:
             gmail_configuration = self.configuration.get_email_apps()[0]
-            gmail_app = GmailEmailApp(email_address=gmail_configuration['email_address'],
-                                      api_key=gmail_configuration['api_key'])
+            gmail_app = GmailEmailApp(config=gmail_configuration)
 
             gmail_app.send_email(subject='test_send_email_with_html',
                                  to=[gmail_configuration['email_address']],
@@ -92,8 +91,7 @@ class TestGmailEmailApp(unittest.TestCase):
     def test_send_email_with_text(self):
         try:
             gmail_configuration = self.configuration.get_email_apps()[0]
-            gmail_app = GmailEmailApp(email_address=gmail_configuration['email_address'],
-                                      api_key=gmail_configuration['api_key'])
+            gmail_app = GmailEmailApp(config=gmail_configuration)
 
             gmail_app.send_email(subject='test_send_email_with_text',
                                  to=[gmail_configuration['email_address']],

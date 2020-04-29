@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Dict
 import logging
 from gmail import GMail, Message
 
@@ -13,17 +13,17 @@ class GmailEmailApp(AbstractEmailApp):
     _handler: GMail
     test_mode: bool
 
-    def __init__(self, email_address: str, api_key: str, test_mode: bool) -> None:
+    def __init__(self, config: Dict, test_mode: bool = False) -> None:
         """
         The basic constructor. Creates a new instance of EmailApp using the specified credentials
 
-        :param email_address:
-        :param api_key:
+        :param config:
         :param test_mode:
         """
 
-        self._handler = self.get_handler(email_address=email_address, api_key=api_key)
-        self.email_address = email_address
+        self.email_address = config['email_address']
+        self._handler = self.get_handler(email_address=self.email_address,
+                                         api_key=config['api_key'])
         self.test_mode = test_mode
         super().__init__()
 

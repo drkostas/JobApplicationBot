@@ -2,6 +2,15 @@ tag: production
 cloudstore:
   - config:
       api_key: !ENV ${DROPBOX_API_KEY}
+      local_files_folder: data
+      attachments_names:
+        - cv.pdf
+        - cover_letter.pdf
+      update_stop_words: true
+      update_url_search_params: true
+      update_application_sent_email: true
+      update_inform_success_email: true
+      update_inform_should_call_email: true
     type: dropbox
 datastore:
   - config:
@@ -16,6 +25,3 @@ email_app:
       email_address: !ENV ${EMAIL_ADDRESS}
       api_key: !ENV ${GMAIL_API_KEY}
     type: gmail
-attachments:
-  - cv.pdf
-  - cover_letter.pdf

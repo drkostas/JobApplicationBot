@@ -20,21 +20,17 @@ class JobBotMySqlDatastore(MySqlDatastore):
                                     'sent_on varchar(100) not null, ' \
                                     'constraint link unique (link)'
 
-    def __init__(self, username: str, password: str, hostname: str, db_name: str, port: int = 3306,
+    def __init__(self, config: Dict,
                  application_table_name: str = 'applications_sent') -> None:
         """
         The basic constructor. Creates a new instance of Datastore using the specified credentials
 
-        :param username:
-        :param password:
-        :param hostname:
-        :param db_name:
-        :param port:
+        :param config:
+        :param application_table_name:
         """
 
         self.application_table_name = application_table_name
-        super().__init__(username=username, password=password,
-                         hostname=hostname, db_name=db_name, port=port)
+        super().__init__(config=config)
 
     def get_applications_sent(self) -> List[Dict]:
         return self.select_from_table(table=self.application_table_name, columns='id, link, email, sent_on')

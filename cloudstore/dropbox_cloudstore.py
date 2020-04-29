@@ -12,14 +12,14 @@ class DropboxCloudstore(AbstractCloudstore):
 
     _handler: Dropbox
 
-    def __init__(self, api_key: str) -> None:
+    def __init__(self, config: Dict) -> None:
         """
         The basic constructor. Creates a new instance of Cloudstore using the specified credentials
 
-        :param api_key:
+        :param config:
         """
 
-        self._handler = self.get_handler(api_key=api_key)
+        self._handler = self.get_handler(api_key=config['api_key'])
         super().__init__()
 
     @staticmethod
@@ -34,19 +34,20 @@ class DropboxCloudstore(AbstractCloudstore):
         dbx = Dropbox(api_key)
         return dbx
 
-    def upload_file(self, file_stream: bytes, upload_path: str, write_mode: str = 'overwrite') -> None:
+    def upload_file(self, file_bytes: bytes, upload_path: str, write_mode: str = 'overwrite') -> None:
         """
         Uploads a file to the Cloudstore
 
-        :param file_stream:
+        :param file_bytes:
         :param upload_path:
         :param write_mode:
         :return:
         """
 
+        # TODO: Add option to support FileStream, StringIO and FilePath
         try:
             logger.debug("Uploading file to path: %s" % upload_path)
-            self._handler.files_upload(f=file_stream, path=upload_path, mode=files.WriteMode(write_mode))
+            self._handler.files_upload(f=file_bytes, path=upload_path, mode=files.WriteMode(write_mode))
         except exceptions.ApiError as err:
             logger.error('API error: %s' % err)
 
@@ -81,7 +82,7 @@ class DropboxCloudstore(AbstractCloudstore):
         """
 
         try:
-            logger.debug("Deleting file in path: %s to path %s" % file_path)
+            logger.debug("Deleting file from path: %s" % file_path)
             self._handler.files_delete_v2(path=file_path)
         except exceptions.ApiError as err:
             logger.error('API error %s' % err)

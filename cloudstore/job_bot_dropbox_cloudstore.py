@@ -9,20 +9,42 @@ logger = logging.getLogger('JobBotDropboxCloudstore')
 
 
 class JobBotDropboxCloudstore(DropboxCloudstore):
-    __slots__ = ('_handler', 'base_folder')
+    __slots__ = ('_handler', 'remote_files_folder', 'local_files_folder',
+                 'attachments_names', '_update_stop_words', '_update_url_search_params',
+                 '_update_application_sent_email', '_update_inform_success_email', '_update_inform_should_call_email')
 
     _handler: Dropbox
-    base_folder: str
+    remote_files_folder: str
+    local_files_folder: str
+    attachments_names: List
+    _update_stop_words: bool
+    _update_url_search_params: bool
+    _update_application_sent_email: bool
+    _update_inform_success_email: bool
+    _update_inform_should_call_email: bool
 
-    def __init__(self, api_key: str, base_folder: str = 'job_bot_xegr') -> None:
+    def __init__(self, config: Dict, remote_files_folder: str = 'job_bot_xegr') -> None:
         """
         The basic constructor. Creates a new instance of Cloudstore using the specified credentials
 
-        :param api_key:
+        :param config:
         """
 
-        self.base_folder = base_folder
-        super().__init__(api_key=api_key)
+        self.remote_files_folder = remote_files_folder
+        self.local_files_folder = config['local_files_folder']
+        self.attachments_names = config['attachments_names']
+        # Default value for the boolean attributes is False
+        self._update_stop_words = config[
+            'update_stop_words'] if 'update_stop_words' in config else False
+        self._update_url_search_params = config[
+            'update_url_search_params'] if 'update_url_search_params' in config else False
+        self.update_application_sent_email = config[
+            'update_application_sent_email'] if 'update_application_sent_email' in config else False
+        self._update_inform_success_email = config[
+            'update_inform_success_email'] if 'update_inform_success_email' in config else False
+        self._update_inform_should_call_email = config[
+            'update_inform_should_call_email'] if 'update_inform_should_call_email' in config else False
+        super().__init__(config=config)
 
     def get_application_sent_email_data(self) -> Tuple[str, str]:
         return self._get_email_data(type='application_sent')
@@ -33,56 +55,77 @@ class JobBotDropboxCloudstore(DropboxCloudstore):
     def get_inform_success_email_data(self) -> Tuple[str, str]:
         return self._get_email_data(type='inform_success')
 
+    def get_stop_words_data(self) -> List:
+        stop_words_path = os.path.join(self.remote_files_folder, 'stop_words.txt')
+        return list(self.download_file(frompath=stop_words_path))
+
+    def get_url_search_params_data(self) -> Dict:
+        url_search_params_path = os.path.join(self.remote_files_folder, 'url_search_params.txt')
+        return dict(self.download_file(frompath=url_search_params_path))
+
     def _get_email_data(self, type: str) -> Tuple[str, str]:
-        subject_file_path = os.path.join(self.base_folder, '{type}_subject.txt'.format(type=type))
-        html_file_path = os.path.join(self.base_folder, '{type}_html.html'.format(type=type))
+        subject_file_path = os.path.join(self.remote_files_folder, '{type}_subject.txt'.format(type=type))
+        html_file_path = os.path.join(self.remote_files_folder, '{type}_html.html'.format(type=type))
         subject_file = self.download_file(frompath=subject_file_path).decode("utf-8")
         html_file = self.download_file(frompath=html_file_path).decode("utf-8")
         return subject_file, html_file
 
-    def get_stop_words(self) -> List:
-        stop_words_path = os.path.join(self.base_folder, 'stop_words.txt')
-        return list(self.download_file(frompath=stop_words_path))
+    def download_attachments(self) -> None:
+        for attachment_name in self.attachments_names:
+            attachment_local_path = os.path.join(self.local_files_folder, attachment_name)
+            attachment_remote_path = os.path.join(self.remote_files_folder, attachment_name)
+            self.download_file(frompath=attachment_remote_path, tofile=attachment_local_path)
 
-    def get_url_search_params(self) -> Dict:
-        url_search_params_path = os.path.join(self.base_folder, 'url_search_params.txt')
-        return dict(self.download_file(frompath=url_search_params_path))
+    def update_application_sent_email_data(self) -> None:
+        if self._update_application_sent_email:
+            self._update_email_data(type='application_sent')
+        else:
+            logger.info("The update of application_sent email data was skipped.")
 
-    def update_application_email_data(self, subject: str, body: str) -> None:
-        self._update_email_data(subject=subject, body=body, type='application_sent')
+    def update_inform_should_call_email_data(self) -> None:
+        if self._update_inform_should_call_email:
+            self._update_email_data(type='inform_should_call')
+        else:
+            logger.info("The update of inform_should_call email data was skipped.")
 
-    def update_inform_should_call_email_data(self, subject: str, body: str) -> None:
-        self._update_email_data(subject=subject, body=body, type='inform_should_call')
+    def update_inform_success_email_data(self) -> None:
+        if self._update_inform_success_email:
+            self._update_email_data(type='inform_success')
+        else:
+            logger.info("The update of inform_success email data was skipped.")
 
-    def update_inform_success_email_data(self, subject: str, body: str) -> None:
-        self._update_email_data(subject=subject, body=body, type='inform_success')
+    def update_stop_words_data(self, stop_words_local_file_name: str = 'stop_words.txt') -> None:
+        if self._update_stop_words:
+            stop_words_remote_path = os.path.join(self.remote_files_folder, 'stop_words.txt')
+            stop_words_local_path = os.path.join(self.local_files_folder, stop_words_local_file_name)
+            with open(stop_words_local_path, 'rb') as stop_words_file:
+                self.upload_file(file_bytes=stop_words_file.read(), upload_path=stop_words_remote_path)
+        else:
+            logger.info("The update of stop_words data was skipped.")
 
-    def _update_email_data(self, subject: str, body: str, type: str) -> None:
-        subject_file_path = os.path.join(self.base_folder, '{type}_subject.txt'.format(type=type))
-        html_file_path = os.path.join(self.base_folder, '{type}_html.html'.format(type=type))
-        subject_file = subject.encode("utf-8")
-        html_file = body.encode("utf-8")
-        self.upload_file(file_stream=subject_file, upload_path=subject_file_path)
-        self.upload_file(file_stream=html_file, upload_path=html_file_path)
+    def update_url_search_params_data(self, stop_words_local_file_name: str = 'url_search_params.txt') -> None:
+        if self._update_url_search_params:
+            url_search_params_remote_path = os.path.join(self.remote_files_folder, 'url_search_params.txt')
+            url_search_params_local_path = os.path.join(self.local_files_folder, stop_words_local_file_name)
+            with open(url_search_params_local_path, 'rb') as url_search_params_file:
+                self.upload_file(file_bytes=url_search_params_file.read(), upload_path=url_search_params_remote_path)
+        else:
+            logger.info("The update of url_search_params data was skipped.")
 
-    def update_stop_words(self, stop_words: List) -> None:
-        stop_words_path = os.path.join(self.base_folder, 'stop_words.txt')
-        stop_words_file = bytes(stop_words)
-        self.upload_file(file_stream=stop_words_file, upload_path=stop_words_path)
+    def _update_email_data(self, type: str) -> None:
+        logger.info("Updating the %s email data.." % type)
+        subject_remote_path = os.path.join(self.remote_files_folder, '{type}_subject.txt'.format(type=type))
+        html_remote_path = os.path.join(self.remote_files_folder, '{type}_html.html'.format(type=type))
+        subject_local_path = os.path.join(self.local_files_folder, '{type}_subject.txt'.format(type=type))
+        html_local_path = os.path.join(self.local_files_folder, '{type}_html.html'.format(type=type))
+        with open(subject_local_path, 'rb') as subject_file:
+            self.upload_file(file_bytes=subject_file.read(), upload_path=subject_remote_path)
+        with open(html_local_path, 'rb') as html_file:
+            self.upload_file(file_bytes=html_file.read(), upload_path=html_remote_path)
 
-    def update_url_search_params(self, url_search_params: Dict) -> None:
-        url_search_params_path = os.path.join(self.base_folder, 'stop_words.txt')
-        url_search_params_file = bytes(url_search_params)
-        self.upload_file(file_stream=url_search_params_file, upload_path=url_search_params_path)
-
-    def download_attachments(self, attachment_names: List[str], to_path: str = 'attachments') -> None:
-        for attachment_name in attachment_names:
-            attachment_local_path = os.path.join(self.base_folder, attachment_name)
-            self.download_file(frompath=attachment_local_path, tofile=os.path.join(to_path, attachment_name))
-
-    def upload_attachments(self, attachment_names: List[str], from_path: str = 'attachments') -> None:
-        for attachment_name in attachment_names:
-            attachment_upload_path = os.path.join(self.base_folder, attachment_name)
-            attachment_local_path = os.path.join(from_path, attachment_name)
+    def upload_attachments(self) -> None:
+        for attachment_name in self.attachments_names:
+            attachment_upload_path = os.path.join(self.remote_files_folder, attachment_name)
+            attachment_local_path = os.path.join(self.local_files_folder, attachment_name)
             with open(attachment_local_path, 'rb') as attachment_file:
-                self.upload_file(file_stream=attachment_file.read(), upload_path=attachment_upload_path)
+                self.upload_file(file_bytes=attachment_file.read(), upload_path=attachment_upload_path)

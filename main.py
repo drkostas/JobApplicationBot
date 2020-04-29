@@ -48,7 +48,8 @@ def _argparser() -> argparse.Namespace:
         'required': True,
         'help': "The configuration yml file"
     }
-    required_arguments.add_argument('-m', '--run-mode', choices=['crawl_and_send', 'list_emails', 'remove_email'],
+    required_arguments.add_argument('-m', '--run-mode',
+                                    choices=['crawl_and_send', 'list_emails', 'remove_email', 'upload_files'],
                                     required=True,
                                     default='crawl_and_send')
     required_arguments.add_argument('-c', '--config-file', **config_file_params)
@@ -57,7 +58,7 @@ def _argparser() -> argparse.Namespace:
     optional = parser.add_argument_group('optional arguments')
     optional.add_argument('--email-id', help='the id of the email you want to be deleted')
     optional.add_argument('-d', '--debug', action='store_true', help='enables the debug log messages')
-    optional.add_argument('--test-mode', action='store_true',
+    optional.add_argument('t', '--test-mode', action='store_true',
                           help='enables the test mode which sends all emails to self')
     optional.add_argument("-h", "--help", action="help", help="Show this help message and exit")
     # Parse args
@@ -67,22 +68,14 @@ def _argparser() -> argparse.Namespace:
     return parsed_args
 
 
-def init_main() -> Tuple[argparse.Namespace, JobBotMySqlDatastore, JobBotDropboxCloudstore, GmailEmailApp, List]:
+def init_main() -> Tuple[argparse.Namespace, Configuration]:
     args = _argparser()
     _setup_log(args.log, args.debug)
     logger.info("Starting in run mode: {0}".format(args.run_mode))
     # Load the configuration
     configuration = Configuration(config_src=args.config_file)
-    # Init the Datastore
-    data_store = JobBotMySqlDatastore(**configuration.get_datastores()[0])
-    # Init the Cloudstore
-    cloud_store = JobBotDropboxCloudstore(api_key=configuration.get_cloudstores()[0]['api_key'])
-    # Init the Email App
-    gmail_configuration = configuration.get_email_apps()[0]
-    email_app = GmailEmailApp(email_address=gmail_configuration['email_address'],
-                              api_key=gmail_configuration['api_key'],
-                              test_mode=args.test_mode)
-    return args, data_store, cloud_store, email_app, configuration.attachments
+
+    return args, configuration
 
 
 def show_ads_checked(ads: List[Dict]) -> None:
@@ -99,10 +92,18 @@ def show_ads_checked(ads: List[Dict]) -> None:
     print("|{}|".format("_" * 144))
 
 
+def upload_files_to_cloudstore(cloud_store: JobBotDropboxCloudstore):
+    cloud_store.update_stop_words_data()
+    cloud_store.update_url_search_params_data()
+    cloud_store.update_application_sent_email_data()
+    cloud_store.update_inform_should_call_email_data()
+    cloud_store.update_inform_success_email_data()
+    cloud_store.upload_attachments()
+
+
 def crawl_and_send_loop(data_store: JobBotMySqlDatastore,
                         cloud_store: JobBotDropboxCloudstore,
-                        email_app: GmailEmailApp,
-                        attachment_names: List) -> None:
+                        email_app: GmailEmailApp) -> None:
     """
     The main loop.
     Crawls the ad site for new ads and sends emails where applicable and informs the applicant.
@@ -112,14 +113,15 @@ def crawl_and_send_loop(data_store: JobBotMySqlDatastore,
     :params gmail_app:
     """
 
-    attachments_paths = [os.path.join('attachments', attachment_name) for attachment_name in attachment_names]
+    attachments_local_paths = [os.path.join(cloud_store.local_files_folder, attachment_name)
+                         for attachment_name in cloud_store.attachments_names]
     # Get the email_data, the attachments and the stop_words list from the cloudstore
-    ad_site_crawler = XeGrAdSiteCrawler(stop_words=cloud_store.get_stop_words())
+    ad_site_crawler = XeGrAdSiteCrawler(stop_words=cloud_store.get_stop_words_data())
     application_sent_subject, application_sent_html = cloud_store.get_application_sent_email_data()
     inform_should_call_subject, inform_should_call_html = cloud_store.get_inform_should_call_email_data()
     inform_success_subject, inform_success_html = cloud_store.get_inform_success_email_data()
-    cloud_store.download_attachments(attachment_names=attachment_names, to_path='attachments')
-    url_search_params = cloud_store.get_url_search_params()
+    cloud_store.download_attachments()
+    url_search_params = cloud_store.get_url_search_params_data()
 
     links_checked = [row["link"] for row in data_store.get_applications_sent()]
     logger.info("Waiting for new ads..")
@@ -144,7 +146,7 @@ def crawl_and_send_loop(data_store: JobBotMySqlDatastore,
                         email_app.send_email(subject=application_sent_subject,
                                              html=application_sent_html.format(link),
                                              to=email,
-                                             attachments=attachments_paths)
+                                             attachments=attachments_local_paths)
 
                         # Inform applicant that an application has been sent successfully
                         email_app.send_email(subject=inform_success_subject,
@@ -168,16 +170,22 @@ def main():
     """
 
     # Initializing
-    args, data_store, cloud_store, email_app, attachment_names = init_main()
+    args, configuration = init_main()
 
     # Start in the specified mode
     if args.run_mode == 'list_emails':
+        data_store = JobBotMySqlDatastore(config=configuration.get_datastores()[0])
         show_ads_checked(ads=data_store.get_applications_sent())
     elif args.run_mode == 'remove_email':
+        data_store = JobBotMySqlDatastore(config=configuration.get_datastores()[0])
         data_store.remove_ad(email_id=args.email_id)
+    elif args.run_mode == 'upload_files':
+        upload_files_to_cloudstore(cloud_store=JobBotDropboxCloudstore(config=configuration.get_cloudstores()[0]))
     elif args.run_mode == 'crawl_and_send':
-        crawl_and_send_loop(data_store=data_store, cloud_store=cloud_store, email_app=email_app,
-                            attachment_names=attachment_names)
+        crawl_and_send_loop(data_store=JobBotMySqlDatastore(config=configuration.get_datastores()[0]),
+                            cloud_store=JobBotDropboxCloudstore(config=configuration.get_cloudstores()[0]),
+                            email_app=GmailEmailApp(config=configuration.get_email_apps()[0],
+                                                    test_mode=args.test_mode))
     else:
         logger.error('Incorrect run_mode specified!')
         raise argparse.ArgumentTypeError('Incorrect run_mode specified!')
