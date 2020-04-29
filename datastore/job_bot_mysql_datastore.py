@@ -1,5 +1,5 @@
 import logging
-from typing import List, Dict
+from typing import List, Dict, Tuple, Union
 
 from mysql import connector as mysql_connector
 
@@ -32,13 +32,13 @@ class JobBotMySqlDatastore(MySqlDatastore):
         self.application_table_name = application_table_name
         super().__init__(config=config)
 
-    def get_applications_sent(self) -> List[Dict]:
+    def get_applications_sent(self) -> List[Tuple]:
         return self.select_from_table(table=self.application_table_name, columns='id, link, email, sent_on')
 
     def save_sent_application(self, application_info: Dict) -> None:
         self.insert_into_table(table=self.application_table_name, data=application_info)
 
-    def remove_ad(self, email_id: str) -> None:
+    def remove_ad(self, email_id: Union[int, str]) -> None:
         self.delete_from_table(table=self.application_table_name, where='id={email_id}'.format(email_id=email_id))
 
     def create_applications_sent_table(self) -> None:

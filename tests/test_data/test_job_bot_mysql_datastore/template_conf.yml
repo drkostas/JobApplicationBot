@@ -1,0 +1,9 @@
+tag: production
+datastore:
+  - config:
+      hostname: !ENV ${MYSQL_HOST}
+      username: !ENV ${MYSQL_USERNAME}
+      password: !ENV ${MYSQL_PASSWORD}
+      db_name: !ENV ${MYSQL_DB_NAME}
+      port: 3306
+    type: mysql
