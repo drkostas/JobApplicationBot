@@ -10,6 +10,9 @@
     },
     "cloudstore": {
       "$ref": "#/definitions/cloudstore"
+    },
+    "attachments": {
+      "$ref": "#/definitions/attachments"
     }
   },
   "required": [
@@ -37,6 +40,12 @@
         "subproperty2": {
           "type": "array"
         }
+      }
+    },
+    "attachments": {
+      "type": "array",
+      "items": {
+        "type": "string"
       }
     }
   },

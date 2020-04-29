@@ -8,9 +8,11 @@ import re
 import yaml
 from jsonschema import validate as validate_json_schema
 
+logger = logging.getLogger('Configuration')
+
 
 class Configuration:
-    __slots__ = ('config', 'config_path', 'datastore', 'cloudstore', 'email_app', 'tag')
+    __slots__ = ('config', 'config_path', 'datastore', 'cloudstore', 'email_app', 'tag', 'attachments')
 
     config: Dict
     config_path: str
@@ -18,10 +20,10 @@ class Configuration:
     cloudstore: Dict
     email_app: Dict
     tag: str
+    attachments: List
     config_attributes: List = []
     env_variable_tag: str = '!ENV'
     env_variable_pattern: str = r'.*?\${(\w+)}.*?'  # ${var}
-    logger = logging.getLogger('Configuration')
 
     def __init__(self, config_src: Union[TextIOWrapper, StringIO, str], config_schema_path: str = 'yml_schema.json'):
         """
@@ -35,10 +37,15 @@ class Configuration:
         # Load the configuration
         self.config, self.config_path = self.load_yml(config_src=config_src, env_tag=self.env_variable_tag,
                                                       env_pattern=self.env_variable_pattern)
+        logger.debug("Loaded config: %s" % self.config)
         # Validate the config
         validate_json_schema(self.config, configuration_schema)
         # Set the config properties as instance attributes
         self.tag = self.config['tag']
+        if 'attachments' in self.config:
+            self.attachments = self.config['attachments']
+        else:
+            self.attachments = []
         all_config_attributes = ('datastore', 'cloudstore', 'email_app')
         for config_attribute in all_config_attributes:
             if config_attribute in self.config.keys():
@@ -130,6 +137,9 @@ class Configuration:
         dict_conf = dict()
         for config_attribute in self.config_attributes:
             dict_conf[config_attribute] = getattr(self, config_attribute)
+
+        if self.attachments:
+            dict_conf['attachments'] = self.attachments
         if include_tag:
             dict_conf['tag'] = self.tag
 
@@ -148,6 +158,8 @@ class Configuration:
         for config_attribute in self.config_attributes:
             dict_conf[config_attribute] = getattr(self, config_attribute)
         dict_conf['tag'] = self.tag
+        if self.attachments:
+            dict_conf['attachments'] = self.attachments
         return dict_conf
 
 

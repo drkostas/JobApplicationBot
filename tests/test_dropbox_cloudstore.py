@@ -74,7 +74,7 @@ class TestDropboxCloudstore(unittest.TestCase):
     @staticmethod
     def _setup_log(debug: bool = False) -> None:
         # noinspection PyArgumentList
-        logging.basicConfig(level=logging.INFO if debug is not True else logging.DEBUG,
+        logging.basicConfig(level=logging.DEBUG,
                             format='%(asctime)s %(name)-12s %(levelname)-8s %(message)s',
                             datefmt='%Y-%m-%d %H:%M:%S',
                             handlers=[logging.StreamHandler()

@@ -5,3 +5,6 @@ cloudstore:
         - 123
         - 234
 tag: test_tag
+attachments:
+  - test1.txt
+  - test2.txt

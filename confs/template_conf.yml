@@ -16,3 +16,6 @@ email_app:
       email_address: !ENV ${EMAIL_ADDRESS}
       api_key: !ENV ${GMAIL_API_KEY}
     type: gmail
+attachments:
+  - cv.pdf
+  - cover_letter.pdf

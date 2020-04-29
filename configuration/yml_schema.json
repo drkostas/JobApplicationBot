@@ -13,6 +13,9 @@
     },
     "email_app": {
       "$ref": "#/definitions/email_app"
+    },
+    "attachments": {
+      "$ref": "#/definitions/attachments"
     }
   },
   "required": [
@@ -125,6 +128,12 @@
           },
           "additionalProperties": true
         }
+      }
+    },
+    "attachments": {
+      "type": "array",
+      "items": {
+        "type": "string"
       }
     }
   },

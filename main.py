@@ -82,7 +82,7 @@ def init_main() -> Tuple[argparse.Namespace, JobBotMySqlDatastore, JobBotDropbox
     email_app = GmailEmailApp(email_address=gmail_configuration['email_address'],
                               api_key=gmail_configuration['api_key'],
                               test_mode=args.test_mode)
-    return args, data_store, cloud_store, email_app, ['cv.pdf', 'cover_letter.pdf']
+    return args, data_store, cloud_store, email_app, configuration.attachments
 
 
 def show_ads_checked(ads: List[Dict]) -> None:
@@ -154,6 +154,9 @@ def crawl_and_send_loop(data_store: JobBotMySqlDatastore,
                     email_info = {"link": link, "address": email, "sent_on": datetime.datetime.utcnow().isoformat()}
                     data_store.save_sent_application(email_info)
                     logger.info("Waiting for new ads..")
+
+                    # Look for new ads every 2 minutes
+                    time.sleep(120)
 
 
 def main():
