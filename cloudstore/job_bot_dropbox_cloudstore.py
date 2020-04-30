@@ -1,6 +1,7 @@
 import os
 from typing import Dict, List, Tuple
 import logging
+import ast
 from dropbox import Dropbox
 
 from .dropbox_cloudstore import DropboxCloudstore
@@ -32,13 +33,15 @@ class JobBotDropboxCloudstore(DropboxCloudstore):
 
         self.remote_files_folder = remote_files_folder
         self.local_files_folder = config['local_files_folder']
-        self.attachments_names = config['attachments_names']
+        # Set default value for attachments_names
+        self.attachments_names = config[
+            'attachments_names'] if 'attachments_names' in config else []
         # Default value for the boolean attributes is False
         self._update_stop_words = config[
             'update_stop_words'] if 'update_stop_words' in config else False
         self._update_url_search_params = config[
             'update_url_search_params'] if 'update_url_search_params' in config else False
-        self.update_application_sent_email = config[
+        self._update_application_sent_email = config[
             'update_application_sent_email'] if 'update_application_sent_email' in config else False
         self._update_inform_success_email = config[
             'update_inform_success_email'] if 'update_inform_success_email' in config else False
@@ -61,7 +64,7 @@ class JobBotDropboxCloudstore(DropboxCloudstore):
 
     def get_url_search_params_data(self) -> Dict:
         url_search_params_path = os.path.join(self.remote_files_folder, 'url_search_params.txt')
-        return dict(self.download_file(frompath=url_search_params_path))
+        return ast.literal_eval(self.download_file(frompath=url_search_params_path).decode("UTF-8"))
 
     def _get_email_data(self, type: str) -> Tuple[str, str]:
         subject_file_path = os.path.join(self.remote_files_folder, '{type}_subject.txt'.format(type=type))

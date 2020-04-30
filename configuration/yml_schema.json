@@ -86,6 +86,10 @@
         },
         "config": {
           "type": "object",
+          "required": [
+            "api_key",
+            "local_files_folder"
+          ],
           "properties": {
             "api_key": {
               "type": "string"

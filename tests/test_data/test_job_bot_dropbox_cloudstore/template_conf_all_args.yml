@@ -1,0 +1,13 @@
+tag: production
+cloudstore:
+  - config:
+      api_key: !ENV ${DROPBOX_API_KEY}
+      local_files_folder: test_data/test_job_bot_dropbox_cloudstore
+      attachments_names:
+        - sample.txt
+      update_stop_words: true
+      update_url_search_params: true
+      update_application_sent_email: true
+      update_inform_success_email: true
+      update_inform_should_call_email: true
+    type: dropbox
