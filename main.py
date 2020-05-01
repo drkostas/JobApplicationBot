@@ -114,7 +114,7 @@ def crawl_and_send_loop(data_store: JobBotMySqlDatastore,
     """
 
     attachments_local_paths = [os.path.join(cloud_store.local_files_folder, attachment_name)
-                         for attachment_name in cloud_store.attachments_names]
+                               for attachment_name in cloud_store.attachments_names]
     # Get the email_data, the attachments and the stop_words list from the cloudstore
     ad_site_crawler = XeGrAdSiteCrawler(stop_words=cloud_store.get_stop_words_data())
     application_sent_subject, application_sent_html = cloud_store.get_application_sent_email_data()

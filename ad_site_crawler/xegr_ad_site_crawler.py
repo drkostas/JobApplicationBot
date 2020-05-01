@@ -1,5 +1,5 @@
 import urllib.request, urllib.error, urllib.parse
-from typing import List, Dict, Tuple
+from typing import List, Dict, Tuple, Union
 import re
 import logging
 from unidecode import unidecode
@@ -10,22 +10,24 @@ logger = logging.getLogger('XeGrAdSiteCrawler')
 
 
 class XeGrAdSiteCrawler(AbstractAdSiteCrawler):
-    __slots__ = ('_stop_words')
+    __slots__ = ('_stop_words', '_ad_site_url')
 
     _stop_words: List
-    _ad_site_url: str = "http://www.xe.gr"
+    _ignored_emails: List = ['email@paroxos.com']
+    _ad_site_url: str
 
-    def __init__(self, stop_words: List):
+    def __init__(self, stop_words: List, ad_site_url: str = "http://www.xe.gr"):
         """
         Tha basic constructor. Creates a new instance of AdSiteCrawler using the specified credentials
 
         :param stop_words:
         """
 
+        self._ad_site_url = ad_site_url
         self._stop_words = stop_words
         super().__init__()
 
-    def get_new_ads(self, url_search_params: Dict, ads_checked: List) -> Dict:
+    def get_new_ads(self, url_search_params: Dict, ads_checked: List) -> Tuple[str, Union[None, str]]:
         """
         Retrieves each sub-link's html, searches and yields an email for each of them.
 
@@ -37,21 +39,27 @@ class XeGrAdSiteCrawler(AbstractAdSiteCrawler):
         search_page_url = "{ad_site_url}/search?{encoded_search_params}".format(ad_site_url=self._ad_site_url,
                                                                                 encoded_search_params=encoded_search_params)
 
+        logger.debug("ads_checked: %s" % ads_checked)
         search_page_html = self._retrieve_html_from_url(search_page_url)
         # Search for links in the main page's html, retrieve their html and look for emails inside them
         for ad_link in self._find_links_in_html(search_page_html):
-            full_sub_link = self._ad_site_url + ad_link
+            logger.debug("Checking ad_link: %s" % ad_link)
+            full_sub_link =  self._ad_site_url + urllib.parse.quote(ad_link)
             if full_sub_link in ads_checked:
+                logger.debug("It is in ads_checked, skipping..")
                 continue
             ad_page_html = self._retrieve_html_from_url(full_sub_link)
-            if any(unidecode(word).lower() in unidecode(ad_page_html) for word in self._stop_words):
+            if any(unidecode(word).lower() in unidecode(ad_page_html).lower() for word in self._stop_words):
+                logger.debug("It contains one of the stop words, skipping..")
                 continue
             # Add the link inside the check list in order to avoid duplicate ads
             ads_checked.append(full_sub_link)
-            emails_in_ad_page = self._find_emails_in_html(html=ad_page_html)
+            emails_in_ad_page = self._find_emails_in_html(html_data=ad_page_html)
             if len(emails_in_ad_page) == 0:
+                logger.debug("Found no emails in the ad page, returning None..")
                 yield full_sub_link, None
             else:
+                logger.debug("Found emails in the ad page, returning %s.." % emails_in_ad_page[0])
                 yield full_sub_link, emails_in_ad_page[0]
 
     @staticmethod
@@ -92,8 +100,8 @@ class XeGrAdSiteCrawler(AbstractAdSiteCrawler):
             href = href_raw[:href_raw.find(' ')]
             yield href[6:-1]
 
-    @staticmethod
-    def _find_emails_in_html(html: str) -> List:
+    @classmethod
+    def _find_emails_in_html(cls, html_data: str) -> List:
         """
         Searches for email patterns in html and returns list of emails.
 
@@ -103,5 +111,5 @@ class XeGrAdSiteCrawler(AbstractAdSiteCrawler):
         logger.debug("Searching for emails in html..")
 
         pattern = re.compile(r'[\w\-][\w\-\.]+@[\w\-][\w\-\.]+(?:com|gr)', re.MULTILINE)
-        emails = pattern.findall(html)
-        return emails
+        emails = pattern.findall(html_data)
+        return [email for email in emails if email not in cls._ignored_emails]
