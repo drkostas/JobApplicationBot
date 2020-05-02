@@ -93,9 +93,10 @@ class TestJobBotDropboxCloudstore(unittest.TestCase):
         # Download it
         logger.info('Downloading stop_words..')
         stop_words_downloaded = cloud_store.get_stop_words_data()
+        stop_words_downloaded = "['" + "', '".join(stop_words_downloaded) + "']"
         # Compare contents of downloaded file with the original
         self.assertEqual(open(os.path.join(self.test_data_path, self.file_name), 'rb').read(),
-                         bytes(stop_words_downloaded))
+                         bytes(stop_words_downloaded, encoding='utf8'))
 
     def test_update_get_email_data(self):
         cloud_store = JobBotDropboxCloudstore(config=self.configuration.get_cloudstores()[0],
