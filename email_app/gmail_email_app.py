@@ -44,7 +44,7 @@ class GmailEmailApp(AbstractEmailApp):
     def is_connected(self) -> bool:
         return self._handler.is_connected()
 
-    def get_self_email(self):
+    def get_self_email(self) -> str:
         return self.email_address
 
     def send_email(self, subject: str, to: List, cc: List = None, bcc: List = None, text: str = None, html: str = None,
@@ -65,10 +65,11 @@ class GmailEmailApp(AbstractEmailApp):
         """
 
         if self.test_mode:
-            to = self.email_address
-            cc = self.email_address if cc is not None else None
-            bcc = self.email_address if bcc is not None else None
+            to = [self.email_address]
+            cc = [self.email_address] if cc is not None else None
+            bcc = [self.email_address] if bcc is not None else None
 
+        logger.debug("Constructing message..")
         msg = Message(subject=subject,
                       to=",".join(to),
                       cc=",".join(cc) if cc is not None else None,
@@ -78,7 +79,7 @@ class GmailEmailApp(AbstractEmailApp):
                       attachments=attachments,
                       sender=sender,
                       reply_to=reply_to)
-        logger.debug("Sending email with Message: %s" % msg)
+        logger.debug("Sending email to %s with subject: %s.." % (to, subject))
         self._handler.send(msg)
 
     def __exit__(self):
