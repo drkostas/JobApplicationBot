@@ -99,7 +99,7 @@ def upload_files_to_cloudstore(cloud_store: JobBotDropboxCloudstore):
     cloud_store.upload_attachments()
 
 
-def crawl_and_send_loop(lookup_url: str, check_interval: int, crawl_interval: int,
+def crawl_and_send_loop(lookup_url: str, check_interval: int, crawl_interval: int, anchor_class_name: str,
                         data_store: JobBotMySqlDatastore,
                         cloud_store: JobBotDropboxCloudstore,
                         email_app: GmailEmailApp) -> None:
@@ -114,7 +114,8 @@ def crawl_and_send_loop(lookup_url: str, check_interval: int, crawl_interval: in
     :params gmail_app:
     """
 
-    ad_site_crawler = XeGrAdSiteCrawler(stop_words=cloud_store.get_stop_words_data())
+    ad_site_crawler = XeGrAdSiteCrawler(stop_words=cloud_store.get_stop_words_data(),
+                                        anchor_class_name=anchor_class_name)
     attachments_local_paths = [os.path.join(cloud_store.local_files_folder, attachment_name)
                                for attachment_name in cloud_store.attachments_names]
     # Get the email_data, the attachments and the stop_words list from the cloudstore
@@ -131,7 +132,7 @@ def crawl_and_send_loop(lookup_url: str, check_interval: int, crawl_interval: in
 
         if len(new_ads) > 0:
             links_checked = [row[0] for row in data_store.get_applications_sent(columns='link')]
-            emails_checked = [row[0] for row in data_store.get_applications_sent(columns='address')]
+            emails_checked = [row[0] for row in data_store.get_applications_sent(columns='email')]
             for link, email in new_ads:
                 if link not in links_checked and (email not in emails_checked or email is None):
                     if email is None:
@@ -154,7 +155,7 @@ def crawl_and_send_loop(lookup_url: str, check_interval: int, crawl_interval: in
                                              html=inform_success_html.format(email=email, link=link),
                                              to=email_app.get_self_email())
 
-                    email_info = {"link": link, "address": email, "sent_on": datetime.datetime.utcnow().isoformat()}
+                    email_info = {"link": link, "email": email, "sent_on": datetime.datetime.utcnow().isoformat()}
                     data_store.save_sent_application(email_info)
                     logger.info("Waiting for new ads..")
 
@@ -190,6 +191,7 @@ def main():
         crawl_and_send_loop(lookup_url=configuration.lookup_url,
                             check_interval=configuration.check_interval,
                             crawl_interval=configuration.crawl_interval,
+                            anchor_class_name=configuration.anchor_class_name,
                             data_store=JobBotMySqlDatastore(config=configuration.get_datastores()[0]),
                             cloud_store=JobBotDropboxCloudstore(config=configuration.get_cloudstores()[0]),
                             email_app=GmailEmailApp(config=configuration.get_email_apps()[0],

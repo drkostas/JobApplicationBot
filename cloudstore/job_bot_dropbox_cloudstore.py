@@ -58,9 +58,9 @@ class JobBotDropboxCloudstore(DropboxCloudstore):
     def get_inform_success_email_data(self) -> Tuple[str, str]:
         return self._get_email_data(type='inform_success')
 
-    def get_stop_words_data(self) -> List:
+    def get_stop_words_data(self) -> List[str]:
         stop_words_path = os.path.join(self.remote_files_folder, 'stop_words.txt')
-        return list(self.download_file(frompath=stop_words_path))
+        return eval(self.download_file(frompath=stop_words_path))
 
     def _get_email_data(self, type: str) -> Tuple[str, str]:
         subject_file_path = os.path.join(self.remote_files_folder, '{type}_subject.txt'.format(type=type))

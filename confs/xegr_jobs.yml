@@ -2,6 +2,7 @@ tag: production
 lookup_url: !ENV ${LOOKUP_URL}
 check_interval: !ENV ${CHECK_INTERVAL}
 crawl_interval: !ENV ${CRAWL_INTERVAL}
+anchor_class_name: !ENV ${ANCHOR_CLASS_NAME}
 test_mode: !ENV ${TEST_MODE}
 cloudstore:
   - config:

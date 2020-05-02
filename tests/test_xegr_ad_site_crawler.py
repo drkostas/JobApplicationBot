@@ -50,7 +50,7 @@ class TestXeGrAdSiteCrawler(unittest.TestCase):
             html_file = html_f.read()
         # Search for links in the loaded html
         logger.info("Calling _find_links_in_html()..")
-        returned_links = list(ad_site_crawler._find_links_in_html(html_data=html_file))
+        returned_links = list(ad_site_crawler._find_links_in_html(html_data=html_file, anchor_class_name='highlight'))
         # Check if the correct email was loaded
         expected_links = self.html_sub_links
         self.assertListEqual(expected_links, [urllib.parse.quote(link) for link in returned_links])
@@ -86,7 +86,8 @@ class TestXeGrAdSiteCrawler(unittest.TestCase):
 
     def test_get_new_ads(self):
         ad_site_crawler = XeGrAdSiteCrawler(stop_words=self.stop_words,
-                                            ad_site_url=self.base_url)
+                                            ad_site_url=self.base_url,
+                                            anchor_class_name='highlight')
         # Retrieve the html from the local server
         logger.info("Calling get_new_ads()..")
         returned_ads = list(

@@ -13,7 +13,7 @@ logger = logging.getLogger('Configuration')
 
 class Configuration:
     __slots__ = ('config', 'config_path', 'datastore', 'cloudstore', 'email_app', 'tag',
-                 'check_interval', 'crawl_interval', 'lookup_url', 'test_mode')
+                 'check_interval', 'crawl_interval', 'anchor_class_name', 'lookup_url', 'test_mode')
 
     config: Dict
     config_path: str
@@ -23,6 +23,7 @@ class Configuration:
     lookup_url: str
     check_interval: int
     crawl_interval: int
+    anchor_class_name: str
     tag: str
     test_mode: bool
     config_attributes: List = []
@@ -55,12 +56,15 @@ class Configuration:
             self.check_interval = self.config['check_interval']
         else:
             self.check_interval = 120
-
         if 'crawl_interval' in self.config.keys():
             self.config['crawl_interval'] = int(self.config['crawl_interval'])
             self.crawl_interval = self.config['crawl_interval']
         else:
             self.crawl_interval = 15
+        if 'anchor_class_name' in self.config.keys():
+            self.anchor_class_name = self.config['anchor_class_name']
+        else:
+            self.anchor_class_name = "highlight"
         logger.debug("Loaded config: %s" % self.config)
         # Validate the config
         validate_json_schema(self.config, configuration_schema)
@@ -164,6 +168,8 @@ class Configuration:
             dict_conf['crawl_interval'] = self.crawl_interval
         if 'test_mode' in self.config.keys():
             dict_conf['test_mode'] = self.test_mode
+        if 'anchor_class_name' in self.config.keys():
+            dict_conf['anchor_class_name'] = self.anchor_class_name
 
         if isinstance(fn, str):
             with open(fn, 'w') as f:
@@ -188,6 +194,8 @@ class Configuration:
             dict_conf['crawl_interval'] = self.crawl_interval
         if 'test_mode' in self.config.keys():
             dict_conf['test_mode'] = self.test_mode
+        if 'anchor_class_name' in self.config.keys():
+            dict_conf['anchor_class_name'] = self.anchor_class_name
 
         return dict_conf
 
