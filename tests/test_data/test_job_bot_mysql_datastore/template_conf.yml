@@ -1,4 +1,5 @@
 tag: production
+lookup_url: www.xe.gr
 datastore:
   - config:
       hostname: !ENV ${MYSQL_HOST}

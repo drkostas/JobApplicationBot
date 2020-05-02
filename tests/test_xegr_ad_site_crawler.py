@@ -14,14 +14,13 @@ logger = logging.getLogger('TestXeGrAdSiteCrawler')
 
 class TestXeGrAdSiteCrawler(unittest.TestCase):
     __slots__ = (
-        'encoded_search_params', 'httpd',
-        'html_sub_links', 'html_file_with_links_path',
+        'httpd', 'html_sub_links', 'html_file_with_links_path', 'base_url',
         'html_file_with_email_path_1', 'html_file_with_email_path_2',
         'html_file_with_email_path_3', 'html_file_with_email_path_4')
 
     stop_words: List = ['Senior']
-    search_params: Dict = {"q1": 1, "q2": 2}
-    encoded_search_params: str
+    lookup_params: str = "?q1=1&q2=2"
+    base_url: str
     httpd: socketserver.TCPServer
     html_sub_links: List
     html_file_with_links_path: str
@@ -65,9 +64,8 @@ class TestXeGrAdSiteCrawler(unittest.TestCase):
         # Retrieve the html from the local server
         logger.info("Calling _retrieve_html_from_url()..")
         returned_html_links = ad_site_crawler._retrieve_html_from_url(
-            'http://localhost:{port}'
-            '/search?{encoded_search_params}'.format(port=self.PORT,
-                                                     encoded_search_params=self.encoded_search_params))
+            '{base_url}/search?{lookup_params}'.format(base_url=self.base_url,
+                                                       lookup_params=self.lookup_params))
         # Check if the correct html was loaded
         self.assertEqual(html_file_links, returned_html_links)
 
@@ -80,26 +78,27 @@ class TestXeGrAdSiteCrawler(unittest.TestCase):
         # Retrieve the html from the local server
         logger.info("Calling _retrieve_html_from_url()..")
         returned_html_links = ad_site_crawler._retrieve_html_from_url(
-            'http://localhost:{port}'
-            '{email_page}'.format(port=self.PORT,
+            '{base_url}'
+            '{email_page}'.format(base_url=self.base_url,
                                   email_page=self.html_sub_links[0]))
         # Check if the correct html was loaded
         self.assertEqual(html_file_email_1, returned_html_links)
 
     def test_get_new_ads(self):
         ad_site_crawler = XeGrAdSiteCrawler(stop_words=self.stop_words,
-                                            ad_site_url='http://localhost:{port}'.format(port=self.PORT))
+                                            ad_site_url=self.base_url)
         # Retrieve the html from the local server
         logger.info("Calling get_new_ads()..")
-        returned_ads = list(ad_site_crawler.get_new_ads(url_search_params=self.search_params,
-                                                        ads_checked=['http://localhost:{port}'.format(port=self.PORT) +
-                                                                     self.html_sub_links[1]]))
+        returned_ads = list(
+            ad_site_crawler.get_new_ads(lookup_url='{base_url}/search?{lookup_params}'
+                                        .format(base_url=self.base_url, lookup_params=self.lookup_params),
+                                        ads_checked=[self.base_url + self.html_sub_links[1]]))
         # Check if the correct html was loaded
-        expected_ads = [('http://localhost:{port}{sublink}'.format(port=self.PORT,
-                                                                   sublink=self.html_sub_links[2]),
+        expected_ads = [('{base_url}{sublink}'.format(base_url=self.base_url,
+                                                      sublink=self.html_sub_links[2]),
                          None),
-                        ('http://localhost:{port}{sublink}'.format(port=self.PORT,
-                                                                   sublink=self.html_sub_links[3]),
+                        ('{base_url}{sublink}'.format(base_url=self.base_url,
+                                                      sublink=self.html_sub_links[3]),
                          'epharmacy137@gmail.com'),
                         ]
         self.assertListEqual(sorted(expected_ads, key=lambda x: x[0]),
@@ -109,8 +108,7 @@ class TestXeGrAdSiteCrawler(unittest.TestCase):
     def init_local_server(cls, port: int = 8111) -> socketserver.TCPServer:
         class MyHttpRequestHandler(http.server.SimpleHTTPRequestHandler):
             def do_GET(self):
-                if self.path == '/search?{encoded_search_params}'.format(
-                        encoded_search_params=cls.encoded_search_params):
+                if self.path == '/search?{lookup_params}'.format(lookup_params=cls.lookup_params):
                     self.path = cls.html_file_with_links_path
                 elif self.path == cls.html_sub_links[0]:
                     self.path = cls.html_file_with_email_path_1
@@ -144,7 +142,6 @@ class TestXeGrAdSiteCrawler(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls._setup_log()
-        cls.encoded_search_params = urllib.parse.urlencode(cls.search_params)
         cls.html_file_with_links_path = os.path.join(cls.test_data_path, 'file_with_links.html')
         cls.html_file_with_email_path_1 = os.path.join(cls.test_data_path, 'file_with_email_1.html')
         cls.html_file_with_email_path_2 = os.path.join(cls.test_data_path, 'file_with_email_2.html')
@@ -156,8 +153,9 @@ class TestXeGrAdSiteCrawler(unittest.TestCase):
                                '/jobs/programmatistes-mhxanikoi-h-y|ad-94456892.html',
                                '/jobs/programmatistes-mhxanikoi-h-y|ad-579027979.html']]
         # Server the html file from local server
-        logger.info("Serving html file to local server. Base: http://localhost:{port}/search?{encoded_search_params}"
-                    .format(port=cls.PORT, encoded_search_params=cls.encoded_search_params))
+        cls.base_url = 'http://localhost:{port}'.format(port=cls.PORT)
+        logger.info("Serving html file to local server. Base: {base_url}"
+                    .format(base_url=cls.base_url, lookup_params=cls.lookup_params))
         cls.httpd = cls.init_local_server(port=cls.PORT)
         server_thread = threading.Thread(target=cls.httpd.serve_forever)
         server_thread.start()

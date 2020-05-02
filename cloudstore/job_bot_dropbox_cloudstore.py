@@ -11,20 +11,20 @@ logger = logging.getLogger('JobBotDropboxCloudstore')
 
 class JobBotDropboxCloudstore(DropboxCloudstore):
     __slots__ = ('_handler', 'remote_files_folder', 'local_files_folder',
-                 'attachments_names', '_update_stop_words', '_update_url_search_params',
+                 'attachments_names', '_update_attachments', '_update_stop_words',
                  '_update_application_sent_email', '_update_inform_success_email', '_update_inform_should_call_email')
 
     _handler: Dropbox
     remote_files_folder: str
     local_files_folder: str
     attachments_names: List
+    _update_attachments: bool
     _update_stop_words: bool
-    _update_url_search_params: bool
     _update_application_sent_email: bool
     _update_inform_success_email: bool
     _update_inform_should_call_email: bool
 
-    def __init__(self, config: Dict, remote_files_folder: str = 'job_bot_xegr') -> None:
+    def __init__(self, config: Dict, remote_files_folder: str = '/job_bot_xegr') -> None:
         """
         The basic constructor. Creates a new instance of Cloudstore using the specified credentials
 
@@ -37,10 +37,10 @@ class JobBotDropboxCloudstore(DropboxCloudstore):
         self.attachments_names = config[
             'attachments_names'] if 'attachments_names' in config else []
         # Default value for the boolean attributes is False
+        self._update_attachments = config[
+            'update_attachments'] if 'update_attachments' in config else False
         self._update_stop_words = config[
             'update_stop_words'] if 'update_stop_words' in config else False
-        self._update_url_search_params = config[
-            'update_url_search_params'] if 'update_url_search_params' in config else False
         self._update_application_sent_email = config[
             'update_application_sent_email'] if 'update_application_sent_email' in config else False
         self._update_inform_success_email = config[
@@ -61,10 +61,6 @@ class JobBotDropboxCloudstore(DropboxCloudstore):
     def get_stop_words_data(self) -> List:
         stop_words_path = os.path.join(self.remote_files_folder, 'stop_words.txt')
         return list(self.download_file(frompath=stop_words_path))
-
-    def get_url_search_params_data(self) -> Dict:
-        url_search_params_path = os.path.join(self.remote_files_folder, 'url_search_params.txt')
-        return ast.literal_eval(self.download_file(frompath=url_search_params_path).decode("UTF-8"))
 
     def _get_email_data(self, type: str) -> Tuple[str, str]:
         subject_file_path = os.path.join(self.remote_files_folder, '{type}_subject.txt'.format(type=type))
@@ -106,15 +102,6 @@ class JobBotDropboxCloudstore(DropboxCloudstore):
         else:
             logger.info("The update of stop_words data was skipped.")
 
-    def update_url_search_params_data(self, stop_words_local_file_name: str = 'url_search_params.txt') -> None:
-        if self._update_url_search_params:
-            url_search_params_remote_path = os.path.join(self.remote_files_folder, 'url_search_params.txt')
-            url_search_params_local_path = os.path.join(self.local_files_folder, stop_words_local_file_name)
-            with open(url_search_params_local_path, 'rb') as url_search_params_file:
-                self.upload_file(file_bytes=url_search_params_file.read(), upload_path=url_search_params_remote_path)
-        else:
-            logger.info("The update of url_search_params data was skipped.")
-
     def _update_email_data(self, type: str) -> None:
         logger.info("Updating the %s email data.." % type)
         subject_remote_path = os.path.join(self.remote_files_folder, '{type}_subject.txt'.format(type=type))
@@ -127,8 +114,9 @@ class JobBotDropboxCloudstore(DropboxCloudstore):
             self.upload_file(file_bytes=html_file.read(), upload_path=html_remote_path)
 
     def upload_attachments(self) -> None:
-        for attachment_name in self.attachments_names:
-            attachment_upload_path = os.path.join(self.remote_files_folder, attachment_name)
-            attachment_local_path = os.path.join(self.local_files_folder, attachment_name)
-            with open(attachment_local_path, 'rb') as attachment_file:
-                self.upload_file(file_bytes=attachment_file.read(), upload_path=attachment_upload_path)
+        if self._update_attachments:
+            for attachment_name in self.attachments_names:
+                attachment_upload_path = os.path.join(self.remote_files_folder, attachment_name)
+                attachment_local_path = os.path.join(self.local_files_folder, attachment_name)
+                with open(attachment_local_path, 'rb') as attachment_file:
+                    self.upload_file(file_bytes=attachment_file.read(), upload_path=attachment_upload_path)

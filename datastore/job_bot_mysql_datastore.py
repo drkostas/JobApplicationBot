@@ -32,8 +32,8 @@ class JobBotMySqlDatastore(MySqlDatastore):
         self.application_table_name = application_table_name
         super().__init__(config=config)
 
-    def get_applications_sent(self) -> List[Tuple]:
-        return self.select_from_table(table=self.application_table_name, columns='id, link, email, sent_on')
+    def get_applications_sent(self, columns: str = 'id, link, email, sent_on') -> List[Tuple]:
+        return self.select_from_table(table=self.application_table_name, columns=columns)
 
     def save_sent_application(self, application_info: Dict) -> None:
         self.insert_into_table(table=self.application_table_name, data=application_info)

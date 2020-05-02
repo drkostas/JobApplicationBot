@@ -1,4 +1,7 @@
 tag: production
+lookup_url: !ENV ${LOOKUP_URL}
+check_interval: !ENV ${CHECK_INTERVAL}
+test_mode: !ENV ${TEST_MODE}
 cloudstore:
   - config:
       api_key: !ENV ${DROPBOX_API_KEY}
@@ -6,11 +9,11 @@ cloudstore:
       attachments_names:
         - cv.pdf
         - cover_letter.pdf
-      update_stop_words: true
-      update_url_search_params: true
-      update_application_sent_email: true
-      update_inform_success_email: true
-      update_inform_should_call_email: true
+      update_attachments: false
+      update_stop_words: false
+      update_application_sent_email: false
+      update_inform_success_email: false
+      update_inform_should_call_email: false
     type: dropbox
 datastore:
   - config:

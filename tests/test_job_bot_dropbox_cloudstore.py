@@ -33,7 +33,6 @@ class TestJobBotDropboxCloudstore(unittest.TestCase):
                                               remote_files_folder=self.remote_tests_folder)
         boolean_attributes = [True if len(cloud_store.attachments_names) > 0 else False,
                               cloud_store._update_stop_words,
-                              cloud_store._update_url_search_params,
                               cloud_store._update_application_sent_email,
                               cloud_store._update_inform_success_email,
                               cloud_store._update_inform_should_call_email]
@@ -42,7 +41,6 @@ class TestJobBotDropboxCloudstore(unittest.TestCase):
                                                        remote_files_folder=self.remote_tests_folder)
         req_only_boolean_attributes = [True if len(req_only_cloud_store.attachments_names) == 0 else False,
                                        not req_only_cloud_store._update_stop_words,
-                                       not req_only_cloud_store._update_url_search_params,
                                        not req_only_cloud_store._update_application_sent_email,
                                        not req_only_cloud_store._update_inform_success_email,
                                        not req_only_cloud_store._update_inform_should_call_email]
@@ -98,32 +96,6 @@ class TestJobBotDropboxCloudstore(unittest.TestCase):
         # Compare contents of downloaded file with the original
         self.assertEqual(open(os.path.join(self.test_data_path, self.file_name), 'rb').read(),
                          bytes(stop_words_downloaded))
-
-    def test_update_get_url_search_params_data(self):
-        cloud_store = JobBotDropboxCloudstore(config=self.configuration.get_cloudstores()[0],
-                                              remote_files_folder=self.remote_tests_folder)
-        # Copy bck to to actual file
-        bck_url_search_params_path = os.path.join(cloud_store.local_files_folder,
-                                                  'bck_url_search_params.txt')
-        url_search_params_path = os.path.join(cloud_store.local_files_folder,
-                                              'url_search_params.txt')
-        copyfile(bck_url_search_params_path, url_search_params_path)
-        # Upload stop_words
-        logger.info('Uploading url_search_params..')
-        cloud_store.update_url_search_params_data()
-        # Check if it was uploaded
-        self.assertIn('url_search_params.txt', cloud_store.ls(self.remote_tests_folder).keys())
-        # Rename the old file before downloading it
-        logger.info('Renaming the old file before downloading it..')
-        os.rename(os.path.join(self.test_data_path, 'url_search_params.txt'),
-                  os.path.join(self.test_data_path, self.file_name))
-        # Download it
-        logger.info('Downloading url_search_params..')
-        url_search_params_downloaded = cloud_store.get_url_search_params_data()
-        # Compare contents of downloaded file with the original
-        with open(os.path.join(self.test_data_path, self.file_name), 'rb') as expected_file:
-            expected_dict = ast.literal_eval(expected_file.read().decode("UTF-8"))
-        self.assertDictEqual(expected_dict, url_search_params_downloaded)
 
     def test_update_get_email_data(self):
         cloud_store = JobBotDropboxCloudstore(config=self.configuration.get_cloudstores()[0],
@@ -184,7 +156,7 @@ class TestJobBotDropboxCloudstore(unittest.TestCase):
         return file_name, contents
 
     @staticmethod
-    def _setup_log(debug: bool = False) -> None:
+    def _setup_log() -> None:
         # noinspection PyArgumentList
         logging.basicConfig(level=logging.DEBUG,
                             format='%(asctime)s %(name)-12s %(levelname)-8s %(message)s',

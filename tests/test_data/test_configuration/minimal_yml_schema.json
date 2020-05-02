@@ -8,6 +8,9 @@
     "tag": {
       "type": "string"
     },
+    "lookup_url": {
+      "type": "string"
+    },
     "cloudstore": {
       "$ref": "#/definitions/cloudstore"
     },
@@ -16,7 +19,8 @@
     }
   },
   "required": [
-    "tag"
+    "tag",
+    "lookup_url"
   ],
   "definitions": {
     "cloudstore": {

@@ -49,22 +49,21 @@ def _argparser() -> argparse.Namespace:
         'help': "The configuration yml file"
     }
     required_arguments.add_argument('-m', '--run-mode',
-                                    choices=['crawl_and_send', 'list_emails', 'remove_email', 'upload_files'],
+                                    choices=['crawl_and_send', 'list_emails', 'remove_email', 'upload_files',
+                                             'create_table'],
                                     required=True,
                                     default='crawl_and_send')
     required_arguments.add_argument('-c', '--config-file', **config_file_params)
     required_arguments.add_argument('-l', '--log', help="Name of the output log file")
     # Optional args
-    optional = parser.add_argument_group('optional arguments')
-    optional.add_argument('--email-id', help='the id of the email you want to be deleted')
-    optional.add_argument('-d', '--debug', action='store_true', help='enables the debug log messages')
-    optional.add_argument('t', '--test-mode', action='store_true',
-                          help='enables the test mode which sends all emails to self')
+    optional = parser.add_argument_group('Optional Arguments')
+    optional.add_argument('--email-id', help='The id of the email you want to be deleted')
+    optional.add_argument('-d', '--debug', action='store_true', help='Enables the debug log messages')
     optional.add_argument("-h", "--help", action="help", help="Show this help message and exit")
     # Parse args
     parsed_args = parser.parse_args()
     if parsed_args.email_id is None and parsed_args.run_mode == 'remove_email':
-        raise argparse.ArgumentTypeError('--run-mode = parsed_args requires --email-id to be set!')
+        raise argparse.ArgumentTypeError('--run-mode = remove_email requires --email-id to be set!')
     return parsed_args
 
 
@@ -78,7 +77,7 @@ def init_main() -> Tuple[argparse.Namespace, Configuration]:
     return args, configuration
 
 
-def show_ads_checked(ads: List[Dict]) -> None:
+def show_ads_checked(ads: List[Tuple]) -> None:
     """
     Pretty prints the list of emails sent.
 
@@ -94,44 +93,45 @@ def show_ads_checked(ads: List[Dict]) -> None:
 
 def upload_files_to_cloudstore(cloud_store: JobBotDropboxCloudstore):
     cloud_store.update_stop_words_data()
-    cloud_store.update_url_search_params_data()
     cloud_store.update_application_sent_email_data()
     cloud_store.update_inform_should_call_email_data()
     cloud_store.update_inform_success_email_data()
     cloud_store.upload_attachments()
 
 
-def crawl_and_send_loop(data_store: JobBotMySqlDatastore,
+def crawl_and_send_loop(lookup_url: str, check_interval: int,
+                        data_store: JobBotMySqlDatastore,
                         cloud_store: JobBotDropboxCloudstore,
                         email_app: GmailEmailApp) -> None:
     """
     The main loop.
     Crawls the ad site for new ads and sends emails where applicable and informs the applicant.
 
+    :params lookup_url:
+    :params check_interval:
     :params data_store:
     :params cloud_store:
     :params gmail_app:
     """
 
+    ad_site_crawler = XeGrAdSiteCrawler(stop_words=cloud_store.get_stop_words_data())
     attachments_local_paths = [os.path.join(cloud_store.local_files_folder, attachment_name)
                                for attachment_name in cloud_store.attachments_names]
     # Get the email_data, the attachments and the stop_words list from the cloudstore
-    ad_site_crawler = XeGrAdSiteCrawler(stop_words=cloud_store.get_stop_words_data())
+    cloud_store.download_attachments()
     application_sent_subject, application_sent_html = cloud_store.get_application_sent_email_data()
     inform_should_call_subject, inform_should_call_html = cloud_store.get_inform_should_call_email_data()
     inform_success_subject, inform_success_html = cloud_store.get_inform_success_email_data()
-    cloud_store.download_attachments()
-    url_search_params = cloud_store.get_url_search_params_data()
 
-    links_checked = [row["link"] for row in data_store.get_applications_sent()]
+    links_checked = [row[0] for row in data_store.get_applications_sent(columns='link')]
     logger.info("Waiting for new ads..")
     while True:
-        new_ads = ad_site_crawler.get_new_ads(url_search_params=url_search_params, ads_checked=links_checked)
+        new_ads = list(ad_site_crawler.get_new_ads(lookup_url=lookup_url, ads_checked=links_checked))
 
         if len(new_ads) > 0:
-            links_checked = [row["link"] for row in data_store.get_applications_sent()]
-            emails_checked = [row["address"] for row in data_store.get_applications_sent()]
-            for link, email in new_ads.items():
+            links_checked = [row[0] for row in data_store.get_applications_sent(columns='link')]
+            emails_checked = [row[0] for row in data_store.get_applications_sent(columns='address')]
+            for link, email in new_ads:
                 if link not in links_checked and (email not in emails_checked or email is None):
                     if email is None:
                         # Email applicant that he/should call manually
@@ -141,7 +141,7 @@ def crawl_and_send_loop(data_store: JobBotMySqlDatastore,
                                              to=email_app.get_self_email())
                     else:
                         # Send application after 1 minute (don't be too cocky)
-                        time.sleep(60)
+                        time.sleep(2)
                         logger.info("Sending email to: {}. Ad Link: {}".format(email, link))
                         email_app.send_email(subject=application_sent_subject,
                                              html=application_sent_html.format(link),
@@ -157,8 +157,9 @@ def crawl_and_send_loop(data_store: JobBotMySqlDatastore,
                     data_store.save_sent_application(email_info)
                     logger.info("Waiting for new ads..")
 
-                    # Look for new ads every 2 minutes
-                    time.sleep(120)
+        # Look for new ads every 2 minutes
+        logger.debug("Sleeping for {check_interval} seconds..".format(check_interval=check_interval))
+        time.sleep(check_interval)
 
 
 def main():
@@ -181,11 +182,16 @@ def main():
         data_store.remove_ad(email_id=args.email_id)
     elif args.run_mode == 'upload_files':
         upload_files_to_cloudstore(cloud_store=JobBotDropboxCloudstore(config=configuration.get_cloudstores()[0]))
+    elif args.run_mode == 'create_table':
+        data_store = JobBotMySqlDatastore(config=configuration.get_datastores()[0])
+        data_store.create_applications_sent_table()
     elif args.run_mode == 'crawl_and_send':
-        crawl_and_send_loop(data_store=JobBotMySqlDatastore(config=configuration.get_datastores()[0]),
+        crawl_and_send_loop(lookup_url=configuration.lookup_url,
+                            check_interval=configuration.check_interval,
+                            data_store=JobBotMySqlDatastore(config=configuration.get_datastores()[0]),
                             cloud_store=JobBotDropboxCloudstore(config=configuration.get_cloudstores()[0]),
                             email_app=GmailEmailApp(config=configuration.get_email_apps()[0],
-                                                    test_mode=args.test_mode))
+                                                    test_mode=configuration.test_mode))
     else:
         logger.error('Incorrect run_mode specified!')
         raise argparse.ArgumentTypeError('Incorrect run_mode specified!')

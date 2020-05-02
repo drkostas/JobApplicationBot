@@ -1,4 +1,5 @@
 tag: production
+lookup_url: www.xe.gr
 cloudstore:
   - config:
       api_key: !ENV ${DROPBOX_API_KEY}

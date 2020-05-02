@@ -12,14 +12,19 @@ logger = logging.getLogger('Configuration')
 
 
 class Configuration:
-    __slots__ = ('config', 'config_path', 'datastore', 'cloudstore', 'email_app', 'tag')
+    __slots__ = (
+        'config', 'config_path', 'datastore', 'cloudstore', 'email_app', 'tag', 'check_interval', 'lookup_url',
+        'test_mode')
 
     config: Dict
     config_path: str
     datastore: Dict
     cloudstore: Dict
     email_app: Dict
+    lookup_url: str
+    check_interval: int
     tag: str
+    test_mode: bool
     config_attributes: List = []
     env_variable_tag: str = '!ENV'
     env_variable_pattern: str = r'.*?\${(\w+)}.*?'  # ${var}
@@ -38,11 +43,22 @@ class Configuration:
         self.config, self.config_path = self.load_yml(config_src=config_src,
                                                       env_tag=self.env_variable_tag,
                                                       env_pattern=self.env_variable_pattern)
+        if 'test_mode' in self.config.keys():
+            if isinstance(self.config['test_mode'], str):
+                self.config['test_mode'] = False if self.config['test_mode'].lower() == 'false' else True
+            self.test_mode = self.config['test_mode']
+        else:
+            self.test_mode = True
         logger.debug("Loaded config: %s" % self.config)
         # Validate the config
         validate_json_schema(self.config, configuration_schema)
         # Set the config properties as instance attributes
+        self.lookup_url = self.config['lookup_url']
         self.tag = self.config['tag']
+        if 'check_interval' in self.config.keys():
+            self.check_interval = int(self.config['check_interval'])
+        else:
+            self.check_interval = 120
         all_config_attributes = ('datastore', 'cloudstore', 'email_app')
         for config_attribute in all_config_attributes:
             if config_attribute in self.config.keys():
@@ -119,7 +135,7 @@ class Configuration:
         else:
             raise ConfigurationError('Config property email_app not set!')
 
-    def to_yml(self, fn: Union[str, _io.TextIOWrapper], include_tag=False) -> None:
+    def to_yml(self, fn: Union[str, _io.TextIOWrapper]) -> None:
         """
         Writes the configuration to a stream. For example a file.
 
@@ -132,8 +148,12 @@ class Configuration:
         for config_attribute in self.config_attributes:
             dict_conf[config_attribute] = getattr(self, config_attribute)
 
-        if include_tag:
-            dict_conf['tag'] = self.tag
+        dict_conf['lookup_url'] = self.lookup_url
+        dict_conf['tag'] = self.tag
+        if 'check_interval' in self.config.keys():
+            dict_conf['check_interval'] = self.check_interval
+        if 'test_mode' in self.config.keys():
+            dict_conf['test_mode'] = self.test_mode
 
         if isinstance(fn, str):
             with open(fn, 'w') as f:
@@ -149,7 +169,14 @@ class Configuration:
         dict_conf = dict()
         for config_attribute in self.config_attributes:
             dict_conf[config_attribute] = getattr(self, config_attribute)
+
+        dict_conf['lookup_url'] = self.lookup_url
         dict_conf['tag'] = self.tag
+        if 'check_interval' in self.config.keys():
+            dict_conf['check_interval'] = self.check_interval
+        if 'test_mode' in self.config.keys():
+            dict_conf['test_mode'] = self.test_mode
+
         return dict_conf
 
     def __getitem__(self, item):

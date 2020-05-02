@@ -33,6 +33,8 @@ class TestConfiguration(unittest.TestCase):
         logger.info('Loading Configuration..')
         configuration = Configuration(config_src=os.path.join(self.test_data_path, 'template_conf.yml'))
         expected_json = {'tag': 'production',
+                         'test_mode': False,
+                         "lookup_url": "www.xe.gr",
                          'datastore': [{'config':
                                             {'hostname': 'host123',
                                              'username': 'user1',
@@ -55,7 +57,7 @@ class TestConfiguration(unittest.TestCase):
         configuration.datastore[0]['config']['hostname'] = 'changedhost'
         configuration.cloudstore[0]['config']['api_key'] = 'changed_api'
         logger.info('Exporting to yaml..')
-        configuration.to_yaml('test_data/test_configuration/actual_output_to_yaml.yml', include_tag=True)
+        configuration.to_yaml('test_data/test_configuration/actual_output_to_yaml.yml')
         # Load the modified yml
         logger.info('Loading the exported yaml..')
         modified_configuration = Configuration(
@@ -63,6 +65,8 @@ class TestConfiguration(unittest.TestCase):
         # Compare
         logger.info('Comparing the results..')
         expected_json = {'tag': 'production',
+                         'test_mode': False,
+                         "lookup_url": "www.xe.gr",
                          'datastore': [{'config':
                                             {'hostname': 'changedhost',
                                              'username': 'user1',

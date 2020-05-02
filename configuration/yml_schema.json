@@ -2,8 +2,14 @@
   "$schema": "http://json-schema.org/draft-04/schema#",
   "type": "object",
   "properties": {
-    "tag": {
+    "lookup_url": {
       "type": "string"
+    },
+    "check_interval": {
+      "type": "string"
+    },
+    "test_mode": {
+      "type": "boolean"
     },
     "datastore": {
       "$ref": "#/definitions/datastore"
@@ -13,9 +19,13 @@
     },
     "email_app": {
       "$ref": "#/definitions/email_app"
+    },
+    "tag": {
+      "type": "string"
     }
   },
   "required": [
+    "lookup_url",
     "tag"
   ],
   "definitions": {
@@ -102,6 +112,9 @@
               "items": {
                 "type": "string"
               }
+            },
+            "update_attachments": {
+              "type": "boolean"
             },
             "update_stop_words": {
               "type": "boolean"

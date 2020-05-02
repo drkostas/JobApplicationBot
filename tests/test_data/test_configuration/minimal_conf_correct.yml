@@ -1,4 +1,5 @@
 datastore: test
+lookup_url: www.xe.gr
 cloudstore:
   -  subproperty1: 1
      subproperty2:

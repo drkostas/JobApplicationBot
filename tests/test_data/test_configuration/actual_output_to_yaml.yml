@@ -10,4 +10,6 @@ datastore:
     port: 3306
     username: user1
   type: mysql
+lookup_url: www.xe.gr
 tag: production
+test_mode: false

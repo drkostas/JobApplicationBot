@@ -1,4 +1,6 @@
 tag: production
+lookup_url: www.xe.gr
+test_mode: false
 cloudstore:
   - config:
       api_key: apiqwerty
