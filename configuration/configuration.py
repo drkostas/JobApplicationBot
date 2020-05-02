@@ -12,9 +12,8 @@ logger = logging.getLogger('Configuration')
 
 
 class Configuration:
-    __slots__ = (
-        'config', 'config_path', 'datastore', 'cloudstore', 'email_app', 'tag', 'check_interval', 'lookup_url',
-        'test_mode')
+    __slots__ = ('config', 'config_path', 'datastore', 'cloudstore', 'email_app', 'tag',
+                 'check_interval', 'crawl_interval', 'lookup_url', 'test_mode')
 
     config: Dict
     config_path: str
@@ -23,6 +22,7 @@ class Configuration:
     email_app: Dict
     lookup_url: str
     check_interval: int
+    crawl_interval: int
     tag: str
     test_mode: bool
     config_attributes: List = []
@@ -43,22 +43,30 @@ class Configuration:
         self.config, self.config_path = self.load_yml(config_src=config_src,
                                                       env_tag=self.env_variable_tag,
                                                       env_pattern=self.env_variable_pattern)
+        # Fix datatype and set default values
         if 'test_mode' in self.config.keys():
             if isinstance(self.config['test_mode'], str):
                 self.config['test_mode'] = False if self.config['test_mode'].lower() == 'false' else True
             self.test_mode = self.config['test_mode']
         else:
             self.test_mode = True
+        if 'check_interval' in self.config.keys():
+            self.config['check_interval'] = int(self.config['check_interval'])
+            self.check_interval = self.config['check_interval']
+        else:
+            self.check_interval = 120
+
+        if 'crawl_interval' in self.config.keys():
+            self.config['crawl_interval'] = int(self.config['crawl_interval'])
+            self.crawl_interval = self.config['crawl_interval']
+        else:
+            self.crawl_interval = 15
         logger.debug("Loaded config: %s" % self.config)
         # Validate the config
         validate_json_schema(self.config, configuration_schema)
         # Set the config properties as instance attributes
         self.lookup_url = self.config['lookup_url']
         self.tag = self.config['tag']
-        if 'check_interval' in self.config.keys():
-            self.check_interval = int(self.config['check_interval'])
-        else:
-            self.check_interval = 120
         all_config_attributes = ('datastore', 'cloudstore', 'email_app')
         for config_attribute in all_config_attributes:
             if config_attribute in self.config.keys():
@@ -152,6 +160,8 @@ class Configuration:
         dict_conf['tag'] = self.tag
         if 'check_interval' in self.config.keys():
             dict_conf['check_interval'] = self.check_interval
+        if 'crawl_interval' in self.config.keys():
+            dict_conf['crawl_interval'] = self.crawl_interval
         if 'test_mode' in self.config.keys():
             dict_conf['test_mode'] = self.test_mode
 
@@ -174,6 +184,8 @@ class Configuration:
         dict_conf['tag'] = self.tag
         if 'check_interval' in self.config.keys():
             dict_conf['check_interval'] = self.check_interval
+        if 'crawl_interval' in self.config.keys():
+            dict_conf['crawl_interval'] = self.crawl_interval
         if 'test_mode' in self.config.keys():
             dict_conf['test_mode'] = self.test_mode
 

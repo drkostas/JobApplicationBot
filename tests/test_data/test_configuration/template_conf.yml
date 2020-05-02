@@ -1,5 +1,6 @@
 tag: production
 lookup_url: www.xe.gr
+crawl_interval: 2
 test_mode: false
 cloudstore:
   - config:

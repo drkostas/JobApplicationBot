@@ -99,7 +99,7 @@ def upload_files_to_cloudstore(cloud_store: JobBotDropboxCloudstore):
     cloud_store.upload_attachments()
 
 
-def crawl_and_send_loop(lookup_url: str, check_interval: int,
+def crawl_and_send_loop(lookup_url: str, check_interval: int, crawl_interval: int,
                         data_store: JobBotMySqlDatastore,
                         cloud_store: JobBotDropboxCloudstore,
                         email_app: GmailEmailApp) -> None:
@@ -126,7 +126,8 @@ def crawl_and_send_loop(lookup_url: str, check_interval: int,
     links_checked = [row[0] for row in data_store.get_applications_sent(columns='link')]
     logger.info("Waiting for new ads..")
     while True:
-        new_ads = list(ad_site_crawler.get_new_ads(lookup_url=lookup_url, ads_checked=links_checked))
+        new_ads = list(ad_site_crawler.get_new_ads(lookup_url=lookup_url, ads_checked=links_checked,
+                                                   crawl_interval=crawl_interval))
 
         if len(new_ads) > 0:
             links_checked = [row[0] for row in data_store.get_applications_sent(columns='link')]
@@ -188,6 +189,7 @@ def main():
     elif args.run_mode == 'crawl_and_send':
         crawl_and_send_loop(lookup_url=configuration.lookup_url,
                             check_interval=configuration.check_interval,
+                            crawl_interval=configuration.crawl_interval,
                             data_store=JobBotMySqlDatastore(config=configuration.get_datastores()[0]),
                             cloud_store=JobBotDropboxCloudstore(config=configuration.get_cloudstores()[0]),
                             email_app=GmailEmailApp(config=configuration.get_email_apps()[0],

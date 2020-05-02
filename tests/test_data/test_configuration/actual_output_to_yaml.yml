@@ -2,6 +2,7 @@ cloudstore:
 - config:
     api_key: changed_api
   type: dropbox
+crawl_interval: 2
 datastore:
 - config:
     db_name: db3

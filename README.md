@@ -76,12 +76,14 @@ MYSQL_DB_NAME=<VALUE>
 EMAIL_ADDRESS=<VALUE>
 GMAIL_API_KEY=<VALUE>
 CHECK_INTERVAL=<VALUE>
+CRAWL_INTERVAL=<VALUE>
 TEST_MODE=<VALUE>
 LOOKUP_URL=<VALUE>
 ```
 
 - LOOKUP_URL (str): The url that matches your desired search results. You can copy it straight from your browser.
 - CHECK_INTERVAL (int) : The seconds to wait before each check (for new ads).
+- CRAWL_INTERVAL (int) : The seconds to wait before each crawl (for the discovering of sublinks).
 - TEST_MODE (bool) : If enabled, every email will be sent to you instead of the discovered email addresses.
 
 ### Modify the files in the data folder <a name = "data_files"></a>
@@ -98,9 +100,9 @@ to new ads.
 to you when the bot successfully sends an email.
 - [inform_success_sent_html.html](data/inform_success_sent_html.html): The html body of the email that is going to be sent 
 to you when the bot successfully sends an email.
-- [inform_should_calll.txt](data/inform_should_calll.txt): The subject of the email that is going to be sent 
+- [inform_should_call.txt](data/inform_should_calll.txt): The subject of the email that is going to be sent 
 to you when the bot couldn't find any email to a new ad, and requires manual action.
-- [inform_should_calll_html.html](data/inform_should_calll_html.html): The html body of the email that is going to be sent 
+- [inform_should_call_html.html](data/inform_should_calll_html.html): The html body of the email that is going to be sent 
 to you when the bot couldn't find any email to a new ad, and requires manual action.
 - Attachments: Add any attachments you want to be included in the Ad Email and define 
 their names in [xegr_jobs.yml](confs/xegr_jobs.yml)
@@ -226,6 +228,7 @@ There is an already configured yml file under [xegr_jobs.yml](confs/xegr_jobs.ym
 tag: production
 lookup_url: !ENV ${LOOKUP_URL}
 check_interval: !ENV ${CHECK_INTERVAL}
+crawl_interval: !ENV ${CRAWL_INTERVAL}
 test_mode: !ENV ${TEST_MODE}
 cloudstore:
   - config:
@@ -281,6 +284,7 @@ If it's the first time you are running the code you may need to execute those 2 
 - To create the required table in the Database run:
 
     `$ python main.py -m create_table -c confs/conf.yml -l logs/output.log`
+    
 - To upload the files that are going to be used to Dropbox (after modifying them appropriately)
 run:
 
@@ -332,12 +336,14 @@ Optional Arguments:
 
 ```
 
-If you notice that no ad is being discovered, play with the `crawl_interval` and `_anchor_class_name` default values in 
+If you notice that no ad is being discovered, fine-tune the `crawl_interval` and `_anchor_class_name` default values in 
 [XeGrAdSiteCrawler class](ad_site_crawler/xegr_ad_site_crawler.py). 
 
-- The `crawl_interval` defines the time between each crawl and should be increased if the bot is being flagged as a bot (well..) 
+- The `crawl_interval` defines the time between each crawl and should be increased 
+if the bot is being flagged as a bot (well..). You can change this from the yaml file.
 
-- while the `anchor_class_name` is the css class value that characterizes all the search results anchors (`<a .. class=`)
+- The `anchor_class_name` is the css class value that characterizes all the search results anchors (`<a .. class=`) 
+and if you this it is wrong, you can change from the top of the class definition.
 
 
 ## Deployment <a name = "deployment"></a>
@@ -358,7 +364,7 @@ and for any modifications, edit the [circleci config](/.circleci/config.yml).
 
 ## Built With <a name = "built_with"></a>
 
-* [Dropbpox Python API](https://www.dropbox.com/developers/documentation/python) - Used for the Cloudstore Class
+* [Dropbox Python API](https://www.dropbox.com/developers/documentation/python) - Used for the Cloudstore Class
 * [Gmail Sender](https://github.com/paulc/gmail-sender) - Used for the EmailApp Class
 * [Heroku](https://www.heroku.com) - The deployment environment
 * [CircleCI](https://www.circleci.com/) - Continuous Integration service
@@ -370,5 +376,5 @@ This project is licensed under the GNU License - see the [LICENSE](LICENSE) file
 
 ## Acknowledgments <a name = "acknowledgments"></a>
 
-* Thanks το PurpleBooth fort the [README template](https://gist.github.com/PurpleBooth/109311bb0361f32d87a2)
+* Thanks το PurpleBooth for the [README template](https://gist.github.com/PurpleBooth/109311bb0361f32d87a2)
 

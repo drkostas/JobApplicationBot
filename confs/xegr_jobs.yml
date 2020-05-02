@@ -1,6 +1,7 @@
 tag: production
 lookup_url: !ENV ${LOOKUP_URL}
 check_interval: !ENV ${CHECK_INTERVAL}
+crawl_interval: !ENV ${CRAWL_INTERVAL}
 test_mode: !ENV ${TEST_MODE}
 cloudstore:
   - config:

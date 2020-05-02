@@ -6,7 +6,10 @@
       "type": "string"
     },
     "check_interval": {
-      "type": "string"
+      "type": "integer"
+    },
+    "crawl_interval": {
+      "type": "integer"
     },
     "test_mode": {
       "type": "boolean"
