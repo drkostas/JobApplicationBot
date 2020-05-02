@@ -16,7 +16,7 @@ class XeGrAdSiteCrawler(AbstractAdSiteCrawler):
     _stop_words: List
     _ad_site_url: str
     _ignored_emails: List = ['email@paroxos.com']
-    _anchor_class_name: str = 'highlight'
+    _anchor_class_name: str = 'result-list-narrow-item'
 
     def __init__(self, stop_words: List, ad_site_url: str = "https://www.xe.gr"):
         """
@@ -91,7 +91,7 @@ class XeGrAdSiteCrawler(AbstractAdSiteCrawler):
         return html
 
     @staticmethod
-    def _find_links_in_html(html_data: str, anchor_class_name: str = 'highlight') -> str:
+    def _find_links_in_html(html_data: str, anchor_class_name: str = 'result-list-narrow-item') -> str:
         """
         Searches for sub-link patterns in html and yields each link.
 
