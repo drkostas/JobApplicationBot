@@ -92,18 +92,18 @@ Before starting, you should modify the emails that are going to be sent, the sto
 
 - [stop_words.txt](data/stop_words.txt): A list of words that you don't want to be present in the ads that the bot
 sends emails to.
-- [application_sent_subject.txt](data/application_sent_subject.txt): The subject of the email that is going to be sent 
+- [application_to_send_subject.txt](data/application_to_send_subject.txt): The subject of the email that is going to be sent 
 to new ads.
-- [application_sent_html.html](data/application_sent_html.html): The html body of the email that is going to be sent 
+- [application_to_send_body.html](data/application_to_send_body.html): The html body of the email that is going to be sent 
 to new ads.
 - [inform_success_subject.txt](data/inform_success_subject.txt): The subject of the email that is going to be sent 
 to you when the bot successfully sends an email.
-- [inform_success_sent_html.html](data/inform_success_sent_html.html): The html body of the email that is going to be sent 
+- [inform_success_body.html](data/inform_success_body.html): The html body of the email that is going to be sent 
 to you when the bot successfully sends an email. Make sure to use the {link} and {email} vars 
 in order to include them in the email.
 - [inform_should_call.txt](data/inform_should_calll.txt): The subject of the email that is going to be sent 
 to you when the bot couldn't find any email to a new ad, and requires manual action.
-- [inform_should_call_html.html](data/inform_should_calll_html.html): The html body of the email that is going to be sent 
+- [inform_should_call_body.html](data/inform_should_calll_body.html): The html body of the email that is going to be sent 
 to you when the bot couldn't find any email to a new ad, and requires manual action. Make sure to use the {link} var 
 in order to include it in the email.
 - Attachments: Add any attachments you want to be included in the Ad Email and define 
@@ -241,7 +241,7 @@ cloudstore:
         - cover_letter.pdf
       update_attachments: true
       update_stop_words: true
-      update_application_sent_email: true
+      update_application_to_send_email: true
       update_inform_success_email: true
       update_inform_should_call_email: true
     type: dropbox

@@ -93,7 +93,7 @@ def show_ads_checked(ads: List[Tuple]) -> None:
 
 def upload_files_to_cloudstore(cloud_store: JobBotDropboxCloudstore):
     cloud_store.update_stop_words_data()
-    cloud_store.update_application_sent_email_data()
+    cloud_store.update_application_to_send_email_data()
     cloud_store.update_inform_should_call_email_data()
     cloud_store.update_inform_success_email_data()
     cloud_store.upload_attachments()
@@ -119,7 +119,7 @@ def crawl_and_send_loop(lookup_url: str, check_interval: int, crawl_interval: in
                                for attachment_name in cloud_store.attachments_names]
     # Get the email_data, the attachments and the stop_words list from the cloudstore
     cloud_store.download_attachments()
-    application_sent_subject, application_sent_html = cloud_store.get_application_sent_email_data()
+    application_to_send_subject, application_to_send_html = cloud_store.get_application_to_send_email_data()
     inform_should_call_subject, inform_should_call_html = cloud_store.get_inform_should_call_email_data()
     inform_success_subject, inform_success_html = cloud_store.get_inform_success_email_data()
 
@@ -144,8 +144,8 @@ def crawl_and_send_loop(lookup_url: str, check_interval: int, crawl_interval: in
                         # Send application after 1 minute (don't be too cocky)
                         time.sleep(60)
                         logger.info("Sending email to: {}. Ad Link: {}".format(email, link))
-                        email_app.send_email(subject=application_sent_subject,
-                                             html=application_sent_html.format(link),
+                        email_app.send_email(subject=application_to_send_subject,
+                                             html=application_to_send_html.format(link),
                                              to=email,
                                              attachments=attachments_local_paths)
 

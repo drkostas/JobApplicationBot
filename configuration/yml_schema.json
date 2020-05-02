@@ -128,7 +128,7 @@
             "update_inform_should_call_email": {
               "type": "boolean"
             },
-            "update_application_sent_email": {
+            "update_application_to_send_email": {
               "type": "boolean"
             },
             "update_inform_success_email": {

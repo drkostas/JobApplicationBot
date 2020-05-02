@@ -33,7 +33,7 @@ class TestJobBotDropboxCloudstore(unittest.TestCase):
                                               remote_files_folder=self.remote_tests_folder)
         boolean_attributes = [True if len(cloud_store.attachments_names) > 0 else False,
                               cloud_store._update_stop_words,
-                              cloud_store._update_application_sent_email,
+                              cloud_store._update_application_to_send_email,
                               cloud_store._update_inform_success_email,
                               cloud_store._update_inform_should_call_email]
         self.assertTrue(True, all(boolean_attributes))
@@ -41,7 +41,7 @@ class TestJobBotDropboxCloudstore(unittest.TestCase):
                                                        remote_files_folder=self.remote_tests_folder)
         req_only_boolean_attributes = [True if len(req_only_cloud_store.attachments_names) == 0 else False,
                                        not req_only_cloud_store._update_stop_words,
-                                       not req_only_cloud_store._update_application_sent_email,
+                                       not req_only_cloud_store._update_application_to_send_email,
                                        not req_only_cloud_store._update_inform_success_email,
                                        not req_only_cloud_store._update_inform_should_call_email]
         self.assertTrue(True, all(req_only_boolean_attributes))
@@ -100,8 +100,8 @@ class TestJobBotDropboxCloudstore(unittest.TestCase):
     def test_update_get_email_data(self):
         cloud_store = JobBotDropboxCloudstore(config=self.configuration.get_cloudstores()[0],
                                               remote_files_folder=self.remote_tests_folder)
-        email_types = (('application_sent', cloud_store.get_application_sent_email_data,
-                        cloud_store.update_application_sent_email_data),
+        email_types = (('application_to_send', cloud_store.get_application_to_send_email_data,
+                        cloud_store.update_application_to_send_email_data),
                        ('inform_should_call', cloud_store.get_inform_should_call_email_data,
                         cloud_store.update_inform_should_call_email_data),
                        ('inform_success', cloud_store.get_inform_success_email_data,
@@ -111,9 +111,9 @@ class TestJobBotDropboxCloudstore(unittest.TestCase):
             bck_subject_path = os.path.join(cloud_store.local_files_folder,
                                             'bck_subject.txt')
             bck_html_path = os.path.join(cloud_store.local_files_folder,
-                                         'bck_html.html')
+                                         'bck_body.html')
             current_subject_file = '{type}_subject.txt'.format(type=email_type)
-            current_html_file = '{type}_html.html'.format(type=email_type)
+            current_html_file = '{type}_body.html'.format(type=email_type)
             subject_path = os.path.join(cloud_store.local_files_folder,
                                         current_subject_file)
             html_path = os.path.join(cloud_store.local_files_folder,
@@ -131,7 +131,7 @@ class TestJobBotDropboxCloudstore(unittest.TestCase):
             copied_subject_file = os.path.join(self.test_data_path,
                                                self.file_name + '_{type}_subject.txt'.format(type=email_type))
             copied_html_file = os.path.join(self.test_data_path,
-                                               self.file_name + '_{type}_html.html'.format(type=email_type))
+                                               self.file_name + '_{type}_body.html'.format(type=email_type))
             os.rename(os.path.join(self.test_data_path, current_subject_file), copied_subject_file)
             os.rename(os.path.join(self.test_data_path, current_html_file), copied_html_file)
             # Download it
