@@ -14,7 +14,7 @@ logger = logging.getLogger('XeGrAdSiteCrawler')
 class XeGrAdSiteCrawler(AbstractAdSiteCrawler):
     __slots__ = ('_stop_words', '_ad_site_url', '_anchor_class_name')
 
-    _stop_words: List
+    _stop_words: List[str]
     _ad_site_url: str
     _anchor_class_name: str
     _ignored_emails: List = ['email@paroxos.com']
@@ -26,6 +26,7 @@ class XeGrAdSiteCrawler(AbstractAdSiteCrawler):
         :param stop_words:
         """
 
+        logger.debug("Initializing with stop_words: %s" % stop_words)
         self._ad_site_url = ad_site_url
         self._stop_words = stop_words
         self._anchor_class_name = anchor_class_name
@@ -64,6 +65,8 @@ class XeGrAdSiteCrawler(AbstractAdSiteCrawler):
                 logger.debug("It is in ads_checked, skipping..")
                 continue
             ad_page_html = self._retrieve_html_from_url(full_sub_link)
+            print("Type stop words: ", type(self._stop_words[0]))
+            print("Type ad_page_html: ", type(ad_page_html))
             if any(unidecode(word).lower() in unidecode(ad_page_html).lower() for word in self._stop_words):
                 logger.debug("It contains one of the stop words, skipping..")
                 continue
