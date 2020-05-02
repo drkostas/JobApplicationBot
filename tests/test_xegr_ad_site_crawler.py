@@ -92,7 +92,8 @@ class TestXeGrAdSiteCrawler(unittest.TestCase):
         returned_ads = list(
             ad_site_crawler.get_new_ads(lookup_url='{base_url}/search?{lookup_params}'
                                         .format(base_url=self.base_url, lookup_params=self.lookup_params),
-                                        ads_checked=[self.base_url + self.html_sub_links[1]]))
+                                        ads_checked=[self.base_url + self.html_sub_links[1]],
+                                        crawl_interval=1))
         # Check if the correct html was loaded
         expected_ads = [('{base_url}{sublink}'.format(base_url=self.base_url,
                                                       sublink=self.html_sub_links[2]),

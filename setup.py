@@ -24,20 +24,20 @@ else:
 
 # Run the Setup
 setup(
-    name='job_application_bot',
+    name='auto_apply_bot',
     version='0.1',
-    packages=['datastore', 'cloudstore', 'configuration'],
+    packages=['datastore', 'cloudstore', 'configuration', 'email_app', 'ad_site_crawler'],
     py_modules=['main'],
     data_files=[('', ['configuration/yml_schema.json'])],
     entry_points={
         'console_scripts': [
-            'template_python_project=main:main',
+            'auto_apply_bot=main:main',
         ]
     },
-    url='https://github.com/drkostas/template_python_project',
+    url='https://github.com/drkostas/AutoApplyBot',
     license='GNU General Public License v3.0',
     author='drkostas',
     author_email='georgiou.kostas94@gmail.com',
-    description='A bot that automatically applies to new job posts in xe.gr using your email address.'
+    description='A bot that automatically sends emails to new ads posted in any desired xe.gr search url.'
 
 )

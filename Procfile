@@ -1,4 +1,7 @@
-make_help: make help
-make_tests: make run_tests
-main_help: python main.py --help
-main: python main.py -m run_mode_1 -c confs/template_conf.yml -l logs/output.log
+crawl_and_send: --run-mode crawl_and_send -c confs/xegr_jobs.yml -l logs/out.log
+crawl_and_send: --run-mode crawl_and_send -c confs/xegr_jobs.yml -l logs/out.log
+create_mysql_table: --run-mode create_table -c confs/xegr_jobs.yml -l logs/out.log --debug
+upload_files_to_dropbox: --run-mode upload_files -c confs/xegr_jobs.yml -l logs/out.log --debug
+upload_files_to_dropbox: --run-mode upload_files -c confs/xegr_jobs.yml -l logs/out.log --debug
+list_emails_sent: --run-mode list_emails -c confs/xegr_jobs.yml -l logs/out.log --debug
+help: python main.py --help

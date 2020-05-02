@@ -29,7 +29,7 @@ class XeGrAdSiteCrawler(AbstractAdSiteCrawler):
         self._stop_words = stop_words
         super().__init__()
 
-    def get_new_ads(self, lookup_url: str, ads_checked: List) -> Tuple[str, Union[None, str]]:
+    def get_new_ads(self, lookup_url: str, ads_checked: List, crawl_interval: int = 15) -> Tuple[str, Union[None, str]]:
         """
         Retrieves each sub-link's html, searches and yields an email for each of them.
 
@@ -48,7 +48,7 @@ class XeGrAdSiteCrawler(AbstractAdSiteCrawler):
         search_page_html = self._retrieve_html_from_url(lookup_url)
         # Search for links in the main page's html, retrieve their html and look for emails inside them
         for ad_link in self._find_links_in_html(html_data=search_page_html, anchor_class_name=self._anchor_class_name):
-            time.sleep(15)
+            time.sleep(crawl_interval)
             logger.debug("Checking ad_link: %s" % ad_link)
             full_sub_link = self._ad_site_url + urllib.parse.quote(ad_link)
             if full_sub_link in ads_checked:

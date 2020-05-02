@@ -39,7 +39,7 @@ def _setup_log(log_path: str = 'logs/output.log', debug: bool = False) -> None:
 
 def _argparser() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description='A template for python projects.',
+        description='A bot that automatically sends emails to new ads posted in the specified xe.gr search page.',
         add_help=False)
     # Required Args
     required_arguments = parser.add_argument_group('required arguments')

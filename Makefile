@@ -59,6 +59,8 @@ install:
 	$(MAKE) requirements
 	$(MAKE) run_tests
 	$(MAKE) setup
+	@echo "To setup Dropbox, make sure to run: \npython main.py -m upload_files -c confs/conf.yml -l logs/output.log"
+	@echo "To setup MySql, make sure to run: \npython main.py -m create_table -c confs/conf.yml -l logs/output.log"
 clean:
 	$(MAKE) delete_venv
 	$(MAKE) clean_pyc
