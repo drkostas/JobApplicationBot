@@ -1,0 +1,11 @@
+datastore: test
+lookup_url: www.xe.gr
+cloudstore:
+  -  subproperty1: 1
+     subproperty2:
+       - 123
+       - 234
+tag: test_tag
+attachments:
+  - test1.txt
+  - test2.txt

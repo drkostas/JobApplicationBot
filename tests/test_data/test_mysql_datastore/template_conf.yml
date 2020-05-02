@@ -1,0 +1,14 @@
+tag: production
+lookup_url: www.xe.gr
+cloudstore:
+  - config:
+      api_key: sample_api_key
+    type: dropbox
+datastore:
+  - config:
+      hostname: !ENV ${MYSQL_HOST}
+      username: !ENV ${MYSQL_USERNAME}
+      password: !ENV ${MYSQL_PASSWORD}
+      db_name: !ENV ${MYSQL_DB_NAME}
+      port: 3306
+    type: mysql

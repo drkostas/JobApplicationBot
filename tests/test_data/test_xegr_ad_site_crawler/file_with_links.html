@@ -1,0 +1,3012 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+
+    <link rel='preconnect' href='//static.xe.gr'>
+    <link rel='preconnect' href='//ad.xe.gr'>
+    <link rel='preconnect' href='//blog.cdn.xe.gr'>
+    <meta name="ahrefs-site-verification" content="5ae3ab4a8c10276f5bf50c7dbdbd91250abdc2c67a8386fa64630aa262acabf6">
+
+    <script type="text/javascript" src="/react@16/umd/react.development.js" async></script>
+
+
+
+
+
+    <!-- More meta tags here -->
+
+
+
+
+            <meta property="og:title" content=""/>
+            <meta property="og:image" content="https://xe.gr/images/xe_home/xe_og_stelexos.jpg"/>
+            <meta property="og:site_name" content="XE.GR"/>
+
+
+
+
+
+
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="http://www.xe.gr/search" />
+
+    <meta name="application-name" content="xe.gr" />
+	<meta name="msapplication-TileColor" content="#ffffff" />
+	<meta name="msapplication-square70x70logo" content="/images/xe_header/smalltile.png" />
+	<meta name="msapplication-square150x150logo" content="/images/xe_header/mediumtile.png" />
+	<meta name="msapplication-wide310x150logo" content="/images/xe_header/widetile.png" />
+	<meta name="msapplication-square310x310logo" content="/images/xe_header/largetile.png" />
+
+
+
+    <meta property="fb:pages" content="198837063843" />
+	<!-- <meta name="apple-itunes-app" content="app-id=535811544" /> -->
+	<title>
+
+		Αγγελίες για Προγραμματιστές & Μηχανικοί Η/Υ
+
+
+	</title>
+
+        <script>
+		// Detect mobile device (Android / iphone) for app splash screen
+		var deviceDetection = function () {
+			var osVersion,
+					device,
+					deviceType,
+					userAgent,
+					isSmartphoneOrTablet;
+
+			device = (navigator.userAgent).match(/Android|iPhone|iPad|iPod/i);
+
+			if ( /Android/i.test(device) ) {
+				if ( !/mobile/i.test(navigator.userAgent) ) {
+					deviceType = 'tablet';
+				} else {
+					deviceType = 'phone';
+				}
+
+				osVersion = (navigator.userAgent).match(/Android\s+([\d\.]+)/i);
+				osVersion = osVersion[0];
+				osVersion = osVersion.replace('Android ', '');
+
+			} else if ( /iPhone/i.test(device) ) {
+				deviceType = 'phone';
+				osVersion = (navigator.userAgent).match(/OS\s+([\d\_]+)/i);
+				osVersion = osVersion[0];
+				osVersion = osVersion.replace(/_/g, '.');
+				osVersion = osVersion.replace('OS ', '');
+
+			} else if ( /iPad/i.test(device) ) {
+				deviceType = 'tablet';
+				osVersion = (navigator.userAgent).match(/OS\s+([\d\_]+)/i);
+				osVersion = osVersion[0];
+				osVersion = osVersion.replace(/_/g, '.');
+				osVersion = osVersion.replace('OS ', '');
+			}
+			isSmartphoneOrTablet = /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent);
+			userAgent = navigator.userAgent;
+
+			return { 'isSmartphoneOrTablet': isSmartphoneOrTablet,
+				'device': device,
+				'osVersion': osVersion,
+				'userAgent': userAgent,
+				'deviceType': deviceType
+			};
+		}();
+
+        function isLocalStorageNameSupported() {
+            var testKey = 'test', storage = window.localStorage;
+            try {
+                storage.setItem(testKey, '1');
+                storage.removeItem(testKey);
+                return true;
+            } catch (error) {
+                return false;
+            }
+        }
+
+        function readCookie(name) {
+            var nameEQ = name + "=";
+            var ca = document.cookie.split(';');
+            for(var i=0;i < ca.length;i++) {
+                var c = ca[i];
+                while (c.charAt(0)==' ') c = c.substring(1,c.length);
+                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+            }
+            return null;
+        }
+
+		mobPopup = "";
+		var isMobile = false;
+		if (deviceDetection.isSmartphoneOrTablet) { isMobile = true }
+		var today = new Date();
+		var dd = String(today.getMonth()+1);
+
+        if ((typeof(localStorage) != 'undefined') ) {
+            if (isLocalStorageNameSupported()) {
+                if (((localStorage.getItem('mobileSplash') == null) || (localStorage.getItem('mobileSplash') != dd)) && isMobile) {
+                    window.location = "https://" + document.domain + "/mobile/redirect/?url=" + document.URL;
+                }
+            } else {
+                if ((readCookie('mobileSplash') == null) && isMobile) {
+                    window.location = "https://" + document.domain + "/mobile/redirect/?url=" + document.URL;
+                }
+            }
+        }
+
+        // fix jump page effect after async calls
+        function scrollTo()
+        {
+            return;
+        }
+	</script>
+    <link href="/css/sweetalert2.min.css?v=3.2.57" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="/property/src/libraries/slickjs/slick.css?v=3.2.57"/>
+	<!-- CSS includes -->
+
+        <link rel="stylesheet" href="https://static.xe.gr/css/xe.base-min.css?v=3.2.57" type="text/css" />
+        <link href="https://static.xe.gr/css/xe.premium-user-min.css?v=3.2.57" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+
+            <link rel="stylesheet" href="https://static.xe.gr/css/xe.results-min.css?v=3.2.57" type="text/css" />
+            <link href="https://static.xe.gr/js/lightslider/lightslider.min.css?v=3.2.57" rel="stylesheet" type="text/css" />
+            <link rel="stylesheet" href="https://static.xe.gr/css/premium_style-min.css?v=3.2.57" type="text/css" />
+
+
+
+
+
+
+
+
+
+
+
+
+	<!--[if lt IE 8]>
+	<style type="text/css">
+	#footer{
+		position:static !important;
+	}
+	#content{
+		padding-bottom:20px;
+	}
+	</style>
+	<![endif]-->
+
+
+
+
+
+
+
+
+        <script type="text/javascript">
+            var userRole = {
+                is_premium: false,
+                previous_trial: "",
+                fb_messenger: "",
+                webPush: ""
+            };
+        </script>
+
+
+
+<script>
+    (function(d, s, id){
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {return;}
+        js = d.createElement(s); js.id = id;
+        js.src = "https://connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+
+
+    window.fbAsyncInit = function() {
+        FB.init({
+            appId            : '128927927315303',
+            autoLogAppEvents : true,
+            xfbml            : true,
+            version          : 'v2.12'
+        });
+
+        FB.Event.subscribe('send_to_messenger', function(response) {
+            if ( response.event == 'opt_in' ) {
+                // callback for events triggered by the plugin
+                $(".notify_input").show();
+                $(".sw_fb_messenger").hide();
+                $(".hd_fb_messenger").hide();
+
+                xeMetrics.pushEvent('Notifications', "Send_To_Messenger_XE", 'Clicked');
+
+                FB.getLoginStatus(function(response) {
+                    if (response.status === 'connected') {
+                        console.log('Logged in.');
+                    }
+                    else {
+                        console.log('initiate FB login...');
+                        FB.login();
+                    }
+                });
+
+                //alert("Subscribed!");
+            } else if(response.event == 'not_you'){
+                alert("Not you clicked");
+            }
+        });
+    };
+
+</script>
+
+	<style type="text/css">
+		#___plusone_0 {
+			position:absolute;
+			top:103px;
+			right:116px;
+		}
+	</style>
+
+
+
+
+
+            <script type="text/javascript" src="https://static.xe.gr/js/priority-min.js?v=3.2.57"></script>
+
+
+
+
+
+
+
+<script type="text/javascript">
+
+    function getRemarketing(){
+        var remarketingName= "ZWA";
+
+		if ((localStorage.getItem('remTime')!= null)){
+			var todayDate = new Date();
+			var oldDate = new Date(localStorage.getItem('remTime'));
+			//alert(oldDate);
+			var days = ((todayDate.getTime() - oldDate.getTime() ) / (1000*60*60*24.0));
+			//alert(Math.round(days))
+			if (Math.round(days) >= 30){
+				localStorage.removeItem('remTime');
+				localStorage.removeItem('remarketing');
+				// Change Item__category to Item__master_type if it targets jobs section
+				if (XE.adServing.keywords.Item__category == remarketingName) {
+					localStorage.setItem('remTime', new Date());
+					localStorage.setItem('remarketing',remarketingName);
+					return localStorage.getItem('remarketing');
+				} else {
+					return localStorage.getItem('remarketing');
+				}
+			} else {
+				return localStorage.getItem('remarketing');
+			}
+		} else {
+			// Change Item__category to Item__master_type if it targets jobs section
+			if (XE.adServing.keywords.Item__category.indexOf(remarketingName) != -1 ) {
+				localStorage.setItem('remTime', new Date());
+				localStorage.setItem('remarketing',remarketingName);
+				return localStorage.getItem('remarketing');
+			}
+		}
+    }
+
+	XE.adServing.keywords = {
+		"Item__category" : "BUSINESS,BUSINESS.TEXNOLOGIA_HY",
+		"Item__master_type" : "programmatistes_mhxanikoi_h_y",
+		"Item__master_subtype" : "web_developers,alles_eidikothtes_programmatistes_mhxanikoi_h_y,web_designers",
+		"Item__type" : "",
+		"Item__make" : "",
+		"Item__subject" : "",
+		"Transaction__type" : "",
+		"Transaction__channel" : "",
+		"Transaction__price_from" : "700",
+		"Transaction__price_to" : "",
+
+        "section" : "xe_stelexos",
+
+        "students" : localStorage.getItem('students-visit'),
+        "remarketing" : localStorage.getItem('remarketing'),
+        "adult" : sessionStorage.getItem('isAdult'),
+        "Description": ""
+	}
+
+    XE.adServing.other = {
+        "remarketing" : getRemarketing()
+    }
+
+	XE.clusters.serialized.Item__make = '';
+	XE.clusters.serialized.Item__type = '';
+	XE.clusters.serialized.Item__subject = '';
+</script>
+
+    <script async='async' src='https://www.googletagservices.com/tag/js/gpt.js'></script>
+<script>
+
+	var adSlots = [];
+
+
+        adSlots = [
+            {
+                adUnitName : 'ΧΕ.Desktop_inventory_300x250',
+                adUnitID : '1564472315144-0',
+                size: [300,250]
+            }
+        ];
+
+
+    $(function () {
+        window.googletag = window.googletag || {cmd: []};
+
+        adSlots.forEach(function (el) {
+            googletag.cmd.push(function() {
+                googletag.defineSlot('/12392028/'+ el.adUnitName, el.size, 'div-gpt-ad-'+ el.adUnitID)
+                    .setTargeting('Item__category', XE.adServing.keywords.Item__category)
+                    .setTargeting('Item__master_type', XE.adServing.keywords.Item__master_type)
+                    .setTargeting('Item__master_subtype', XE.adServing.keywords.Item__master_subtype)
+                    .setTargeting('Item__type', XE.adServing.keywords.Item__type)
+                    .setTargeting('Item__make', XE.adServing.keywords.Item__make)
+                    .setTargeting('Item__subject', XE.adServing.keywords.Item__subject)
+                    .setTargeting('Transaction__type', XE.adServing.keywords.Transaction__type)
+                    .setTargeting('Transaction__channel',  XE.adServing.keywords.Transaction__type_channel)
+                    .setTargeting('Price_from',  XE.adServing.keywords.Transaction__price_from)
+                    .setTargeting('Price_to',  XE.adServing.keywords.Transaction__price_to)
+                    .setTargeting('section',  XE.adServing.keywords.section)
+                    .setTargeting('students', XE.adServing.keywords.students)
+                    .setTargeting('remarketing', XE.adServing.keywords.remarketing)
+                    .setTargeting('adult', XE.adServing.keywords.adult)
+                    .setTargeting('Description', XE.adServing.keywords.Description)
+                    .addService(googletag.pubads());
+                googletag.pubads().enableSingleRequest();
+                googletag.enableServices();
+            });
+        });
+	});
+</script>
+
+
+
+
+
+
+    <script type='text/javascript'>
+        var isjobs = false;
+        var ishealth = false;
+    </script>
+
+
+    <script type='text/javascript'>
+        var is = false;
+    </script>
+
+
+	<link rel="mask-icon" sizes="any" href="/images/xe-pinned-icon.svg" color="#58585a">
+
+	<link rel="icon" href="https://static.xe.gr/images/favicon.ico"/>
+
+    <link rel="apple-touch-icon-precomposed" href="/images/generic/Icon_57x57.jpg" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/images/generic/Icon_72x72.jpg" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/images/generic/Icon_114x114.jpg" />
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/images/generic/Icon_144x144.jpg" />
+
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-WL6HXT');</script>
+    <!-- End Google Tag Manager -->
+
+
+    <script type="text/javascript">
+        var logged_in = 0;
+    </script>
+
+    <script type="text/javascript">
+        XE.ENV.currentPage = 'results';
+        XE.ENV.loginUrl = 'https://my.xe.gr/login?redirect=';
+        XE.ENV.scriptURL = window.location.pathname + window.location.search;
+        XE.ENV.scriptURI = encodeURIComponent(window.location.pathname + window.location.search);
+    </script>
+</head>
+
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WL6HXT" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+<div class="google_diaclaimer">
+    <div class="inner_disc">
+		<span>
+			Με τη χρήση αυτού του ιστότοπου, αποδέχεστε τη χρήση των cookies. <a href="https://www.google.com/policies/technologies/cookies/" target="_blank">Μάθετε περισσότερα</a>
+		</span>
+        <a href="#" class="disc_ok">Έγινε</a>
+    </div>
+</div>
+
+<div id="wrapper" class="" >
+
+
+
+
+
+<div id="xe_network_wrapper">
+	<div id="xe_network" role="navigation" tabindex="0">
+		<a id="xe_network_logo" href="/?from=logo">
+			<img src="/images/xe_network/logo-small.png" width="108" height="27" alt="Χρυσή Ευκαιρία - xe.gr" border="0" />
+		</a>
+		<ul id="xe_network_sites">
+			<li class="pro_net "><a href="https://www.xe.gr/property/?from=topnav">property</a></li>
+			<li class="au_net "><a href="https://www.xe.gr/automoto/?from=topnav">automoto</a></li>
+            <li class="job_net "><a href="https://www.xe.gr/jobs/?from=topnav">εργασία</a></li>
+            <li class="prof_net "><a href="https://www.xe.gr/professionals/?from=topnav">επαγγελματίες</a></li>
+            <li class="gl_net "><a href="http://globalproperties.xe.gr/">global properties</a></li>
+		</ul>
+
+        <ul id="xe_network_account">
+
+
+
+            <li class="log_net"><a id="lnk_login" rel="nofollow" href="https://my.xe.gr/login?redirect=https://www.xe.gr/search?Item.master_type=139926&System.item_type=xe_stelexos&Publication.freetext=%CE%A0%CE%A1%CE%9F%CE%93%CE%A1%CE%91%CE%9C%CE%9C%CE%91%CE%A4%CE%99%CE%A3%CE%A4%CE%97%CE%A3&Transaction.price.from=700&Transaction.type_channel=117538&per_page=10">σύνδεση</a> | <a href='https://my.xe.gr/create-account' rel="nofollow"><strong>εγγραφή</strong></a></li>
+            <li class="pro2_net"><a href="http://pro2.xe.gr/">εταιρικοί πελάτες</a></li>
+
+            <li class="en_net"><a href="/en/">EN</a></li>
+            <li class="help"><a href="https://support.xe.gr/" target="_blank" title="Βοήθεια"></a></li>
+            <li><a class="new_classify_btn" href="https://my.xe.gr/app/NewAd/category">Νέα αγγελία</a></li>
+        </ul>
+    </div>
+</div>
+<!-- end xe-network -->
+
+
+<script type="text/javascript">
+	var sites = {
+		"common" : {
+			"easypayServer" : "https://www.xe.gr"
+		}
+	}
+</script>
+
+
+    <div style="width: 986px; margin: 0 auto;">
+        <!-- Check if user is premium  and exception zones--><!--/* OpenX Javascript Tag v2.8.5 */-->
+<script type='text/javascript'>
+<!--//<![CDATA[
+var m3_u = 'https://ad.xe.gr/www/delivery/ajs.php';
+var m3_r = Math.floor(Math.random()*99999999999);
+if (!document.MAX_used) document.MAX_used = ',';
+document.write ("<scr"+"ipt type='text/javascript' src='"+m3_u);
+
+document.write ("?zoneid=788&Item__category=" + XE.adServing.keywords.Item__category + "&Item__master_type=" + XE.adServing.keywords.Item__master_type + "&Item__master_subtype=" + XE.adServing.keywords.Item__master_subtype + "&Item__make=" + XE.adServing.keywords.Item__make + "&Item__type=" + XE.adServing.keywords.Item__type + "&students=" + XE.adServing.keywords.students + "&adult=" + XE.adServing.keywords.adult + "&section=" + XE.adServing.keywords.section + "&remarketing=" + XE.adServing.other.remarketing + "&Description=" + XE.adServing.keywords.Description + "&skag=" + XE.adServing.keywords.skag);
+
+document.write ('&amp;cb=' + m3_r);
+if (document.MAX_used != ',') document.write ("&amp;exclude=" + document.MAX_used);
+document.write (document.charset ? '&amp;charset='+document.charset : (document.characterSet ? '&amp;charset='+document.characterSet : ''));
+document.write ("&amp;loc=" + escape(window.location));
+if (document.referrer) document.write ("&amp;referer=" + escape(document.referrer));
+if (document.context) document.write ("&context=" + escape(document.context));
+if (document.mmm_fo) document.write ("&amp;mmm_fo=1");
+document.write ("'><\/scr"+"ipt>");
+//]]>-->
+</script>
+
+    </div>
+
+
+
+        <div id="header">
+
+
+                        <a id="header_logo" href="/">
+                            <img src="https://static.xe.gr/images/xe_header/xe_logo.png" srcset="https://static.xe.gr/images/xe_header/xe_logo@2x.png"	  width="358" height="95" alt="Χρυσή Ευκαιρία - xe.gr">
+                        </a>
+
+
+
+
+
+            <!--<a id="btn_new_ad" href="https://my.xe.gr/app/NewAd/category" rel="nofollow">Καταχώριση αγγελίας</a>-->
+
+        </div>
+
+        <!--
+/*
+	TODO Redesign the search bar. Implement transaction.price in property search.
+*/
+-->
+
+
+
+<div id="xe_search_bar"  role="search">
+	<div id="lst_category" class="field">
+		<!--<span id="pseudo_dropdown"><em>Επιλέξτε κατηγορία</em></span>-->
+		<select id="vertical_category_selector" class="styled" name="vert-cat" tabindex="1">
+
+			<option value="" style="font-size:14px;">Επιλέξτε κατηγορία</option>
+
+			<!-- Property Item types -->
+			<optgroup label="XE Property">
+				<option value="re_residence">Κατοικίες</option>
+				<option value="re_land">Γη</option>
+				<option value="re_prof">Επαγγελματικοί Χώροι</option>
+				<option value="re_parking">Parking</option>
+				<option value="re_residence_hol">Εξοχικές Κατοικίες</option>
+			</optgroup>
+
+			<!-- Automoto Item types -->
+			<optgroup label="XE Automoto">
+				<option value="auto">Αυτοκίνητα</option>
+				<option value="auto_moto">Μοτοσυκλέτες</option>
+				<option value="auto_prof">Επαγγελματικά Οχήματα</option>
+				<option value="auto_taxi">Ταξί</option>
+				<option value="auto_parts">Ανταλλακτικά / Αξεσουάρ Αυτοκινήτων</option>
+				<option value="moto_parts">Ανταλλακτικά / Αξεσουάρ Μοτοσυκλετών</option>
+				<option value="prof_parts">Ανταλλακτικά / Αξεσουάρ Επαγγελματικών</option>
+				<option value="auto_caravan">Τροχόσπιτα</option>
+				<option value="auto_plane">Αεροσκάφη</option>
+				<!--<option value="auto_misc">Διάφορα Οχήματα</option>-->
+			</optgroup>
+
+			<!-- STELEXOS Categories -->
+			<optgroup label="Άλλες κατηγορίες">
+			<option value="0" >Όλες οι κατηγορίες</option>
+
+					<option
+
+					selected="true"
+
+					value="117109">
+					Εργασία
+					</option>
+
+					<option
+
+					value="117123">
+					Σκάφη & Ανταλλακτικά
+					</option>
+
+					<option
+
+					value="117124">
+					Επιχειρησιακά
+					</option>
+
+					<option
+
+					value="117129">
+					Ελεύθερος Χρόνος
+					</option>
+
+					<option
+
+					value="117140">
+					Σπίτι & Κήπος
+					</option>
+
+					<option
+
+					value="117137">
+					Τηλεφωνία
+					</option>
+
+					<option
+
+					value="117112">
+					Ζώα & Αξεσουάρ
+					</option>
+
+					<option
+
+					value="117146">
+					Προσωπικά & Κοινωνικά
+					</option>
+
+					<option
+
+					value="117142">
+					Εξοπλισμός Γραφείου
+					</option>
+
+					<option
+
+					value="117113">
+					Computers
+					</option>
+
+					<option
+
+					value="117133">
+					Ηλεκτρονικά
+					</option>
+
+					<option
+
+					value="117116">
+					Διάφορα Είδη
+					</option>
+
+					<option
+
+					value="117130">
+					Μουσικά Όργανα & Αξεσουάρ
+					</option>
+
+					<option
+
+					value="117143">
+					Travel
+					</option>
+
+					<option
+
+					value="117145">
+					Βιβλία, Τύπος, Ταινίες & Μουσική
+					</option>
+
+					<option
+
+					value="117127">
+					Ηλεκτρικές συσκευές
+					</option>
+
+					<option
+
+					value="117118">
+					Ένδυση, Υπόδηση & Προσωπικά Είδη
+					</option>
+
+					<option
+
+					value="117139">
+					Έπιπλα
+					</option>
+
+					<option
+
+					value="117125">
+					Βρεφικά & Παιδικά
+					</option>
+
+			</optgroup>
+
+		</select>
+	</div>
+
+	<div id="xe_stelexos_search" class="field">
+		<input type="text" id="xe_stelexos_input" helptext="πληκτρολογήστε τοv όρο αναζήτησής σας" tabindex="2" />
+	</div>
+
+	<div id="xe_property_search" class="field">
+		<form id="xe_property_form">
+		<div id="xe_property_items">
+			<input type="text" id="xe_property_input" helptext="πληκτρολογήστε μία ή περισσότερες περιοχές" tabindex="3" />
+		</div>
+		</form>
+
+		<p id="property_transaction_radios">
+			<label id="lbl_sell" for="Transaction_SELL"><input checked="checked" type="radio" name="Transaction_type_channel" id="Transaction_SELL" value="117518"> Πωλήσεις</label>
+			<label id="lbl_let" for="Transaction_LET"><input type="radio" name="Transaction_type_channel" id="Transaction_LET" value="117541"> Ενοικιάσεις</label>
+		</p>
+
+		<p id="property_price">
+			<label><strong>Τιμή</strong></label>
+			<input type="text" name="property_price_to" id="property_price_to" helptext="έως" style="width:80px;" />
+			<label id="property_area_label"><strong>Εμβαδόν (σε τ.μ.)</strong></label>
+			<input type="text" name="property_area_from" id="property_area_from" helptext="από" style="width:80px;" />
+		</p>
+
+		<p id="property_strapline">
+			<span><a href="/property/">Αναζήτηση με περισσότερα<br /> κριτήρια &amp; χάρτη</a></span>
+		</p>
+
+	</div>
+
+	<div id="xe_automoto_search" class="field">
+		<div id="auto_prof_container">
+			<select name="System.item_type" id="Item_prof_types" class="styled">
+				<option value="">Όλα τα επαγγελματικά οχήματα</option>
+				<option value="auto_truck_a">Φορτηγά έως 7,5τ</option>
+				<option value="auto_truck_b">Φορτηγά άνω των 7,5τ</option>
+				<option value="auto_bus">Λεωφορεία</option>
+				<option value="auto_clark">Φορτωτές / Κλαρκ</option>
+				<option value="auto_construction">Δομικά Οχήματα / Μηχανήματα</option>
+				<option value="auto_farming">Γεωργικά Οχήματα / Μηχανήματα</option>
+				<option value="auto_tractor">Τράκτορες</option>
+				<option value="auto_tug">Ρυμούλκες</option>
+				<option value="auto_wagon">Επικαθήμενα</option>
+			</select>
+		</div>
+		<div id="auto_parts_categories">
+			<select id="auto_parts_list" class="styled" style="top:0;left:0" name="Item.category">
+			<option value="117575">Αμάξωμα Εξωτερικό</option><option value="117576">Αμάξωμα Εσωτερικό</option><option value="117577">Ανάρτηση & Τιμόνι</option><option value="117578">Αντικλεπτικά Συστήματα</option><option value="117579">Διάφορα</option><option value="118665">Ασφάλεια & Προστασία</option><option value="118689">Εισαγωγή Καυσίμου & Αέρα</option><option value="118702">Εξάτμιση</option><option value="118712">Εργαλεία</option><option value="118714">Ζάντες & Ελαστικά</option><option value="118722">Ηλεκτρικά </option><option value="118746">Ηλεκτρονικά</option><option value="118777">Ηχοσυστήματα & Πολυμέσα</option><option value="118795">Κινητήρες & Εξαρτήματα</option><option value="118823">Κλιματισμός & Θέρμανση</option><option value="118831">Λιπαντικά</option><option value="118838">Ρουχισμός/Υποδήματα</option><option value="118848">Σασμάν & Μετάδοση</option><option value="118859">Σύστημα Ανάφλεξης</option><option value="118876">Συστήματα Ψύξης</option><option value="118885">Φίλτρα</option><option value="118890">Φρένα</option><option value="118902">Φωτισμός & Φωτιστικά</option><option value="118987">Ολόκληρο αυτοκίνητο</option><option value="129354">Μεταφορά Αυτοκινήτων</option>
+			</select>
+		</div>
+		<div id="moto_parts_categories">
+			<select id="moto_parts_list" class="styled">
+			<option value="118340">Ανάρτηση</option><option value="118341">Αντικλεπτικά Συστήματα</option><option value="118342">Διάφορα</option><option value="118343">Ελατήρια</option><option value="118344">Εξάτμιση</option><option value="118345">Ηλεκτρικά & Ανάφλεξη</option><option value="118346">Κινητήρες & Μέρη</option><option value="118347">Λιπαντικά</option><option value="118348">Μετάδοση & Αλυσίδες</option><option value="118349">Ντίζες</option><option value="118350">Οργανα</option><option value="118351">Ρουχισμός/Υποδήματα</option><option value="118352">Σώμα & Πλαίσιο</option><option value="118353">Τιμόνια</option><option value="118354">Τροχοί & Λάστιχα</option><option value="118355">Φίλτρα</option><option value="118356">Φρένα</option><option value="118357">Φωτισμός</option><option value="118358">Ψαλίδια/Πιρούνια</option><option value="118989">Ολόκληρη μηχανή</option><option value="129355">Μεταφορά Μοτοσικλετών</option>
+			</select>
+		</div>
+		<div id="prof_parts_categories">
+			<select id="prof_parts_list" class="styled">
+			<option value="118935">Αμάξωμα</option><option value="118937">Ανάρτηση & Τιμόνι</option><option value="118939">Διάφορα</option><option value="118941">Εισαγωγή Καυσίμου & Αέρα</option><option value="118943">Εξάτμιση</option><option value="118945">Ζάντες</option><option value="118947">Ηλεκτρικά </option><option value="118949">Ηλεκτρονικά</option><option value="118951">Εξαρτήματα Γεωργικών/Δομικών</option><option value="118953">Ηχοσυστήματα & Πολυμέσα</option><option value="118955">Κινητήρες & Εξαρτήματα</option><option value="118957">Λιπαντικά</option><option value="118959">Σασμάν & Μετάδοση</option><option value="118961">Σύστημα Ανάφλεξης</option><option value="118963">Συστήματα Ψύξης</option><option value="118965">Φίλτρα</option><option value="118967">Φρένα</option><option value="118969">Φωτισμός & Φωτιστικά</option><option value="118991">Ολόκληρο όχημα</option>
+			</select>
+		</div>
+		<div id="auto_caravan_categories">
+			<select id="caravan_categories_list" class="styled">
+			<option value="">-- Όλες οι κατηγορίες --</option>
+			<option value="117580">Αυτοκινούμενα Τροχόσπιτα</option><option value="117581">Τροχοσκηνές</option><option value="117582">Τροχοβίλες</option><option value="117583">Ρυμουλκούμενα Τροχόσπιτα</option>
+			</select>
+		</div>
+		<div id="auto_plane_categories">
+			<select id="plane_categories_list" class="styled">
+			<option value="">-- Όλες οι κατηγορίες --</option>
+			<option value="117573">Ελικόπτερα</option><option value="117574">Αεροπλάνα</option>
+			</select>
+		</div>
+
+		<div id="auto_parts_freetext_container">
+			<input type="text" id="auto_parts_freetext" />
+		</div>
+
+		<div id="auto_make_container">
+			<select name="Item.make" id="Item_make" class="styled">
+				<option value="">Όλες οι μάρκες</option>
+			</select>
+		</div>
+		<div id="auto_model_container">
+			<select name="Item.model" id="Item_model" disabled="disabled" class="styled">
+				<option value="">Επιλέξτε πρώτα μάρκα</option>
+			</select>
+		</div>
+		<div class="clear"></div>
+
+		<p id="automoto_price">
+			<label><strong>Τιμή</strong></label>
+			<input type="text" name="price_to" id="price_to" helptext="έως" style="width:80px;" />
+			<label id="automoto_registration_label"><strong>Έτος 1ης κυκλοφορίας</strong></label>
+			<input type="text" name="registration_from" id="registration_from" helptext="από" style="width:80px;" />
+		</p>
+
+		<p id="automoto_strapline"><span><a href="/automoto/">Αναζήτηση με περισσότερα κριτήρια</a></span></p>
+
+	</div>
+
+	<div id="freesearch_loading"><img src="https://static.xe.gr/images/generic/free_search_loader.gif" alt="Φόρτωση..." /></div>
+
+	<a id="button_search" href="#" tabindex="3"></a>
+
+</div>
+<!-- end xe_search_bar -->
+
+
+
+
+	<!-- end site header -->
+
+
+
+
+
+
+
+
+	<div id="content">
+
+
+<script type="text/javascript">
+	var google_adnum = 0;
+</script>
+
+
+
+
+
+
+
+
+<script>
+    $(function() {
+        // Show info for reduced prices
+        if ((typeof(localStorage) != 'undefined') && (sessionStorage.getItem('isAdult') === null )) {
+
+            $(".adult").click(function (e) {
+                e.preventDefault();
+                $("#adult_check").modal();
+            });
+
+            //localStorage.setItem('isAdult', true);
+        }
+    });
+</script>
+<script>
+  window.is_apodeltiosi = false;
+</script>
+
+
+
+	<ul id="savedSearchShortcuts">
+		<li>
+
+				<a href="#" data-metrics-label="save_clicked_up" class="iconSaveSearchLoginFirst">Αποθήκευση αναζήτησης &amp; <strong>ειδοποίηση</strong></a>
+
+		</li>
+	</ul>
+
+	<ul class="clearfix" id="breadcrumb">
+
+
+
+		<li><a href="/">Αρχική</a> </li>
+
+
+
+		<li><span>&raquo;</span><a href="/jobs/">Εργασία</a> </li>
+
+
+
+		<li><span>&raquo;</span><a href="/jobs/texnologia-hy.html">Τεχνολογία Η/Υ</a> </li>
+
+
+
+		<li><span>&raquo;</span><a href="/jobs/programmatistes-mhxanikoi-h-y,91914.html">Προγραμματιστές & Μηχανικοί Η/Υ</a> </li>
+
+
+
+		<li class="breadcrumb_last_link"><span>&raquo;</span><a href="javascript:void(0)">Αναζήτηση για &quot;ΠΡΟΓΡΑΜΜΑΤΙΣΤΗΣ&quot;</a> </li>
+
+</ul>
+
+	<div class="clear"></div>
+
+        <div id="rPlatinumCanvas" style="text-align:center;vertical-align:middle;">
+            <img style="margin-top: 50px;" src="https://static.xe.gr/images/ajax_load_24x24.gif"/>
+            <br/>
+            <label style="color: #5F5F5F;">Φόρτωση αγγελιών</label>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="cluster_col_container">
+
+
+<div id="refine_clusters"></div>
+<div id="clusterColumn">
+
+
+
+        <a id="lnkClearClusters" href="/search?&Item.master_type=139926&System.item_type=xe_stelexos">Καθαρισμός επιλογών</a>
+
+
+	<form id="form_clusters">
+
+
+	<h3 class="clusterCategory">Με ενδιαφέρουν μόνο</h3>
+	<div class="clusterPane" id="quick_filters" style="margin-bottom:0px">
+		<ul id="mediaList" class="filterList">
+			<li>
+				<input type="checkbox" id="publication_age_new" name="System.age" value="7"  />
+				<label for="publication_age_new">Νέες αγγελίες</label>
+			</li>
+			<li style="padding-right:0px">
+			   <input  id="asset_has_photos" type="checkbox" name="Asset.has_photos" value="1" class="clusterCheckbox" />
+			   <label  for="asset_has_photos">Αγγελίες με φωτογραφίες</label>
+			</li>
+			<!--
+			<li style="padding-right:0px">
+			   <input  id="asset_has_videos" type="checkbox" name="Asset.has_videos" id="" value="asset_video" class="clusterCheckbox" />
+			   <label  for="asset_has_videos">Αγγελίες με βίντεο</label>
+			</li>
+			-->
+			<li>
+				<input type="checkbox" id="publication_owner_private" name="Owner.type" value="5295" data-metrics-label="Privates"   />
+				<label for="publication_owner_private">Αγγελίες ιδιωτών</label>
+			</li>
+			<li style="padding-right:0">
+				<input type="checkbox" id="publication_owner_prof" name="Owner.type" value="5296"  />
+				<label for="publication_owner_prof" style="width:auto;">Αγγελίες επαγγελματιών</label>
+			</li>
+
+            <li style="padding-right:0;width:auto">
+                <input name="Product.price_reduction" type="checkbox" id="product_price_reduction" value="1" />
+                <label for="product_price_reduction" class="ftip" class="inactive">Αγγελίες με μειωμένη τιμή</label>
+            </li>
+
+		</ul>
+
+		<div id="freetext_container">
+				<label style="font-weight:bold;font-size:12px;margin-bottom:7px;display:block" id="publication_freetext_label" for="cl_publication_freetext">Λέξεις / κλειδιά:</label>
+				<div class="pseudo_input_wrapper">
+					<!--[if IE 7]>
+					<style type="text/css">
+						#freetext_delete{
+							bottom:6px;
+						}
+					</style>
+					<![endif]-->
+					<input type="text" name="Publication.freetext" id="cl_publication_freetext" style="position:static" value="ΠΡΟΓΡΑΜΜΑΤΙΣΤΗΣ" />
+				</div>
+
+
+					<ul class="cluster_update_button_container">
+					<li class="cluster_update_button">
+					<a class="goldButton" href="#"><span>Ανανέωση</span></a>
+					</li>
+					</ul>
+
+
+
+
+		</div>
+
+	</div>
+	<!-- end ClusterPane -->
+
+
+
+
+
+
+
+
+<h3 class="clusterCategory">Κατηγορία</h3>
+
+<div class="clusterPane">
+
+	<ul class="filterList">
+
+
+
+
+
+
+
+
+	<li class="selected"><a class="backLevelLink" href="/search?Publication.freetext=%CE%A0%CE%A1%CE%9F%CE%93%CE%A1%CE%91%CE%9C%CE%9C%CE%91%CE%A4%CE%99%CE%A3%CE%A4%CE%97%CE%A3&amp;System.item_type=xe_stelexos&amp;Transaction.price.from=700&amp;per_page=10"></a><em>Προγραμματιστές & Μηχανικοί Η/Υ</em><span>4</span></li><li class="indent"><a rel="nofollow" href="/search?Item.master_type=139926&amp;Publication.freetext=%CE%A0%CE%A1%CE%9F%CE%93%CE%A1%CE%91%CE%9C%CE%9C%CE%91%CE%A4%CE%99%CE%A3%CE%A4%CE%97%CE%A3&amp;System.item_type=xe_stelexos&amp;Transaction.price.from=700&amp;Transaction.type_channel=117538&amp;per_page=10&Item.master_subtype=139931">Web Developers</a><span>2</span></li><li class="indent"><a rel="nofollow" href="/search?Item.master_type=139926&amp;Publication.freetext=%CE%A0%CE%A1%CE%9F%CE%93%CE%A1%CE%91%CE%9C%CE%9C%CE%91%CE%A4%CE%99%CE%A3%CE%A4%CE%97%CE%A3&amp;System.item_type=xe_stelexos&amp;Transaction.price.from=700&amp;Transaction.type_channel=117538&amp;per_page=10&Item.master_subtype=139933">Άλλες Ειδικότητες (Προγραμματιστές & Μηχανικοί Η/Υ)</a><span>1</span></li><li class="indent"><a rel="nofollow" href="/search?Item.master_type=139926&amp;Publication.freetext=%CE%A0%CE%A1%CE%9F%CE%93%CE%A1%CE%91%CE%9C%CE%9C%CE%91%CE%A4%CE%99%CE%A3%CE%A4%CE%97%CE%A3&amp;System.item_type=xe_stelexos&amp;Transaction.price.from=700&amp;Transaction.type_channel=117538&amp;per_page=10&Item.master_subtype=139932">Web Designers</a><span>1</span></li>
+
+
+
+
+
+
+
+
+
+
+	</ul>
+
+
+
+</div>
+<!-- end clusterPane -->
+
+
+
+
+
+
+
+
+	<h3 class="clusterCategory">Τιμή</h3>
+	<div class="clusterPane" id="cluster_prices">
+		<div class="inputContainer">
+			<input type="text" class="clusterSimpleTextbox" helptext="από &euro;" name="Transaction.price.from" id="cl_transaction_price_from" value="700" />
+			<input type="text" class="clusterSimpleTextbox" helptext="έως &euro;" name="Transaction.price.to" id="cl_transaction_price_to" value="" />
+			<a href="#" id="lnkPriceCluster"></a>
+		</div>
+	</div>
+	<!-- end clusterPane -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<h3 class="clusterCategory">Γεωγραφική Θέση</h3>
+<div class="clusterPane">
+
+    <ul class="filterList" id="filterList_Geo">
+
+
+        <li>
+            <a href="/search?Item.master_type=139926&amp;Publication.freetext=%CE%A0%CE%A1%CE%9F%CE%93%CE%A1%CE%91%CE%9C%CE%9C%CE%91%CE%A4%CE%99%CE%A3%CE%A4%CE%97%CE%A3&amp;System.item_type=xe_stelexos&amp;Transaction.price.from=700&amp;Transaction.type_channel=117538&amp;per_page=10&Geo.area_id_new__hierarchy=82196" rel="nofollow">Νομός Αττικής</a>
+            <span>4</span>
+        </li>
+
+
+</div>
+<!-- end clusterpane -->
+
+
+<div id="geographyModalContainer">
+    <div id="geographyModal">
+        <ul>
+
+            <li>
+                <a href="/search?Item.master_type=139926&amp;Publication.freetext=%CE%A0%CE%A1%CE%9F%CE%93%CE%A1%CE%91%CE%9C%CE%9C%CE%91%CE%A4%CE%99%CE%A3%CE%A4%CE%97%CE%A3&amp;System.item_type=xe_stelexos&amp;Transaction.price.from=700&amp;Transaction.type_channel=117538&amp;per_page=10&Geo.area_id_new__hierarchy=82196" rel="nofollow">Νομός Αττικής</a>
+                <span>4</span>
+            </li>
+
+        </ul>
+    </div>
+    <div id="popupClosePane"><a class="simplemodal-close" href="#"></a></div>
+</div>
+
+
+
+
+
+
+
+	<h3 class="clusterCategory">Άλλα φίλτρα</h3>
+	<div class="clusterPane">
+
+		<ul id="dropDownFilters">
+			<li>
+				<label class="breakLine" for="a">Ηλικία αγγελίας:</label>
+				<select name="Publication.age" id="cl_publication_age" class="clusterDropdownList">
+					<option value="">-- Χωρίς προτίμηση --</option>
+					<option value="1" >24 ώρες</option>
+					<option value="3" >3 ημέρες</option>
+					<option value="10" >10 ημέρες</option>
+					<option value="30" >30 ημέρες</option>
+				</select>
+			</li>
+		</ul>
+
+	</div>
+	<!-- end clusterPane -->
+
+
+	<div style="display:block;" class="cluster_update_button">
+		<a id="update_all" class="goldButton" href="#"><span>Ανανέωση όλων</span></a>
+	</div>
+
+
+
+	<input type="hidden" id="per_page" name="per_page" value="10" />
+
+
+
+
+	</form>
+
+</div>
+<!-- end clusterColumn -->
+
+
+
+	<div class="banner" id="results_bus_160_1">
+
+	</div>
+
+
+</div>
+<!-- end cluster_container -->
+
+<script type="text/javascript">
+	XE.clusters.Transaction__type_channel = 'REQUIRE:NORMAL';
+</script>
+
+	<script type="text/javascript">$(document).trigger("clusters_ready")</script>
+
+		<div id="mainContent" class="">
+			<h1>
+			Αγγελίες για Προγραμματιστές & Μηχανικοί Η/Υ - Αναζητούν <br/> εργαζόμενους, 700 &euro; +
+			<h2>Βρέθηκαν <strong style="font-weight:bold">4</strong> αποτελέσματα </h2>
+			<script type="text/javascript">
+				XE.search.title = 'Αγγελίες για Προγραμματιστές & Μηχανικοί Η/Υ - Αναζητούν <br/> εργαζόμενους, 700 &euro; +';
+			</script>
+			 </h1>
+
+
+
+
+			<div class="tabContents">
+
+				<span id="sortingLabel">Ταξινόμηση κατά:</span>
+				<span id="dropdownContainer">
+
+					<a title="Αλλάξτε την ταξινόμηση των αποτελεσμάτων" href="#" rel="nofollow" id="rSortingLink">προεπιλεγμένα κριτήρια</a>
+					<div id="dropSortContainer" class="close_on_mouseup dropdown">
+						<ul id="rDropSort">
+							<li><a class="sortLink" title="Η προεπιλεγμένη ταξινόμηση προβάλλει πρώτα τις αγγελίες με την πιο πρόσφατη ημερομηνία που έχουν τιμή αλλά και φωτογραφίες" href="/search?&amp;System.item_type=xe_stelexos&amp;&amp;Item.master_type=139926&amp;&amp;Transaction.type_channel=117538&amp;&amp;Publication.freetext=%CE%A0%CE%A1%CE%9F%CE%93%CE%A1%CE%91%CE%9C%CE%9C%CE%91%CE%A4%CE%99%CE%A3%CE%A4%CE%97%CE%A3&amp;&amp;Transaction.price.from=700" rel="nofollow">προεπιλεγμένα κριτήρια</a></li>
+
+                            <li><a class="sortLink" title="Από τις πιο ακριβές στις πιο φθηνές αγγελίες" href="/search?Item.master_type=139926&amp;Publication.freetext=%CE%A0%CE%A1%CE%9F%CE%93%CE%A1%CE%91%CE%9C%CE%9C%CE%91%CE%A4%CE%99%CE%A3%CE%A4%CE%97%CE%A3&amp;System.item_type=xe_stelexos&amp;Transaction.price.from=700&amp;Transaction.type_channel=117538&amp;per_page=10&amp;sort_by=Transaction.price&amp;sort_direction=desc" rel="nofollow">Τιμή (φθίνουσα σειρά)</a></li>
+							<li><a class="sortLink" title="Από τις πιο φθηνές στις πιο ακριβές αγγελίες" href="/search?Item.master_type=139926&amp;Publication.freetext=%CE%A0%CE%A1%CE%9F%CE%93%CE%A1%CE%91%CE%9C%CE%9C%CE%91%CE%A4%CE%99%CE%A3%CE%A4%CE%97%CE%A3&amp;System.item_type=xe_stelexos&amp;Transaction.price.from=700&amp;Transaction.type_channel=117538&amp;per_page=10&amp;sort_by=Transaction.price&amp;sort_direction=asc" rel="nofollow">Τιμή (αύξουσα σειρά)</a></li>
+
+                            <li><a class="sortLink" title="Από τις πιο πρόσφατα τροποποιημένες στις πιο παλιές αγγελίες" href="/search?Item.master_type=139926&amp;Publication.freetext=%CE%A0%CE%A1%CE%9F%CE%93%CE%A1%CE%91%CE%9C%CE%9C%CE%91%CE%A4%CE%99%CE%A3%CE%A4%CE%97%CE%A3&amp;System.item_type=xe_stelexos&amp;Transaction.price.from=700&amp;Transaction.type_channel=117538&amp;per_page=10&amp;sort_by=Publication.effective_date_start&amp;sort_direction=desc" rel="nofollow">Ημερομηνία τελ. τροποποίησης (φθίνουσα σειρά)</a></li>
+							<li><a class="sortLink" title="Από τις πιο παλιά τροποποιημένες στις πιο πρόσφατες αγγελίες" href="/search?Item.master_type=139926&amp;Publication.freetext=%CE%A0%CE%A1%CE%9F%CE%93%CE%A1%CE%91%CE%9C%CE%9C%CE%91%CE%A4%CE%99%CE%A3%CE%A4%CE%97%CE%A3&amp;System.item_type=xe_stelexos&amp;Transaction.price.from=700&amp;Transaction.type_channel=117538&amp;per_page=10&amp;sort_by=Publication.effective_date_start&amp;sort_direction=asc" rel="nofollow">Ημερομηνία τελ. τροποποίησης (αύξουσα σειρά)</a></li>
+							<li><a class="sortLink" title="Από τις πιο πρόσφατες στις πιο παλιές αγγελίες" href="/search?Item.master_type=139926&amp;Publication.freetext=%CE%A0%CE%A1%CE%9F%CE%93%CE%A1%CE%91%CE%9C%CE%9C%CE%91%CE%A4%CE%99%CE%A3%CE%A4%CE%97%CE%A3&amp;System.item_type=xe_stelexos&amp;Transaction.price.from=700&amp;Transaction.type_channel=117538&amp;per_page=10&amp;sort_by=System.creation_date&amp;sort_direction=desc" rel="nofollow">Ημερομηνία δημιουργίας (φθίνουσα σειρά)</a></li>
+							<li><a class="sortLink" title="Από τις πιο παλιές στις πιο πρόσφατες αγγελίες" href="/search?Item.master_type=139926&amp;Publication.freetext=%CE%A0%CE%A1%CE%9F%CE%93%CE%A1%CE%91%CE%9C%CE%9C%CE%91%CE%A4%CE%99%CE%A3%CE%A4%CE%97%CE%A3&amp;System.item_type=xe_stelexos&amp;Transaction.price.from=700&amp;Transaction.type_channel=117538&amp;per_page=10&amp;sort_by=System.creation_date&amp;sort_direction=asc" rel="nofollow">Ημερομηνία δημιουργίας (αύξουσα σειρά)</a></li>
+						</ul>
+					</div>
+				</span>
+
+				<span id="pagingLabel">
+					Σελίδα <strong>1</strong>
+					από <strong>1</strong>
+					<span id="pagingPerPage">
+					με <a href="#" rel="nofollow" id="lnkPaging">10</a>
+                     αγγελίες
+					 ανά σελίδα
+					</span>
+					<div id="rPageSize" class="close_on_mouseup dropdown" style="display: none;">
+						<ul>
+							<li><a class="pageLink" href="/search?Item.master_type=139926&amp;Publication.freetext=%CE%A0%CE%A1%CE%9F%CE%93%CE%A1%CE%91%CE%9C%CE%9C%CE%91%CE%A4%CE%99%CE%A3%CE%A4%CE%97%CE%A3&amp;System.item_type=xe_stelexos&amp;Transaction.price.from=700&amp;Transaction.type_channel=117538&amp;per_page=10" rel="nofollow">10</a></li>
+							<li><a class="pageLink" href="/search?Item.master_type=139926&amp;Publication.freetext=%CE%A0%CE%A1%CE%9F%CE%93%CE%A1%CE%91%CE%9C%CE%9C%CE%91%CE%A4%CE%99%CE%A3%CE%A4%CE%97%CE%A3&amp;System.item_type=xe_stelexos&amp;Transaction.price.from=700&amp;Transaction.type_channel=117538&amp;per_page=20" rel="nofollow">20</a></li>
+							<li><a class="pageLink" href="/search?Item.master_type=139926&amp;Publication.freetext=%CE%A0%CE%A1%CE%9F%CE%93%CE%A1%CE%91%CE%9C%CE%9C%CE%91%CE%A4%CE%99%CE%A3%CE%A4%CE%97%CE%A3&amp;System.item_type=xe_stelexos&amp;Transaction.price.from=700&amp;Transaction.type_channel=117538&amp;per_page=50" rel="nofollow">50</a></li>
+						</ul>
+					</div>
+				</span>
+			</div>
+			<!-- end tabContents -->
+
+
+
+
+
+			<!--<div id="rPlatinumCanvas"></div>-->
+
+			<div class="banner" id="results_728_2" style="position:relative;">
+			<!-- Check if user is premium  and exception zones--><!--/* OpenX Javascript Tag v2.8.5 */-->
+<script type='text/javascript'>
+<!--//<![CDATA[
+var m3_u = 'https://ad.xe.gr/www/delivery/ajs.php';
+var m3_r = Math.floor(Math.random()*99999999999);
+if (!document.MAX_used) document.MAX_used = ',';
+document.write ("<scr"+"ipt type='text/javascript' src='"+m3_u);
+
+document.write ("?zoneid=661&Item__category=" + XE.adServing.keywords.Item__category + "&Item__master_type=" + XE.adServing.keywords.Item__master_type + "&Item__master_subtype=" + XE.adServing.keywords.Item__master_subtype + "&Item__make=" + XE.adServing.keywords.Item__make + "&Item__type=" + XE.adServing.keywords.Item__type + "&students=" + XE.adServing.keywords.students + "&adult=" + XE.adServing.keywords.adult + "&section=" + XE.adServing.keywords.section + "&remarketing=" + XE.adServing.other.remarketing + "&Description=" + XE.adServing.keywords.Description + "&skag=" + XE.adServing.keywords.skag);
+
+document.write ('&amp;cb=' + m3_r);
+if (document.MAX_used != ',') document.write ("&amp;exclude=" + document.MAX_used);
+document.write (document.charset ? '&amp;charset='+document.charset : (document.characterSet ? '&amp;charset='+document.characterSet : ''));
+document.write ("&amp;loc=" + escape(window.location));
+if (document.referrer) document.write ("&amp;referer=" + escape(document.referrer));
+if (document.context) document.write ("&context=" + escape(document.context));
+if (document.mmm_fo) document.write ("&amp;mmm_fo=1");
+document.write ("'><\/scr"+"ipt>");
+//]]>-->
+</script>
+
+			</div>
+
+
+
+			<div id="xeResultsColumn" class="">
+
+
+
+					<div class="banner" id="results_bus_468_1">
+					<!-- Check if user is premium  and exception zones--><!--/* OpenX Javascript Tag v2.8.5 */-->
+<script type='text/javascript'>
+<!--//<![CDATA[
+var m3_u = 'https://ad.xe.gr/www/delivery/ajs.php';
+var m3_r = Math.floor(Math.random()*99999999999);
+if (!document.MAX_used) document.MAX_used = ',';
+document.write ("<scr"+"ipt type='text/javascript' src='"+m3_u);
+
+document.write ("?zoneid=635&Item__category=" + XE.adServing.keywords.Item__category + "&Item__master_type=" + XE.adServing.keywords.Item__master_type + "&Item__master_subtype=" + XE.adServing.keywords.Item__master_subtype + "&Item__make=" + XE.adServing.keywords.Item__make + "&Item__type=" + XE.adServing.keywords.Item__type + "&students=" + XE.adServing.keywords.students + "&adult=" + XE.adServing.keywords.adult + "&section=" + XE.adServing.keywords.section + "&remarketing=" + XE.adServing.other.remarketing + "&Description=" + XE.adServing.keywords.Description + "&skag=" + XE.adServing.keywords.skag);
+
+document.write ('&amp;cb=' + m3_r);
+if (document.MAX_used != ',') document.write ("&amp;exclude=" + document.MAX_used);
+document.write (document.charset ? '&amp;charset='+document.charset : (document.characterSet ? '&amp;charset='+document.characterSet : ''));
+document.write ("&amp;loc=" + escape(window.location));
+if (document.referrer) document.write ("&amp;referer=" + escape(document.referrer));
+if (document.context) document.write ("&context=" + escape(document.context));
+if (document.mmm_fo) document.write ("&amp;mmm_fo=1");
+document.write ("'><\/scr"+"ipt>");
+//]]>-->
+</script>
+
+					</div>
+
+
+                <!-- Check if user is premium  and exception zones--><!--/* OpenX Javascript Tag v2.8.5 */-->
+<script type='text/javascript'>
+<!--//<![CDATA[
+var m3_u = 'https://ad.xe.gr/www/delivery/ajs.php';
+var m3_r = Math.floor(Math.random()*99999999999);
+if (!document.MAX_used) document.MAX_used = ',';
+document.write ("<scr"+"ipt type='text/javascript' src='"+m3_u);
+
+document.write ("?zoneid=774&Item__category=" + XE.adServing.keywords.Item__category + "&Item__master_type=" + XE.adServing.keywords.Item__master_type + "&Item__master_subtype=" + XE.adServing.keywords.Item__master_subtype + "&Item__make=" + XE.adServing.keywords.Item__make + "&Item__type=" + XE.adServing.keywords.Item__type + "&students=" + XE.adServing.keywords.students + "&adult=" + XE.adServing.keywords.adult + "&section=" + XE.adServing.keywords.section + "&remarketing=" + XE.adServing.other.remarketing + "&Description=" + XE.adServing.keywords.Description + "&skag=" + XE.adServing.keywords.skag);
+
+document.write ('&amp;cb=' + m3_r);
+if (document.MAX_used != ',') document.write ("&amp;exclude=" + document.MAX_used);
+document.write (document.charset ? '&amp;charset='+document.charset : (document.characterSet ? '&amp;charset='+document.characterSet : ''));
+document.write ("&amp;loc=" + escape(window.location));
+if (document.referrer) document.write ("&amp;referer=" + escape(document.referrer));
+if (document.context) document.write ("&context=" + escape(document.context));
+if (document.mmm_fo) document.write ("&amp;mmm_fo=1");
+document.write ("'><\/scr"+"ipt>");
+//]]>-->
+</script>
+
+
+                <div class="privateWarning">
+                    Για να περιορίσετε τα αποτελέσματα <strong>μόνο με αγγελίες ιδιωτών</strong> θα πρέπει να έχετε Premium λογαριασμό.<br><br><strong>Αναβαθμίστε σε Premium</strong> ή αφαιρέστε το φίλτρο ιδιωτών ώστε να εμφανίζονται όλες οι αγγελίες.
+
+                    <div class="prv_btns">
+						<div>
+							<a class="pu_btn" href="https://my.xe.gr/app/static/premium-user/?from=privates_disclaimer" data-metrics-label="Upgrade_Button">Αναβάθμιση λογαριασμού</a>
+						</div>
+                    </div>
+                </div>
+
+
+
+
+
+
+
+
+<div class="rContainer  priv r" data-tooltip="Η τιμή έχει μειωθεί κατά -1.199 &euro; (%)"  id="r_96230841" >
+
+	<div class="rMainInfo">
+		<div class="rImage" >
+
+
+
+            <em class="gold_label"></em>
+
+
+            <div class="thumbImg " style="background:url('/images/assets/no_asset.png') no-repeat center center; background-size: 100% auto;">
+				<a style="border:none;padding:0" href="/jobs/programmatistes-mhxanikoi-h-y|ad-96230841.html">
+					<img src="/images/assets/no_asset.png" alt="Senior Full Stack Web Developer - Αργυρούπολη" border="0" width="126" height="96" style="display:none;" />
+				</a>
+			</div>
+			<p class="r_date">Δευτέρα, 27 Απρ 2020</p>
+		</div>
+		<div class="rSummary" >
+			<div class="rHeading">
+				<h2>
+					<a class="highlight" href="/jobs/programmatistes-mhxanikoi-h-y|ad-96230841.html">Senior Full Stack Web Developer</a>
+
+				</h2>
+				<div style="clear:both;"></div>
+
+				<span class="rPriceLabel r_price ">1.200 &euro;</span>
+
+            </div>
+			<span class="areaLabel" >Αργυρούπολη</span>
+
+			<p  >Η IMODE, μια από τις μεγαλύτερες εταιρείες στο χώρο του Web Design / Development και Digital Marketing, αναζητούμε άτομo εργατι......</p>
+		</div>
+
+		<ul class="adUserOptions">            <li>
+                <div class="toolset">
+                    <div class="r_to_list" data-id="96230841">
+                        <a id="to_list_96230841" class="tool-button-mini tool-save" href="#" title="Αποθήκευση αγγελίας" data-metrics-label="Results_pages">
+                            <span></span>
+                        </a>
+                    </div>
+                    <a class="tool-button-mini hideL tool-hide" id="to_hide_96230841" href="#" title="Απόκρυψη αγγελίας" data-metrics-label="Results_pages">
+                        <span></span>
+                    </a>
+
+                    <div class="r_comp to_comparison_96230841">
+                        <input type="checkbox" class="to_comparison_96230841" id="to_comparison_96230841">
+                        <a class="tool-button-mini state noMrag tool-comp" href="#" title="Σύγκριση αγγελίας" id="96230841" data-metrics-label="Results_pages">
+                            <span></span>
+                        </a>
+                    </div>
+
+                </div>
+            </li>
+        </ul>
+
+
+
+	</div>
+	<div class="clear"></div>
+</div>
+<!--end adContainer -->
+
+<script>
+    //Hide content if is not an adult
+    var isAdult = false;
+    if (!sessionStorage.getItem('isAdult')){
+        $('.adult').html("<img src='/images/adult_results.jpg'>");
+        $('.adult').removeClass('rContainer').addClass('rContainer2');
+    }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="rContainer  priv r" data-tooltip="Η τιμή έχει μειωθεί κατά -.899 &euro; (%)"  id="r_659824116" >
+
+	<div class="rMainInfo">
+		<div class="rImage" >
+
+
+
+
+            <div class="thumbImg " style="background:url('/images/assets/no_asset.png') no-repeat center center; background-size: 100% auto;">
+				<a style="border:none;padding:0" href="/jobs/programmatistes-mhxanikoi-h-y|ad-659824116.html">
+					<img src="/images/assets/no_asset.png" alt="Magento 2 Developer - Αιγάλεω" border="0" width="126" height="96" style="display:none;" />
+				</a>
+			</div>
+			<p class="r_date">Πέμπτη, 30 Απρ 2020</p>
+		</div>
+		<div class="rSummary" >
+			<div class="rHeading">
+				<h2>
+					<a class="highlight" href="/jobs/programmatistes-mhxanikoi-h-y|ad-659824116.html">Magento 2 Developer</a>
+
+						<span class="r_new_ad" title="Νέα αγγελία">&nbsp;</span>
+
+				</h2>
+				<div style="clear:both;"></div>
+
+				<span class="rPriceLabel r_price ">900 &euro;</span>
+
+            </div>
+			<span class="areaLabel" >Αιγάλεω</span>
+
+			<p  >ΖΗΤΕΊΤΑΙ Senior Developer για inhouse ή Freelance συνεργασία με καλή γνώση Magento 2, Php(Mvc Framework), Mysql. Αποστολή βιογρ...</p>
+		</div>
+
+		<ul class="adUserOptions">            <li>
+                <div class="toolset">
+                    <div class="r_to_list" data-id="659824116">
+                        <a id="to_list_659824116" class="tool-button-mini tool-save" href="#" title="Αποθήκευση αγγελίας" data-metrics-label="Results_pages">
+                            <span></span>
+                        </a>
+                    </div>
+                    <a class="tool-button-mini hideL tool-hide" id="to_hide_659824116" href="#" title="Απόκρυψη αγγελίας" data-metrics-label="Results_pages">
+                        <span></span>
+                    </a>
+
+                    <div class="r_comp to_comparison_659824116">
+                        <input type="checkbox" class="to_comparison_659824116" id="to_comparison_659824116">
+                        <a class="tool-button-mini state noMrag tool-comp" href="#" title="Σύγκριση αγγελίας" id="659824116" data-metrics-label="Results_pages">
+                            <span></span>
+                        </a>
+                    </div>
+
+                </div>
+            </li>
+        </ul>
+
+
+
+	</div>
+	<div class="clear"></div>
+</div>
+<!--end adContainer -->
+
+<script>
+    //Hide content if is not an adult
+    var isAdult = false;
+    if (!sessionStorage.getItem('isAdult')){
+        $('.adult').html("<img src='/images/adult_results.jpg'>");
+        $('.adult').removeClass('rContainer').addClass('rContainer2');
+    }
+</script>
+
+
+
+
+
+
+							<div class="banner" id="results_bus_468_2">
+							<!-- Check if user is premium  and exception zones--><!--/* OpenX Javascript Tag v2.8.5 */-->
+<script type='text/javascript'>
+<!--//<![CDATA[
+var m3_u = 'https://ad.xe.gr/www/delivery/ajs.php';
+var m3_r = Math.floor(Math.random()*99999999999);
+if (!document.MAX_used) document.MAX_used = ',';
+document.write ("<scr"+"ipt type='text/javascript' src='"+m3_u);
+
+document.write ("?zoneid=636&Item__category=" + XE.adServing.keywords.Item__category + "&Item__master_type=" + XE.adServing.keywords.Item__master_type + "&Item__master_subtype=" + XE.adServing.keywords.Item__master_subtype + "&Item__make=" + XE.adServing.keywords.Item__make + "&Item__type=" + XE.adServing.keywords.Item__type + "&students=" + XE.adServing.keywords.students + "&adult=" + XE.adServing.keywords.adult + "&section=" + XE.adServing.keywords.section + "&remarketing=" + XE.adServing.other.remarketing + "&Description=" + XE.adServing.keywords.Description + "&skag=" + XE.adServing.keywords.skag);
+
+document.write ('&amp;cb=' + m3_r);
+if (document.MAX_used != ',') document.write ("&amp;exclude=" + document.MAX_used);
+document.write (document.charset ? '&amp;charset='+document.charset : (document.characterSet ? '&amp;charset='+document.characterSet : ''));
+document.write ("&amp;loc=" + escape(window.location));
+if (document.referrer) document.write ("&amp;referer=" + escape(document.referrer));
+if (document.context) document.write ("&context=" + escape(document.context));
+if (document.mmm_fo) document.write ("&amp;mmm_fo=1");
+document.write ("'><\/scr"+"ipt>");
+//]]>-->
+</script>
+
+							</div>
+
+
+
+
+
+
+
+
+
+<div class="rContainer  priv r" data-tooltip="Η τιμή έχει μειωθεί κατά -.699 &euro; (%)"  id="r_94456892" >
+
+	<div class="rMainInfo">
+		<div class="rImage" >
+
+
+
+
+            <div class="thumbImg " style="background:url('/images/assets/no_asset.png') no-repeat center center; background-size: 100% auto;">
+				<a style="border:none;padding:0" href="/jobs/programmatistes-mhxanikoi-h-y|ad-94456892.html">
+					<img src="/images/assets/no_asset.png" alt="Junior Frond end Web Developer - Αργυρούπολη" border="0" width="126" height="96" style="display:none;" />
+				</a>
+			</div>
+			<p class="r_date">Δευτέρα, 27 Απρ 2020</p>
+		</div>
+		<div class="rSummary" >
+			<div class="rHeading">
+				<h2>
+					<a class="highlight" href="/jobs/programmatistes-mhxanikoi-h-y|ad-94456892.html">Junior Frond end Web Developer</a>
+
+				</h2>
+				<div style="clear:both;"></div>
+
+				<span class="rPriceLabel r_price ">700 &euro;</span>
+
+            </div>
+			<span class="areaLabel" >Αργυρούπολη</span>
+
+			<p  >Η IMODE, μια από τις μεγαλύτερες εταιρείες στο χώρο του Web Design/Development και Digital Marketing, αναζητούμε άτομο εργατικό......</p>
+		</div>
+
+		<ul class="adUserOptions">            <li>
+                <div class="toolset">
+                    <div class="r_to_list" data-id="94456892">
+                        <a id="to_list_94456892" class="tool-button-mini tool-save" href="#" title="Αποθήκευση αγγελίας" data-metrics-label="Results_pages">
+                            <span></span>
+                        </a>
+                    </div>
+                    <a class="tool-button-mini hideL tool-hide" id="to_hide_94456892" href="#" title="Απόκρυψη αγγελίας" data-metrics-label="Results_pages">
+                        <span></span>
+                    </a>
+
+                    <div class="r_comp to_comparison_94456892">
+                        <input type="checkbox" class="to_comparison_94456892" id="to_comparison_94456892">
+                        <a class="tool-button-mini state noMrag tool-comp" href="#" title="Σύγκριση αγγελίας" id="94456892" data-metrics-label="Results_pages">
+                            <span></span>
+                        </a>
+                    </div>
+
+                </div>
+            </li>
+        </ul>
+
+
+
+	</div>
+	<div class="clear"></div>
+</div>
+<!--end adContainer -->
+
+<script>
+    //Hide content if is not an adult
+    var isAdult = false;
+    if (!sessionStorage.getItem('isAdult')){
+        $('.adult').html("<img src='/images/adult_results.jpg'>");
+        $('.adult').removeClass('rContainer').addClass('rContainer2');
+    }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="rContainer  priv r" data-tooltip="Η τιμή έχει μειωθεί κατά -.749 &euro; (%)"  id="r_579027979" >
+
+	<div class="rMainInfo">
+		<div class="rImage" >
+
+
+
+
+            <div class="thumbImg " style="background:url('/images/assets/no_asset.png') no-repeat center center; background-size: 100% auto;">
+				<a style="border:none;padding:0" href="/jobs/programmatistes-mhxanikoi-h-y|ad-579027979.html">
+					<img src="/images/assets/no_asset.png" alt="ΖΗΤΕΙΤΑΙ ΔΙΑΧΕΙΡΙΣΤΗΣ Ε-SHOP - Νεάπολη" border="0" width="126" height="96" style="display:none;" />
+				</a>
+			</div>
+			<p class="r_date">Σάββατο, 11 Απρ 2020</p>
+		</div>
+		<div class="rSummary" >
+			<div class="rHeading">
+				<h2>
+					<a class="highlight" href="/jobs/programmatistes-mhxanikoi-h-y|ad-579027979.html">ΖΗΤΕΙΤΑΙ ΔΙΑΧΕΙΡΙΣΤΗΣ Ε-SHOP</a>
+
+				</h2>
+				<div style="clear:both;"></div>
+
+				<span class="rPriceLabel r_price ">750 &euro;</span>
+
+            </div>
+			<span class="areaLabel" >Νεάπολη</span>
+
+			<p  >ΖΗΤΕΙΤΑΙ ΔΙΑΧΕΙΡΙΣΤΗΣ Ε-SHOP ΦΑΡΜΑΚΕΙΟΥ. ΑΠΑΡΑΙΤΗΤΗ ΠΡΟΥΠΗΡΕΣΙΑ ΣΕ ΑΝΤΙΣΤΟΙΧΗ ΘΕΣΗ. ΠΛΗΡΗΣ ΑΠΑΣΧΟΛΗΣΗ, ΓΙΑ ΚΑΘΗΜΕΡΙΝΕΣ ΛΕΙΤΟΥΡΓ......</p>
+		</div>
+
+		<ul class="adUserOptions">            <li>
+                <div class="toolset">
+                    <div class="r_to_list" data-id="579027979">
+                        <a id="to_list_579027979" class="tool-button-mini tool-save" href="#" title="Αποθήκευση αγγελίας" data-metrics-label="Results_pages">
+                            <span></span>
+                        </a>
+                    </div>
+                    <a class="tool-button-mini hideL tool-hide" id="to_hide_579027979" href="#" title="Απόκρυψη αγγελίας" data-metrics-label="Results_pages">
+                        <span></span>
+                    </a>
+
+                    <div class="r_comp to_comparison_579027979">
+                        <input type="checkbox" class="to_comparison_579027979" id="to_comparison_579027979">
+                        <a class="tool-button-mini state noMrag tool-comp" href="#" title="Σύγκριση αγγελίας" id="579027979" data-metrics-label="Results_pages">
+                            <span></span>
+                        </a>
+                    </div>
+
+                </div>
+            </li>
+        </ul>
+
+
+
+	</div>
+	<div class="clear"></div>
+</div>
+<!--end adContainer -->
+
+<script>
+    //Hide content if is not an adult
+    var isAdult = false;
+    if (!sessionStorage.getItem('isAdult')){
+        $('.adult').html("<img src='/images/adult_results.jpg'>");
+        $('.adult').removeClass('rContainer').addClass('rContainer2');
+    }
+</script>
+
+
+
+
+
+
+
+
+				<script type="text/javascript">$(document).trigger("results_ready");</script>
+
+
+
+				<div class="banner" id="results_bus_468_3">
+				<!-- Check if user is premium  and exception zones--><!--/* OpenX Javascript Tag v2.8.5 */-->
+<script type='text/javascript'>
+<!--//<![CDATA[
+var m3_u = 'https://ad.xe.gr/www/delivery/ajs.php';
+var m3_r = Math.floor(Math.random()*99999999999);
+if (!document.MAX_used) document.MAX_used = ',';
+document.write ("<scr"+"ipt type='text/javascript' src='"+m3_u);
+
+document.write ("?zoneid=637&Item__category=" + XE.adServing.keywords.Item__category + "&Item__master_type=" + XE.adServing.keywords.Item__master_type + "&Item__master_subtype=" + XE.adServing.keywords.Item__master_subtype + "&Item__make=" + XE.adServing.keywords.Item__make + "&Item__type=" + XE.adServing.keywords.Item__type + "&students=" + XE.adServing.keywords.students + "&adult=" + XE.adServing.keywords.adult + "&section=" + XE.adServing.keywords.section + "&remarketing=" + XE.adServing.other.remarketing + "&Description=" + XE.adServing.keywords.Description + "&skag=" + XE.adServing.keywords.skag);
+
+document.write ('&amp;cb=' + m3_r);
+if (document.MAX_used != ',') document.write ("&amp;exclude=" + document.MAX_used);
+document.write (document.charset ? '&amp;charset='+document.charset : (document.characterSet ? '&amp;charset='+document.characterSet : ''));
+document.write ("&amp;loc=" + escape(window.location));
+if (document.referrer) document.write ("&amp;referer=" + escape(document.referrer));
+if (document.context) document.write ("&context=" + escape(document.context));
+if (document.mmm_fo) document.write ("&amp;mmm_fo=1");
+document.write ("'><\/scr"+"ipt>");
+//]]>-->
+</script>
+
+				</div>
+
+
+
+
+
+
+
+                <div id="premium_store_search_btn">
+                    <a data-metrics-label="save_clicked_down" class="iconSaveSearch saveSearch_btn" href="#">Αποθήκευση αναζήτησης</a>
+
+                </div>
+			</div>
+
+
+
+
+
+			<!-- end xeResultsColumn -->
+
+
+
+
+			<div id="xeSideColumn">
+
+
+                <div class="banner">
+                    <!-- Check if user is premium  and exception zones--><!--/* OpenX Javascript Tag v2.8.5 */-->
+<script type='text/javascript'>
+<!--//<![CDATA[
+var m3_u = 'https://ad.xe.gr/www/delivery/ajs.php';
+var m3_r = Math.floor(Math.random()*99999999999);
+if (!document.MAX_used) document.MAX_used = ',';
+document.write ("<scr"+"ipt type='text/javascript' src='"+m3_u);
+
+document.write ("?zoneid=730&Item__category=" + XE.adServing.keywords.Item__category + "&Item__master_type=" + XE.adServing.keywords.Item__master_type + "&Item__master_subtype=" + XE.adServing.keywords.Item__master_subtype + "&Item__make=" + XE.adServing.keywords.Item__make + "&Item__type=" + XE.adServing.keywords.Item__type + "&students=" + XE.adServing.keywords.students + "&adult=" + XE.adServing.keywords.adult + "&section=" + XE.adServing.keywords.section + "&remarketing=" + XE.adServing.other.remarketing + "&Description=" + XE.adServing.keywords.Description + "&skag=" + XE.adServing.keywords.skag);
+
+document.write ('&amp;cb=' + m3_r);
+if (document.MAX_used != ',') document.write ("&amp;exclude=" + document.MAX_used);
+document.write (document.charset ? '&amp;charset='+document.charset : (document.characterSet ? '&amp;charset='+document.characterSet : ''));
+document.write ("&amp;loc=" + escape(window.location));
+if (document.referrer) document.write ("&amp;referer=" + escape(document.referrer));
+if (document.context) document.write ("&context=" + escape(document.context));
+if (document.mmm_fo) document.write ("&amp;mmm_fo=1");
+document.write ("'><\/scr"+"ipt>");
+//]]>-->
+</script>
+
+                </div>
+
+
+                <div class="banner" >
+                <!-- Check if user is premium  and exception zones--><!--/* OpenX Javascript Tag v2.8.5 */-->
+<script type='text/javascript'>
+<!--//<![CDATA[
+var m3_u = 'https://ad.xe.gr/www/delivery/ajs.php';
+var m3_r = Math.floor(Math.random()*99999999999);
+if (!document.MAX_used) document.MAX_used = ',';
+document.write ("<scr"+"ipt type='text/javascript' src='"+m3_u);
+
+document.write ("?zoneid=726&Item__category=" + XE.adServing.keywords.Item__category + "&Item__master_type=" + XE.adServing.keywords.Item__master_type + "&Item__master_subtype=" + XE.adServing.keywords.Item__master_subtype + "&Item__make=" + XE.adServing.keywords.Item__make + "&Item__type=" + XE.adServing.keywords.Item__type + "&students=" + XE.adServing.keywords.students + "&adult=" + XE.adServing.keywords.adult + "&section=" + XE.adServing.keywords.section + "&remarketing=" + XE.adServing.other.remarketing + "&Description=" + XE.adServing.keywords.Description + "&skag=" + XE.adServing.keywords.skag);
+
+document.write ('&amp;cb=' + m3_r);
+if (document.MAX_used != ',') document.write ("&amp;exclude=" + document.MAX_used);
+document.write (document.charset ? '&amp;charset='+document.charset : (document.characterSet ? '&amp;charset='+document.characterSet : ''));
+document.write ("&amp;loc=" + escape(window.location));
+if (document.referrer) document.write ("&amp;referer=" + escape(document.referrer));
+if (document.context) document.write ("&context=" + escape(document.context));
+if (document.mmm_fo) document.write ("&amp;mmm_fo=1");
+document.write ("'><\/scr"+"ipt>");
+//]]>-->
+</script>
+
+                </div>
+
+
+					<div class="banner" id="results_bus_300_1">
+					<!-- Check if user is premium  and exception zones--><!--/* OpenX Javascript Tag v2.8.5 */-->
+<script type='text/javascript'>
+<!--//<![CDATA[
+var m3_u = 'https://ad.xe.gr/www/delivery/ajs.php';
+var m3_r = Math.floor(Math.random()*99999999999);
+if (!document.MAX_used) document.MAX_used = ',';
+document.write ("<scr"+"ipt type='text/javascript' src='"+m3_u);
+
+document.write ("?zoneid=639&Item__category=" + XE.adServing.keywords.Item__category + "&Item__master_type=" + XE.adServing.keywords.Item__master_type + "&Item__master_subtype=" + XE.adServing.keywords.Item__master_subtype + "&Item__make=" + XE.adServing.keywords.Item__make + "&Item__type=" + XE.adServing.keywords.Item__type + "&students=" + XE.adServing.keywords.students + "&adult=" + XE.adServing.keywords.adult + "&section=" + XE.adServing.keywords.section + "&remarketing=" + XE.adServing.other.remarketing + "&Description=" + XE.adServing.keywords.Description + "&skag=" + XE.adServing.keywords.skag);
+
+document.write ('&amp;cb=' + m3_r);
+if (document.MAX_used != ',') document.write ("&amp;exclude=" + document.MAX_used);
+document.write (document.charset ? '&amp;charset='+document.charset : (document.characterSet ? '&amp;charset='+document.characterSet : ''));
+document.write ("&amp;loc=" + escape(window.location));
+if (document.referrer) document.write ("&amp;referer=" + escape(document.referrer));
+if (document.context) document.write ("&context=" + escape(document.context));
+if (document.mmm_fo) document.write ("&amp;mmm_fo=1");
+document.write ("'><\/scr"+"ipt>");
+//]]>-->
+</script>
+
+					</div>
+
+
+				<!-- Check if user is premium  and exception zones--><!--/* OpenX Javascript Tag v2.8.5 */-->
+<script type='text/javascript'>
+<!--//<![CDATA[
+var m3_u = 'https://ad.xe.gr/www/delivery/ajs.php';
+var m3_r = Math.floor(Math.random()*99999999999);
+if (!document.MAX_used) document.MAX_used = ',';
+document.write ("<scr"+"ipt type='text/javascript' src='"+m3_u);
+
+document.write ("?zoneid=685&Item__category=" + XE.adServing.keywords.Item__category + "&Item__master_type=" + XE.adServing.keywords.Item__master_type + "&Item__master_subtype=" + XE.adServing.keywords.Item__master_subtype + "&Item__make=" + XE.adServing.keywords.Item__make + "&Item__type=" + XE.adServing.keywords.Item__type + "&students=" + XE.adServing.keywords.students + "&adult=" + XE.adServing.keywords.adult + "&section=" + XE.adServing.keywords.section + "&remarketing=" + XE.adServing.other.remarketing + "&Description=" + XE.adServing.keywords.Description + "&skag=" + XE.adServing.keywords.skag);
+
+document.write ('&amp;cb=' + m3_r);
+if (document.MAX_used != ',') document.write ("&amp;exclude=" + document.MAX_used);
+document.write (document.charset ? '&amp;charset='+document.charset : (document.characterSet ? '&amp;charset='+document.characterSet : ''));
+document.write ("&amp;loc=" + escape(window.location));
+if (document.referrer) document.write ("&amp;referer=" + escape(document.referrer));
+if (document.context) document.write ("&context=" + escape(document.context));
+if (document.mmm_fo) document.write ("&amp;mmm_fo=1");
+document.write ("'><\/scr"+"ipt>");
+//]]>-->
+</script>
+
+
+
+
+
+<div class="box " id="box_saved_searches">
+
+
+    <!--<h3>Αποθηκευμένες αναζητήσεις</h3>-->
+
+<div class="boxContent">
+
+	<ul>
+		<li class="ss_empty" >
+			Δεν έχετε αποθηκεύσει καμιά αναζήτηση ακόμα
+		</li>
+        <li style="text-align:center;"><a data-metrics-label="save_clicked__Rside" class="111 iconSaveSearchLoginFirst saveSearch" href="#">Αποθήκευση αναζήτησης <br>&amp; ειδοποίηση</a></li>
+
+	</ul>
+
+	<div id="saved_searches_manage"><a href="/my-saved-searches.html" title="Πηγαίνετε στην σελίδα διαχείρισης απ'όπου μπορείτε να επεξεργαστείτε και διαγράψετε τις αποθηκευμένες αναζητήσεις σας" rel="nofollow">Οι αναζητήσεις μου &raquo;</a></div>
+
+
+</div>
+</div>
+
+
+<div id="dialog_save_search">
+	<div class="btnClose"></div>
+	<h1 class="alt">
+        Αποθήκευση αναζήτησης
+        <span class="gdpr_info" xe-tooltips="Οι αποθηκευμένες αναζητήσεις σας είναι προσωπικές και δεν εμφανίζονται δημόσια">i</span>
+    </h1>
+	<div id="dialog_save_search_contents">
+		<p>Εισάγετε τον τίτλο με τον οποίο θέλετε να αποθηκεύσετε αυτή την αναζήτηση:</p>
+		<input type="text" id="save_search_title" value="Αγγελίες για Προγραμματιστές & Μηχανικοί Η/Υ - Αναζητούν <br/> εργαζόμενους, 700 &euro; +" />
+
+		<a href="#" class="close_ss"></a>
+		<!--div class="no_premium" style="">Οι άμεσες ειδοποιήσεις απευθύνονται στους <a href="#" style="color:#502abd; font-weight:bold;">Premium</a> χρήστες της <br>Χρυσής Ευκαιρίας.</div-->
+		<div class="inner">
+            <div style="display: flex">
+                <div class="frecuencia">
+                    <div class="ss_title"><strong>Ενημέρωση</strong></div>
+                    <fieldset>
+                        <label><input type="radio" name="freq" value="0" id="no"> Χωρίς ειδοποίηση</label><br>
+
+                        <label><input type="radio" name="freq" value="5" id="amesa" class="premiumSearchAlert"> Άμεσα</label><br>
+
+                        <label><input type="radio" name="freq" value="1" id="d1" class="premiumSearchAlert"> Κάθε μέρα</label><br>
+                        <label><input type="radio" name="freq" value="3" id="d3"> Κάθε 3 ημέρες</label><br>
+                        <label><input type="radio" name="freq" value="7" id="d7"> Κάθε 7 ημέρες</label>
+                    </fieldset>
+                </div>
+
+                <div class="manera" style="display:none;">
+                    <div class="ss_title"><strong>Μέσο</strong></div><br>
+
+                    <div class="n35"><input type="checkbox" value="0" id="email" checked> <label for="email">Email</label></div>
+
+                    <div class="notify" >
+                    <label class="sw_mobile_notification" style="padding: 2px 0 6px 0; display: block;" data-status=""><input type="checkbox" id="mobilePush" value="0" > Mobile Push <span></span></label>
+                    <label class="sw_push_notification" style="padding: 2px 0 6px 0; display: block;" data-status=""><input type="checkbox" id="webPush" value="0" > Web Push <span></span><small></small></label>
+                </div>
+            </div>
+
+			</div>
+		</div>
+		<table cellpadding="0" cellspacing="0" class="dialog_buttons">
+			<tr>
+				<td><a href="#" class="simplemodal-close">Ακύρωση και επιστροφή</a></td>
+				<td style="text-align:right"><a href="#" class="goldButton dialog_action"><span class="alt">Aποθήκευση αναζήτησης</span></a></td>
+			</tr>
+		</table>
+	</div>
+</div>
+
+
+
+
+
+
+
+
+
+<div class="box " id="box_recent_ads">
+
+
+    <!--<h3>Πρόσφατες αναζητήσεις</h3>-->
+
+<div class="boxContent">
+
+
+<h4>Αγγελίες που είδατε</h4>
+<div class="rad_loading">
+	<img src="https://static.xe.gr/images/ajax_load_24x24.gif" width="24" height="24" alt="Φόρτωση ιστορικού..." /><br />Φόρτωση ιστορικού...
+</div>
+
+</div>
+</div>
+
+                <div class="banner">
+                    <div class="newsletter_reg">
+    <h2>Εγγραφείτε στο newsletter</h2>
+    Λάβετε στο e-mail σας όλες τις σημαντικές ενημερώσεις της Χρυσής Ευκαιρίας
+    <form id="newsletter" action="#">
+        <div class="form">
+            <input class="newsletter_inp"
+                   type="email" name="email"
+                   placeholder="Το Email σας"
+                   required="required"
+                   oninvalid="this.setCustomValidity('Συμπληρώστε το email σας')"
+                   oninput="setCustomValidity('')">
+
+            <br>
+
+            <!-- Accept Privacy Policy -->
+            <input required="required"
+                   type="checkbox"
+                   name="accept_privacy_policy"
+                   id="accept_privacy_policy"
+                   oninvalid="this.setCustomValidity('Υποχρεωτικό πεδίο')"
+                   oninput="setCustomValidity('')" />
+
+            <label for="accept_privacy_policy" id="accept_privacy_policy_label">
+                Αποδέχομαι την
+                <a style="color:#D59604;text-decoration: underline;" target="_blank" href="/static_html/privacypolicy.html">Πολιτική Δεδομένων</a>
+                της Χρυσής Ευκαιρίας και επιθυμώ να λαμβάνω ενημερωτικά μηνύματα για ενδιαφέροντα θέματα
+            </label><br>
+
+            <input class="submit_n" type="submit" value="Εγγραφή"/>
+            <div class="msg" style="display:none"></div>
+        </div>
+    </form>
+</div>
+                </div>
+
+
+					<div class="banner lock" id="results_bus_300_2">
+					<!-- Check if user is premium  and exception zones--><!--/* OpenX Javascript Tag v2.8.5 */-->
+<script type='text/javascript'>
+<!--//<![CDATA[
+var m3_u = 'https://ad.xe.gr/www/delivery/ajs.php';
+var m3_r = Math.floor(Math.random()*99999999999);
+if (!document.MAX_used) document.MAX_used = ',';
+document.write ("<scr"+"ipt type='text/javascript' src='"+m3_u);
+
+document.write ("?zoneid=640&Item__category=" + XE.adServing.keywords.Item__category + "&Item__master_type=" + XE.adServing.keywords.Item__master_type + "&Item__master_subtype=" + XE.adServing.keywords.Item__master_subtype + "&Item__make=" + XE.adServing.keywords.Item__make + "&Item__type=" + XE.adServing.keywords.Item__type + "&students=" + XE.adServing.keywords.students + "&adult=" + XE.adServing.keywords.adult + "&section=" + XE.adServing.keywords.section + "&remarketing=" + XE.adServing.other.remarketing + "&Description=" + XE.adServing.keywords.Description + "&skag=" + XE.adServing.keywords.skag);
+
+document.write ('&amp;cb=' + m3_r);
+if (document.MAX_used != ',') document.write ("&amp;exclude=" + document.MAX_used);
+document.write (document.charset ? '&amp;charset='+document.charset : (document.characterSet ? '&amp;charset='+document.characterSet : ''));
+document.write ("&amp;loc=" + escape(window.location));
+if (document.referrer) document.write ("&amp;referer=" + escape(document.referrer));
+if (document.context) document.write ("&context=" + escape(document.context));
+if (document.mmm_fo) document.write ("&amp;mmm_fo=1");
+document.write ("'><\/scr"+"ipt>");
+//]]>-->
+</script>
+
+					</div>
+
+
+
+				<div class="banner lock" id="results_bus_300_3">
+					<!-- Check if user is premium  and exception zones--><!--/* OpenX Javascript Tag v2.8.5 */-->
+<script type='text/javascript'>
+<!--//<![CDATA[
+var m3_u = 'https://ad.xe.gr/www/delivery/ajs.php';
+var m3_r = Math.floor(Math.random()*99999999999);
+if (!document.MAX_used) document.MAX_used = ',';
+document.write ("<scr"+"ipt type='text/javascript' src='"+m3_u);
+
+document.write ("?zoneid=657&Item__category=" + XE.adServing.keywords.Item__category + "&Item__master_type=" + XE.adServing.keywords.Item__master_type + "&Item__master_subtype=" + XE.adServing.keywords.Item__master_subtype + "&Item__make=" + XE.adServing.keywords.Item__make + "&Item__type=" + XE.adServing.keywords.Item__type + "&students=" + XE.adServing.keywords.students + "&adult=" + XE.adServing.keywords.adult + "&section=" + XE.adServing.keywords.section + "&remarketing=" + XE.adServing.other.remarketing + "&Description=" + XE.adServing.keywords.Description + "&skag=" + XE.adServing.keywords.skag);
+
+document.write ('&amp;cb=' + m3_r);
+if (document.MAX_used != ',') document.write ("&amp;exclude=" + document.MAX_used);
+document.write (document.charset ? '&amp;charset='+document.charset : (document.characterSet ? '&amp;charset='+document.characterSet : ''));
+document.write ("&amp;loc=" + escape(window.location));
+if (document.referrer) document.write ("&amp;referer=" + escape(document.referrer));
+if (document.context) document.write ("&context=" + escape(document.context));
+if (document.mmm_fo) document.write ("&amp;mmm_fo=1");
+document.write ("'><\/scr"+"ipt>");
+//]]>-->
+</script>
+
+				</div>
+
+
+			</div>
+			<!-- end xeSideColumn -->
+
+
+			<div class="clear"></div>
+		</div>
+		<!-- end mainContent -->
+
+		<div class="clear"></div>
+
+<div id="categoryDrillPane">
+</div>
+
+
+
+<script type="text/javascript">
+	XE.forms.searchid = '&amp;System.item_type=xe_stelexos&amp;&amp;Item.master_type=139926&amp;&amp;Transaction.type_channel=117538&amp;&amp;Publication.freetext=%CE%A0%CE%A1%CE%9F%CE%93%CE%A1%CE%91%CE%9C%CE%9C%CE%91%CE%A4%CE%99%CE%A3%CE%A4%CE%97%CE%A3&amp;&amp;Transaction.price.from=700';
+	XE.request.QUERY_STRING = 'Item.master_type=139926&Publication.freetext=%CE%A0%CE%A1%CE%9F%CE%93%CE%A1%CE%91%CE%9C%CE%9C%CE%91%CE%A4%CE%99%CE%A3%CE%A4%CE%97%CE%A3&System.item_type=xe_stelexos&Transaction.price.from=700&Transaction.type_channel=117538';
+</script>
+
+<script type="text/javascript">
+    //tracking codes for owners (public, jumbo etc.)
+    $(function(){
+        $(".dealer_buy").click(function(){
+            var owner = $(this).attr("data-owner").replace(".","_");
+            _gaq.push(['_trackEvent', 'Listing', owner +"_clicked"]);
+        })
+    })
+</script>
+
+<div class="dialog" id="adult_check">
+    <div id="popupClosePane"><a class="simplemodal-close" href="#"></a></div>
+    <h1>Αγγελίες ενηλίκων</h1>
+    <div class="dialog_contents">
+        Η σελίδα αυτή περιλαμβάνει αγγελίες που απευθύνονται αποκλειστικά σε ενήλικους.<br>
+        Πατώντας το κουμπί «Συνέχεια» δηλώνετε ότι είστε άνω των 18 χρονών
+        και επιθυμείτε να συνεχίσετε.<br>
+        Σε αντίθετη περίπτωση πατήστε το link «Δεν επιθυμώ να δω αυτό το περιεχόμενο»
+    </div>
+    <div class="dialog_action_ok"><a class="goldButton is_adult" href="#"><span>Συνέχεια</span></a></div>
+    <a href="" class="no_adult simplemodal-close">Δεν επιθυμώ να δω αυτό το περιεχόμενο >></a>
+</div>
+
+
+
+
+		</div>
+
+		<!-- end content -->
+
+		<div id="footer">
+		    <div id="footer_disclaimer">
+                <div class="f_left">
+
+
+                        <ul id="footer_seo_links">
+                          <li style="padding-left:0px"><a href="/">Αρχική</a> |</li>
+                          <li><a href="https://support.xe.gr/">Βοήθεια</a> |</li>
+                          <li><a href="https://support.xe.gr/%CF%83%CF%87%CE%B5%CF%84%CE%B9%CE%BA%CE%AC-%CE%BC%CE%B5-%CF%84%CE%B7-%CF%87%CF%81%CF%85%CF%83%CE%AE-%CE%B5%CF%85%CE%BA%CE%B1%CE%B9%CF%81%CE%AF%CE%B1">FAQ</a> |</li>
+                          <!--<li><a href="https://blog.xe.gr">Blog</a> |</li>
+                          <li><a href="/static_html/jobs.html">Ευκαιρίες Καριέρας</a> |</li>-->
+                          <li><a href="/static_html/terms.html">Όροι χρήσης</a> |</li>
+                            <li><a href="/static_html/privacypolicy.html">Πολιτική δεδομένων</a> |</li>
+                            <li><a href="https://careers.xe.gr" target="_blank">Θέσεις εργασίας</a> <span>|</span>
+                          <li style="padding-right:0px"><a href="https://support.xe.gr/el/articles/364805-πώς-κάνω-τηλεφωνική-καταχώριση-αγγελίας?from=contact_xe.gr">Επικοινωνία</a></li>
+                        </ul>
+
+                        <div id="footer_company" class="footer_list">
+                            <h3>XE Professional</h3>
+                            <ul>
+                                <li><a href="http://pro2.xe.gr/pro2/">Το απόλυτο σύστημα διαχείρισης για επαγγελματίες</a></li>
+                            </ul>
+                            <br/>
+                            <h3>Καταχώριση αγγελίας</h3>
+                            <ul>
+                                <li><a href="https://my.xe.gr/app/static/start" rel="nofollow">Δώσε την αγγελία σου στο No1 site αγγελιών στην Ελλάδα</a></li>
+                            </ul>
+                        </div>
+
+                        <div id="footer_professional" class="footer_list">
+                            <h3>XE mobile apps</h3>
+                            <ul class="mobile">
+                                <li><a href="http://xeapps.gr">για iPhone</a></li>
+                                <li><a href="http://xeapps.gr">για Android</a></li>
+                                <li><a href="http://xeapps.gr">για Windows</a></li>
+                            </ul>
+                            <h3 style="margin-top:16px;">XE Timeline</h3>
+                            <ul>
+                                <li><a href="/static_html/timeline.html">Δες τα milestones της Χρυσής Ευκαιρίας μέσα από το διαδραστικό αυτό timeline</a></li>
+                            </ul>
+                        </div>
+
+
+                        <div id="footer_social" class="footer_list">
+                            <h3>Ακολουθήστε μας:</h3>
+                            <ul>
+                                <li><a href="https://www.facebook.com/xrisi.eukairia/" class="facebook" target="_blank">στο Facebook</a></li>
+                                <li><a href="http://twitter.com/xe_gr" class="twitter" target="_blank">Twitter</a></li>
+                                <li><a href="https://www.linkedin.com/company/xrysi-eukairia-ergasia" class="linkedin" target="_blank">LinkedIn</a></li>
+                                <li><a href="https://blog.xe.gr" class="gplus" target="_blank">blog.xe.gr</a></li>
+                            </ul>
+                        </div>
+
+                        <div class="footer_list f_links">
+                            <a href="https://www.xe.gr">xe.gr</a>  |  <a href="https://www.xe.gr/property/">property.gr</a>  |  <a href="https://www.xe.gr/automoto/">automoto.gr</a>
+
+                            <div class="credits">Copyright 2011 - 2020 , Χρυσή Ευκαιρία Α.Ε.</div>
+                        </div>
+
+
+                </div>
+                <div class="f_right">
+                       <!-- Check if user is premium  and exception zones--><!--/* OpenX Javascript Tag v2.8.5 */-->
+<script type='text/javascript'>
+<!--//<![CDATA[
+var m3_u = 'https://ad.xe.gr/www/delivery/ajs.php';
+var m3_r = Math.floor(Math.random()*99999999999);
+if (!document.MAX_used) document.MAX_used = ',';
+document.write ("<scr"+"ipt type='text/javascript' src='"+m3_u);
+
+document.write ("?zoneid=766&Item__category=" + XE.adServing.keywords.Item__category + "&Item__master_type=" + XE.adServing.keywords.Item__master_type + "&Item__master_subtype=" + XE.adServing.keywords.Item__master_subtype + "&Item__make=" + XE.adServing.keywords.Item__make + "&Item__type=" + XE.adServing.keywords.Item__type + "&students=" + XE.adServing.keywords.students + "&adult=" + XE.adServing.keywords.adult + "&section=" + XE.adServing.keywords.section + "&remarketing=" + XE.adServing.other.remarketing + "&Description=" + XE.adServing.keywords.Description + "&skag=" + XE.adServing.keywords.skag);
+
+document.write ('&amp;cb=' + m3_r);
+if (document.MAX_used != ',') document.write ("&amp;exclude=" + document.MAX_used);
+document.write (document.charset ? '&amp;charset='+document.charset : (document.characterSet ? '&amp;charset='+document.characterSet : ''));
+document.write ("&amp;loc=" + escape(window.location));
+if (document.referrer) document.write ("&amp;referer=" + escape(document.referrer));
+if (document.context) document.write ("&context=" + escape(document.context));
+if (document.mmm_fo) document.write ("&amp;mmm_fo=1");
+document.write ("'><\/scr"+"ipt>");
+//]]>-->
+</script>
+
+                </div>
+
+                <a href="#" class="backtotop"></a>
+
+		    </div>
+		</div>
+
+
+
+
+<div class="lightbox c_lightbox" id="c_lightbox">
+    <div class="title_area">
+        <div class="bg_area_content">
+            <h1>Υπηρεσία για <strong>Premium</strong> χρήστες</h1>
+
+            <div class="bg_area_price">
+                <img src="/images/premium_user/vip_people.jpg"><br>
+                Δοκιμάστε σε προνομιακή τιμή γνωριμίας τις νέες δυνατότητες για <br/><strong>Premium</strong> χρήστες από 0,23 €/ ημέρα
+            </div>
+        </div>
+    </div>
+
+    <div class="lightbox_content">
+
+        <div class="icons_container">
+
+            <div class="icon7 ">
+                <div>
+                    <div class="img-container"></div>
+                    <div class="ico-caption">
+                        Άμεσες<br/>
+                        ειδοποιήσεις
+                    </div>
+                </div>
+            </div>
+            <div class="icon8 ">
+                <div>
+                    <div class="img-container"></div>
+                    <div class="ico-caption">
+                        Εργαλείο<br/>
+                        σύγκρισης
+                    </div>
+                </div>
+            </div>
+            <div class="icon2 ">
+                <div>
+                    <div class="img-container"></div>
+                    <div class="ico-caption">
+                        Προσωπικές<br/>
+                        σημειώσεις
+                    </div>
+                </div>
+            </div>
+
+            <div class="icon4 ">
+                <div>
+                    <div class="img-container"></div>
+                    <div class="ico-caption">
+                        Απόκρυψη<br/>
+                        αγγελιών
+                    </div>
+                </div>
+            </div>
+            <div class="icon5 ">
+                <div>
+                    <div class="img-container"></div>
+                    <div class="ico-caption">
+                        Περισσότερες<br/>
+                        επιλογές φίλτρων
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="btns_container">
+
+            <div class="upgrade_btn">
+                <span class="has_pu_account">
+                    Η περίοδος Premium ολοκληρώθηκε<br/>
+                    στις <span class="expiration_date"></span>
+                </span>
+                <a class="pu_btn" href="https://my.xe.gr/app/static/premium-user/" data-metrics-label="Upgrade_Button">Αναβάθμιση λογαριασμού</a>
+            </div>
+
+        </div>
+        <div class="log_in">
+            <a href="https://my.xe.gr/login?redirect=https://www.xe.gr/search?Item.master_type=139926&System.item_type=xe_stelexos&Publication.freetext=%CE%A0%CE%A1%CE%9F%CE%93%CE%A1%CE%91%CE%9C%CE%9C%CE%91%CE%A4%CE%99%CE%A3%CE%A4%CE%97%CE%A3&Transaction.price.from=700&Transaction.type_channel=117538&per_page=10">Έχετε ήδη Premium Λογαριασμό; Σύνδεση >></a>
+        </div>
+    </div>
+</div>
+
+
+<!-- adBlocker dialog-->
+
+
+<div class="c_lightbox" id="ab_lightbox">
+
+    <div class="lightbox_content">
+
+        <div class="btns_container">
+
+            <div class="ab_trial_btn">
+                <a class="ab_pu_btn" href="https://my.xe.gr/create-account?redirect=https://my.xe.gr/app/static/premium-trial/" data-metrics-label="Trial_Button">Ναι, θέλω τη δοκιμαστική περίοδο</a>
+
+            </div>
+            <div class="ab_upgrade_btn">
+                <a class="ab_pu_btn" href="/premium-user/index.html" data-metrics-label="LearnMore_Button">Μάθετε περισσότερα</a>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<!--    Interactive Map Dialog    -->
+<div class="lightbox c_lightbox" id="interactivemap_check">
+    <div class="title_area">
+        <p class="lgtbx_title">Υπηρεσία για Premium χρήστες</p>
+        <p>Δοκιμάστε σε προνομιακή τιμή γνωριμίας τις νέες δυνατότητες για Premium χρήστες από 0,23 €/ ημέρα</p>
+    </div>
+
+    <div class="lightbox_content">
+
+        <div class="gif_container">
+            <img src="https://static.xe.gr/images/premium_user/steno-premium_map_popup.gif" />
+        </div>
+
+        <div class="btns_container">
+
+            <div class="upgrade_btn">
+                <span class="has_pu_account">
+                    Η περίοδος Premium ολοκληρώθηκε<br/>
+                    στις <span class="expiration_date"></span>
+                </span>
+                <a class="pu_btn" href="https://my.xe.gr/app/static/premium-user/" data-metrics-label="Upgrade_Button">Αναβάθμιση λογαριασμού</a>
+            </div>
+
+        </div>
+        <div class="log_in">
+            <a href="https://my.xe.gr/login?redirect=https://www.xe.gr/search?Item.master_type=139926&System.item_type=xe_stelexos&Publication.freetext=%CE%A0%CE%A1%CE%9F%CE%93%CE%A1%CE%91%CE%9C%CE%9C%CE%91%CE%A4%CE%99%CE%A3%CE%A4%CE%97%CE%A3&Transaction.price.from=700&Transaction.type_channel=117538&per_page=10">Έχετε ήδη Premium Λογαριασμό; Σύνδεση >></a>
+        </div>
+    </div>
+</div>
+
+
+
+    </div>
+	<!-- end wrapper -->
+
+
+
+
+<div id="lp">
+	<div id="lp_toggle">
+		<a title="Ανοίγει ή κλείνει τη λίστα σύγκρισης (Shift + L)" href="#"><span><!----></span>&nbsp;</a>
+	</div>
+	<div id="lp_contents">
+		<div id="lp_loading"><img height="32" width="32" src="https://static.xe.gr/images/generic/comparison_pane_preloader.gif" alt="Φόρτωση..."></div>
+		<h1>Σύγκριση αγγελιών</h1>
+		<p><strong id="lp_count">0</strong> αγγελίες</p>
+		<div id="lp_items" style="height: 418px;">
+			<div id="lp_empty">
+				Μπορείτε να προσθέσετε έως και 15 αγγελίες στη λίστα σύγκρισης.<br><br>Για να προσθέσετε μία αγγελία στη λίστα σύγκρισης, κάντε κλικ στο «Σύγκριση» στην σελίδα αποτελεσμάτων των αγγελιών.
+			</div>
+		</div>
+		<div id="lp_item_actions">
+			<div id="lp_action_compare"><a class="goldButton" href="#"><span>Σύγκριση αγγελιών »</span></a></div>
+            <p><a href="/my-lists.html?from=comparison">Διαχείριση λιστών</a></p>
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>
+
+
+	<script type="text/javascript">	XE.ENV.stage = "www.xe.gr";</script>
+
+
+
+<script type="text/javascript" src="https://static.xe.gr/js/jquery.cookie.js"></script>
+<!-- Javascript includes -->
+
+    <script type="text/javascript" src="https://static.xe.gr/js/autosize.min.js?v="></script>
+
+        <script type="text/javascript" src="https://static.xe.gr/js/jquery.lazyload/jquery.lazyload-any.min.js?v=3.2.57" charset="utf-8"></script>
+        <script type="text/javascript" src="https://static.xe.gr/js/lightslider/lightslider.min.js?v=3.2.57" charset="utf-8"></script>
+        <script type="text/javascript" src="https://static.xe.gr/js/pre-results.min.js?v=3.2.57" charset="utf-8"></script>
+
+
+
+
+
+
+        <script type="text/javascript" src="https://static.xe.gr/js/lib/sweetalert2.min.js?v=3.2.57"></script>
+
+
+	<script type="text/javascript" src="https://static.xe.gr/js/xe-core-min.js?v=3.2.57"></script>
+    <script type="text/javascript" src="https://static.xe.gr/js/pre-users.min.js?v=3.2.57"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="deferred_banner h728" id="ad_header_banner_728">
+
+
+    <!-- Check if user is premium  and exception zones--><!--/* OpenX Javascript Tag v2.8.5 */-->
+<script type='text/javascript'>
+<!--//<![CDATA[
+var m3_u = 'https://ad.xe.gr/www/delivery/ajs.php';
+var m3_r = Math.floor(Math.random()*99999999999);
+if (!document.MAX_used) document.MAX_used = ',';
+document.write ("<scr"+"ipt type='text/javascript' src='"+m3_u);
+
+document.write ("?zoneid=641&Item__category=" + XE.adServing.keywords.Item__category + "&Item__master_type=" + XE.adServing.keywords.Item__master_type + "&Item__master_subtype=" + XE.adServing.keywords.Item__master_subtype + "&Item__make=" + XE.adServing.keywords.Item__make + "&Item__type=" + XE.adServing.keywords.Item__type + "&students=" + XE.adServing.keywords.students + "&adult=" + XE.adServing.keywords.adult + "&section=" + XE.adServing.keywords.section + "&remarketing=" + XE.adServing.other.remarketing + "&Description=" + XE.adServing.keywords.Description + "&skag=" + XE.adServing.keywords.skag);
+
+document.write ('&amp;cb=' + m3_r);
+if (document.MAX_used != ',') document.write ("&amp;exclude=" + document.MAX_used);
+document.write (document.charset ? '&amp;charset='+document.charset : (document.characterSet ? '&amp;charset='+document.characterSet : ''));
+document.write ("&amp;loc=" + escape(window.location));
+if (document.referrer) document.write ("&amp;referer=" + escape(document.referrer));
+if (document.context) document.write ("&context=" + escape(document.context));
+if (document.mmm_fo) document.write ("&amp;mmm_fo=1");
+document.write ("'><\/scr"+"ipt>");
+//]]>-->
+</script>
+
+
+
+</div>
+
+
+
+
+
+<div class="deferred_banner" id="ad_results_728_2" >
+    <!-- Check if user is premium  and exception zones--><!--/* OpenX Javascript Tag v2.8.5 */-->
+<script type='text/javascript'>
+<!--//<![CDATA[
+var m3_u = 'https://ad.xe.gr/www/delivery/ajs.php';
+var m3_r = Math.floor(Math.random()*99999999999);
+if (!document.MAX_used) document.MAX_used = ',';
+document.write ("<scr"+"ipt type='text/javascript' src='"+m3_u);
+
+document.write ("?zoneid=661&Item__category=" + XE.adServing.keywords.Item__category + "&Item__master_type=" + XE.adServing.keywords.Item__master_type + "&Item__master_subtype=" + XE.adServing.keywords.Item__master_subtype + "&Item__make=" + XE.adServing.keywords.Item__make + "&Item__type=" + XE.adServing.keywords.Item__type + "&students=" + XE.adServing.keywords.students + "&adult=" + XE.adServing.keywords.adult + "&section=" + XE.adServing.keywords.section + "&remarketing=" + XE.adServing.other.remarketing + "&Description=" + XE.adServing.keywords.Description + "&skag=" + XE.adServing.keywords.skag);
+
+document.write ('&amp;cb=' + m3_r);
+if (document.MAX_used != ',') document.write ("&amp;exclude=" + document.MAX_used);
+document.write (document.charset ? '&amp;charset='+document.charset : (document.characterSet ? '&amp;charset='+document.characterSet : ''));
+document.write ("&amp;loc=" + escape(window.location));
+if (document.referrer) document.write ("&amp;referer=" + escape(document.referrer));
+if (document.context) document.write ("&context=" + escape(document.context));
+if (document.mmm_fo) document.write ("&amp;mmm_fo=1");
+document.write ("'><\/scr"+"ipt>");
+//]]>-->
+</script>
+
+</div>
+
+
+
+
+<div class="skin_banner" id="ad_results_bus_skin">
+    <!-- Check if user is premium  and exception zones--><!--/* OpenX Javascript Tag v2.8.5 */-->
+<script type='text/javascript'>
+<!--//<![CDATA[
+var m3_u = 'https://ad.xe.gr/www/delivery/ajs.php';
+var m3_r = Math.floor(Math.random()*99999999999);
+if (!document.MAX_used) document.MAX_used = ',';
+document.write ("<scr"+"ipt type='text/javascript' src='"+m3_u);
+
+document.write ("?zoneid=673&Item__category=" + XE.adServing.keywords.Item__category + "&Item__master_type=" + XE.adServing.keywords.Item__master_type + "&Item__master_subtype=" + XE.adServing.keywords.Item__master_subtype + "&Item__make=" + XE.adServing.keywords.Item__make + "&Item__type=" + XE.adServing.keywords.Item__type + "&students=" + XE.adServing.keywords.students + "&adult=" + XE.adServing.keywords.adult + "&section=" + XE.adServing.keywords.section + "&remarketing=" + XE.adServing.other.remarketing + "&Description=" + XE.adServing.keywords.Description + "&skag=" + XE.adServing.keywords.skag);
+
+document.write ('&amp;cb=' + m3_r);
+if (document.MAX_used != ',') document.write ("&amp;exclude=" + document.MAX_used);
+document.write (document.charset ? '&amp;charset='+document.charset : (document.characterSet ? '&amp;charset='+document.characterSet : ''));
+document.write ("&amp;loc=" + escape(window.location));
+if (document.referrer) document.write ("&amp;referer=" + escape(document.referrer));
+if (document.context) document.write ("&context=" + escape(document.context));
+if (document.mmm_fo) document.write ("&amp;mmm_fo=1");
+document.write ("'><\/scr"+"ipt>");
+//]]>-->
+</script>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+    <script>
+    // Script for content grouping
+    //_gaq.push('set','ContentGroup1','');
+
+
+    $(function() {
+
+        var contentGroup;
+        var groupID;
+
+        if (window.location.toString().includes("/property")){
+            contentGroup = 1;
+            groupID = keywords.System_type;
+        } else if (window.location.toString().includes("/automoto")){
+            contentGroup = 2;
+            groupID = keywords.System_type;
+        } else if (window.location.toString().includes("/jobs")){
+            contentGroup = 3;
+            groupID = XE.adServing.keywords.Item__master_type;
+        } else if (window.location.toString().includes("/health")){
+            contentGroup = 5;
+            groupID = XE.adServing.keywords.Item__master_type;
+        } else {
+            contentGroup = 4;
+            groupID = XE.adServing.keywords.Item__master_type;
+        }
+
+        //alert(contentGroup + " : " + groupID);
+        //alert(XE.adServing.keywords.Item__master_type)
+        //ga('set','ContentGroup'+contentGroup, groupID);
+        //_gaq.push(['_setPageGroup', contentGroup, groupID]);
+    });
+</script>
+
+    <!-- Premium Promo Popup -->
+
+
+<div class="dialog lightbox h_lightbox lightbox_w_slider h2_lightbox" id="h1_lightbox" style="">
+    <div class="close_lightbox">
+        <img class="simplemodal-close" src="/images/premium_user/x_mark.png" alt="Close" />
+    </div>
+
+    <div id="slide1" class="h_lightbox_slide" style="display: block">
+
+        <div class="title_area without_bg">
+            <h2>Περισσότερα οφέλη</h2>
+        </div>
+
+        <div class="lightbox_content">
+
+            <div id="NW" class="one_half_col">
+                <div class="img_container"></div>
+                <div class="onefourth_content_text">
+                    Ξεχωρίστε εύκολα<br/>
+                    τις ευκαιρίες
+                </div>
+            </div>
+            <div id="NE" class="one_half_col">
+                <div class="img_container"></div>
+                <div class="onefourth_content_text">
+                    Εξοικονομήστε<br/>
+                    πολύτιμο χρόνο
+                </div>
+            </div>
+            <div id="SW" class="one_half_col">
+                <div class="img_container"></div>
+                <div class="onefourth_content_text">
+                    Οργανώστε<br/>
+                    τις αναζητήσεις σας
+                </div>
+            </div>
+            <div id="SE" class="one_half_col">
+                <div class="img_container"></div>
+                <div class="onefourth_content_text">
+                    Βρείτε αυτό<br/>
+                    που ψάχνετε
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="slide2" class="h_lightbox_slide">
+
+        <div class="title_area without_bg">
+            <h2>Νέες δυνατότητες</h2>
+        </div>
+
+        <div class="lightbox_content">
+
+            <div id="NW" class="one_third_col">
+                <div class="img_container"></div>
+                <div class="onefourth_content_text">
+                    Βελτιωμένη<br/>
+                    εμπειρία χρήστη
+                </div>
+            </div>
+            <div id="NC" class="one_third_col">
+                <div class="img_container"></div>
+                <div class="onefourth_content_text">
+                    Προσωπικές<br/>
+                    σημειώσεις
+                </div>
+            </div>
+            <div id="NE" class="one_third_col">
+                <div class="img_container"></div>
+                <div class="onefourth_content_text">
+                    Άμεσες<br/>
+                    ειδοποιήσεις
+                </div>
+            </div>
+            <div id="SW" class="one_third_col">
+                <div class="img_container"></div>
+                <div class="onefourth_content_text">
+                    Περισσότερες<br/>
+                    επιλογές φίλτρων
+                </div>
+            </div>
+            <div id="SC" class="one_third_col">
+                <div class="img_container"></div>
+                <div class="onefourth_content_text">
+                    Απόκρυψη<br/>
+                    αγγελιών
+                </div>
+            </div>
+            <div id="SE" class="one_third_col">
+                <div class="img_container"></div>
+                <div class="onefourth_content_text">
+                    Υπηρεσίες<br/>
+                    Property
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="slide3" class="h_lightbox_slide last_slide">
+
+        <img class="pu_throne" src="/images/premium_user/pu_throne.png" />
+        <div class="title_area upgrade_title">
+            <h2>Αναβαθμίστε σήμερα σε Premium</h2>
+        </div>
+
+
+        <div class="lightbox_content">
+            <div class="price_title">
+                Προσφορά γνωριμίας από 0,23€/ημέρα
+            </div>
+            <div class="price_text">
+                Απολαύστε τις νέες δυνατότητες που σχεδιάσαμε ειδικά για εσάς!
+            </div>
+
+            <div class="btns_container">
+
+                <div class="trial_btn" style="left: 10px;">
+
+
+                    <div class="trial_explanatory">
+                        <span class="">Δωρεάν δοκιμή για 5 ημέρες</span>
+                    </div>
+                    <a href="https://my.xe.gr/app/static/premium-trial/" rel="nofollow">Ναι, θέλω τη δοκιμαστική περίοδο</a>
+                </div>
+
+                <div class="upgrade_btn" style="right: 10px;">
+                    <a href="https://my.xe.gr/app/static/premium-user/" rel="nofollow">Αναβάθμιση λογαριασμού</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="left_navigation navigation">
+        <img src="/images/premium_user/pu_left_arrow.png" onclick="h_plusDivs(-1)"/>
+    </div>
+    <div class="right_navigation navigation">
+        <img src="/images/premium_user/pu_right_arrow.png" onclick="h_plusDivs(1)"/>
+    </div>
+
+    <div class="navbadges_container">
+        <span class="badge h-nav-badge nav-badge active-badge" onclick="h_currentDiv(1)"></span>
+        <span class="badge h-nav-badge nav-badge" onclick="h_currentDiv(2)"></span>
+        <span class="badge h-nav-badge nav-badge" onclick="h_currentDiv(3)"></span>
+    </div>
+
+</div>
+
+
+<script>
+
+    $(".h2_lightbox").ready(function () {
+
+        if ($(".h_lightbox #slide1").is(":visible") ) {
+            $(".h_lightbox .left_navigation").css("display","none");
+        }
+    })
+
+
+    if ( getParameterByName("premium-promo") != null ) {
+
+        $("#h1_lightbox").modal({
+            overlayClose: true,
+            opacity: 20,
+            onShow: function (dialog) {
+
+                // add class to style this modal only
+                // remove class onClose
+                $(".simplemodal-container").addClass("premiumpromo");
+
+                $(".btn_container a").click(function (e) {
+
+                    e.preventDefault();
+                    $.modal.close();
+
+                    $(".h2_lightbox").modal({
+                        overlayClose: true,
+                        opacity: 20,
+                        onShow: function (dialog) {
+                            /*dialog.container.draggable({
+                                handle: 'h3',
+                                cursor: 'move'
+                            });*/
+                        },
+                        onClose: function () {
+                            $(".simplemodal-container").removeClass("premiumpromo");
+                        }
+                    });
+                    $(".h_lightbox .left_navigation").css("display", "none");
+                    //}
+                })
+            }
+        }); //end modal show
+    }
+
+
+    var slideIndex = 1;
+    h_showDivs(slideIndex);
+
+    function h_plusDivs(n) {
+        h_showDivs(slideIndex += n);
+    }
+
+    function h_currentDiv(n) {
+        h_showDivs(slideIndex = n);
+    }
+
+    function h_showDivs(n) {
+        var i;
+        var x = document.getElementsByClassName("h_lightbox_slide");
+        var dots = document.getElementsByClassName("h-nav-badge");
+        if (n > x.length) {slideIndex = 1}
+        if (n < 1) {slideIndex = x.length}
+        for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
+        }
+        for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" active-badge", "");
+        }
+        x[slideIndex-1].style.display = "block";
+        dots[slideIndex-1].className += " active-badge";
+        dots[slideIndex-1].className += " badge" +i;
+
+        $(".navbadges_container").css("display","block");
+        $(".right_navigation").css("display","block");
+        $(".left_navigation").css("display","block");
+
+
+        if ($(".h_lightbox #slide1").is(":visible") ) {
+            $(".left_navigation").css("display","none");
+        }
+
+        if ( $(".h_lightbox #slide3").is(":visible") ) {
+            $(".navbadges_container").css("display","none");
+            $(".right_navigation").css("display","none");
+        }
+    }
+
+    function getParameterByName(name, url) {
+        if (!url) {
+            url = window.location.href;
+        }
+        name = name.replace(/[\[\]]/g, "\\$&");
+        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, " "));
+    }
+
+    function Jsonise() {
+        var Object_json =
+                '[{' +
+                '"productId": {' +
+                '"id": "PremiumUserTrialPack",' +
+                '"bundle": "",' +
+                '"variation": "",' +
+                '"outOfBundle": "false"' +
+                '},' +
+                '"params": {' +
+                '"quantity": "1"' +
+                '}' +
+                '}]';
+
+        return Object_json;
+    }
+
+</script>
+
+<style>
+    .premiumpromo {
+        width: auto !important;
+        height: auto !important;
+        left: 558.5px !important;
+        top: 272px !important;
+    }
+    .modalCloseImg.simplemodal-close {
+        display: none !important;
+    }
+    .lightbox_w_slider {
+        width: 540px !important;
+        height: 410px;
+        border: none;
+        position: relative;
+        overflow: hidden;
+    }
+    .premiumpromo .dialog {
+        display: none;
+        z-index: 1000;
+        background-color: #FFF;
+        -moz-box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+        -webkit-box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+        box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+        -moz-border-radius: 6px;
+        border-radius: 6px;
+        padding: 0px !important;
+    }
+    .lightbox_w_slider .title_area.without_bg {
+        height: 110px;
+    }
+    #h1_lightbox .lightbox_content {
+        text-align: center;
+        margin-top: 0px;
+    }
+    .lightbox_w_slider .title_area.without_bg h2 {
+        line-height: 120px;
+    }
+    .lightbox_w_slider .lightbox_content {
+        width: 380px;
+        margin: 0 auto;
+        margin-top: 0px;
+    }
+    .simplemodal-container.ui-draggable h1,
+    .simplemodal-container.ui-draggable h2 {
+        cursor: move;
+    }
+    .lightbox_w_slider h2 {
+        font-size: 25px;
+        font-weight: normal;
+        text-align: center;
+    }
+    .h2_lightbox #slide1 #NW .img_container {
+        background: url("../images/premium_user/h_lghtbx_slide1_sprite.png") center 8px no-repeat;
+    }
+    .lightbox_w_slider .lightbox_content .one_half_col {
+        width: 50%;
+        float: left;
+        text-align: center;
+        font-size: 13px;
+        text-rendering: geometricprecision;
+        position: relative;
+    }
+    .h2_lightbox #slide1 #NE .img_container {
+        background: url("../images/premium_user/h_lghtbx_slide1_sprite.png") no-repeat center -65px;
+    }
+    .h2_lightbox .img_container {
+        width: 55px;
+        height: 55px;
+        margin: 0 auto;
+    }
+    .h2_lightbox #SW, .h2_lightbox #SE {
+        margin-top: 30px;
+    }
+    .h2_lightbox #slide1 #SW .img_container {
+        background: url("../images/premium_user/h_lghtbx_slide1_sprite.png") no-repeat center -160px;
+    }
+    .h2_lightbox #SW, .h2_lightbox #SE {
+        margin-top: 30px;
+    }
+    .h2_lightbox #slide1 #SE .img_container {
+        background: url("../images/premium_user/h_lghtbx_slide1_sprite.png") no-repeat center -250px;
+    }
+    .lightbox_w_slider .lightbox_content .one_third_col {
+        width: 33%;
+        float: left;
+        text-align: center;
+        font-size: 13px;
+        text-rendering: geometricprecision;
+    }
+    .h2_lightbox #slide2 #NW .img_container {
+        background: url("../images/premium_user/h_lghtbx_slide2_sprite.png") no-repeat center 5px;
+    }
+    .h2_lightbox .img_container {
+        width: 55px;
+        height: 55px;
+        margin: 0 auto;
+    }
+    .h2_lightbox #slide2 #NC .img_container {
+        background: url("../images/premium_user/h_lghtbx_slide2_sprite.png") center -76px no-repeat;
+    }
+    .h2_lightbox #slide2 #NE .img_container {
+        background: url("../images/premium_user/h_lghtbx_slide2_sprite.png") center -485px no-repeat;
+        width: 62px;
+    }
+    .h2_lightbox #SW,
+    .h2_lightbox #SC,
+    .h2_lightbox #SE {
+        margin-top: 30px;
+    }
+    .h2_lightbox #slide2 #SW .img_container {
+        background: url("../images/premium_user/h_lghtbx_slide2_sprite.png") center -294px no-repeat;
+    }
+    .h2_lightbox #slide2 #SC .img_container {
+        background: url("../images/premium_user/h_lghtbx_slide2_sprite.png") center -220px no-repeat;
+    }
+    .h2_lightbox #slide2 #SE .img_container {
+        background: url("../images/premium_user/h_lghtbx_slide2_sprite.png") center -344px no-repeat;
+        width: 72px;
+    }
+    .h2_lightbox #slide3 .pu_throne {
+        margin: 0 auto 0 auto;
+        position: relative;
+        display: block;
+        padding-top: 50px;
+    }
+    .h2_lightbox #slide3 .title_area.upgrade_title {
+        margin-top: 20px;
+    }
+    .h2_lightbox #slide3 .lightbox_content {
+        width: auto !important;
+    }
+    .h2_lightbox #slide3 .lightbox_content .price_title {
+        font-size: 19px;
+        text-align: center;
+        margin-top: 34px;
+    }
+    .h2_lightbox #slide3 .lightbox_content .price_text {
+        font-size: 14px;
+        text-align: center;
+        margin-top: 16px;
+    }
+    .h2_lightbox #slide3 .lightbox_content .trial_explanatory {
+        top: -34px;
+        text-align: center;
+        color: #25ad12;
+        position: absolute;
+        width: 100%;
+    }
+    .h2_lightbox #slide3 .lightbox_content .trial_btn a {
+        padding: 8px 11px;
+    }
+    .h2_lightbox #slide3 .lightbox_content .upgrade_btn a,
+    .h2_lightbox #slide3 .lightbox_content .trial_btn a {
+        font-size: 15px;
+        text-decoration: none;
+        color: #000;
+        border-radius: 5px;
+        margin: 20px 0;
+        background: #ffb800;
+    }
+    .h2_lightbox #slide3 .lightbox_content .upgrade_btn,
+    .h2_lightbox #slide3 .lightbox_content .trial_btn {
+        width: 50%;
+        float: left;
+        display: block;
+        text-align: center;
+        position: relative;
+    }
+
+    .lightbox_w_slider .left_navigation {
+        left: 40px;
+    }
+    .lightbox_w_slider .navigation {
+        position: absolute;
+        top: 167px;
+        cursor: pointer;
+    }
+    .lightbox_w_slider .right_navigation {
+        right: 40px;
+    }
+    .lightbox_w_slider .navigation {
+        position: absolute;
+        top: 167px;
+        cursor: pointer;
+    }
+    .lightbox_w_slider .navbadges_container {
+        position: absolute;
+        bottom: 20px;
+        width: 100%;
+        text-align: center;
+        padding-left: 25px;
+    }
+    .lightbox_w_slider .navbadges_container span {
+        margin-right: 30px;
+        cursor: pointer;
+    }
+    .lightbox_w_slider .badge {
+        height: 21px;
+        width: 21px;
+        padding: 0;
+        background-color: #58585a !important;
+        display: inline-block;
+        cursor: pointer;
+        border-radius: 50%;
+        -moz-transition: background-color .25s,color .15s,box-shadow .25s,opacity .25s,filter .25s,border .15s;
+        -o-transition: background-color .25s,color .15s,box-shadow .25s,opacity .25s,filter .25s,border .15s;
+        -webkit-transition: background-color .25s,color .15s,box-shadow .25s,opacity .25s,filter .25s,border .15s;
+        transition: background-color .25s,color .15s,box-shadow .15s,opacity .25s,filter .25s,border .15s;
+    }
+    .lightbox_w_slider .active-badge, .lightbox_w_slider .badge:hover {
+        color: #000 !important;
+        background-color: #ffb800 !important;
+    }
+    .h2_lightbox #slide3 .lightbox_content .btns_container {
+
+        position: absolute;
+        width: 100%;
+        bottom: 30px;
+
+    }
+    .h2_lightbox #slide3 .lightbox_content .trial_btn {
+        width: 50%;
+        float: left;
+        display: block;
+        text-align: center;
+        position: relative;
+    }
+    .h2_lightbox #slide3 .lightbox_content .upgrade_btn a {
+        padding: 8px 33px;
+    }
+</style>
+
+
+
+
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  $( document ).ready(function() {
+      _gaq.push(['_setAccount', 'UA-4151742-1']);
+      _gaq.push(['_setDomainName', 'www.xe.gr']);
+      _gaq.push (['_gat._anonymizeIp']);
+
+
+
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+  });
+
+</script>
+
+
+
+
+</div>
+
+
+
+        <!-- welcome screen all site -->
+        <script type='text/javascript'>
+            var m3_u = 'https://ad.xe.gr/www/delivery/ajs.php';
+            var m3_r = Math.floor(Math.random()*99999999999);
+            if (!document.MAX_used) document.MAX_used = ',';
+            document.write ("<scr"+"ipt type='text/javascript' src='"+m3_u);
+            document.write ("?zoneid=734&Item__category=" + XE.adServing.keywords.Item__category + "&Item__master_type=" + XE.adServing.keywords.Item__master_type + "&Item__master_subtype=" + XE.adServing.keywords.Item__master_subtype + "&Item__make=" + XE.adServing.keywords.Item__make + "&Item__type=" + XE.adServing.keywords.Item__type + "&students=" + XE.adServing.keywords.students + "&adult=" + XE.adServing.keywords.adult + "&section=" + XE.adServing.keywords.section + "&remarketing=" + XE.adServing.other.remarketing);
+            document.write ('&amp;cb=' + m3_r);
+            if (document.MAX_used != ',') document.write ("&amp;exclude=" + document.MAX_used);
+            document.write (document.charset ? '&amp;charset='+document.charset : (document.characterSet ? '&amp;charset='+document.characterSet : ''));
+            document.write ("&amp;loc=" + escape(window.location));
+            if (document.referrer) document.write ("&amp;referer=" + escape(document.referrer));
+            if (document.context) document.write ("&context=" + escape(document.context));
+            if (document.mmm_fo) document.write ("&amp;mmm_fo=1");
+            document.write ("'><\/scr"+"ipt>");
+        </script>
+
+
+
+
+
+</body>
+
+</html>
+
+<input type="hidden" class="last-search_id" value="/saved_searches?action=create_with_media&search_name=search_name&notify_days=0&realtime=0&amp;System.item_type=xe_stelexos&amp;&amp;Item.master_type=139926&amp;&amp;Transaction.type_channel=117538&amp;&amp;Publication.freetext=%CE%A0%CE%A1%CE%9F%CE%93%CE%A1%CE%91%CE%9C%CE%9C%CE%91%CE%A4%CE%99%CE%A3%CE%A4%CE%97%CE%A3&amp;&amp;Transaction.price.from=700" />
