@@ -1,5 +1,6 @@
 import urllib.request, urllib.error, urllib.parse
 from typing import List, Tuple, Union
+import time
 import re
 import time
 import logging
@@ -11,14 +12,14 @@ logger = logging.getLogger('XeGrAdSiteCrawler')
 
 
 class XeGrAdSiteCrawler(AbstractAdSiteCrawler):
-    __slots__ = ('_stop_words', '_ad_site_url')
+    __slots__ = ('_stop_words', '_ad_site_url', '_anchor_class_name')
 
     _stop_words: List
     _ad_site_url: str
+    _anchor_class_name: str
     _ignored_emails: List = ['email@paroxos.com']
-    _anchor_class_name: str = 'result-list-narrow-item'
 
-    def __init__(self, stop_words: List, ad_site_url: str = "https://www.xe.gr"):
+    def __init__(self, stop_words: List, ad_site_url: str = "https://www.xe.gr", anchor_class_name='result-list-narrow-item'):
         """
         Tha basic constructor. Creates a new instance of AdSiteCrawler using the specified credentials
 
@@ -27,6 +28,7 @@ class XeGrAdSiteCrawler(AbstractAdSiteCrawler):
 
         self._ad_site_url = ad_site_url
         self._stop_words = stop_words
+        self._anchor_class_name = anchor_class_name
         super().__init__()
 
     def get_new_ads(self, lookup_url: str, ads_checked: List, crawl_interval: int = 15) -> Tuple[str, Union[None, str]]:
@@ -48,9 +50,16 @@ class XeGrAdSiteCrawler(AbstractAdSiteCrawler):
         search_page_html = self._retrieve_html_from_url(lookup_url)
         # Search for links in the main page's html, retrieve their html and look for emails inside them
         for ad_link in self._find_links_in_html(html_data=search_page_html, anchor_class_name=self._anchor_class_name):
+            logger.debug("Input ad_link: %s" % ad_link)
+            ad_linked_parsed = urllib.parse.quote(ad_link)
+            if ad_linked_parsed[:4] != 'http':
+                full_sub_link = self._ad_site_url + ad_linked_parsed
+            else:
+                full_sub_link = ad_link
+            logger.debug("Checking constructed full_sub_link: %s" % full_sub_link)
+            # Wait before checking next link to avoid bot ban
+            logger.debug("Sleeping for crawl_interval={crawl_interval} seconds..".format(crawl_interval=crawl_interval))
             time.sleep(crawl_interval)
-            logger.debug("Checking ad_link: %s" % ad_link)
-            full_sub_link = self._ad_site_url + urllib.parse.quote(ad_link)
             if full_sub_link in ads_checked:
                 logger.debug("It is in ads_checked, skipping..")
                 continue
@@ -98,14 +107,17 @@ class XeGrAdSiteCrawler(AbstractAdSiteCrawler):
         :param html_data:
         """
 
+        logger.debug("Using anchor class name=%s" % anchor_class_name)
         logger.debug("Searching for sub-links in html..")
 
-        pattern = re.compile(r'(<a class=\"{anchor_class_name}\".*?>)'.format(anchor_class_name=anchor_class_name))
+        pattern = re.compile(r"(<a[^<]*class=['\"][\sa-zA-Z\-]*{anchor_class_name}[\sa-zA-Z\-]*['\"][^<]*>)"
+                             .format(anchor_class_name=anchor_class_name))
         a_tag_captured = pattern.findall(html_data)
         logger.debug("Anchor captured: %s" % a_tag_captured)
         for i in a_tag_captured:
             href_raw = i[str(i).find('href'):]
             href = href_raw[:href_raw.find(' ')]
+            logger.debug("Href captured: %s" % href)
             yield href[6:-1]
 
     @classmethod

@@ -338,14 +338,14 @@ Optional Arguments:
 
 ```
 
-If you notice that no ad is being discovered, fine-tune the `crawl_interval` and `_anchor_class_name` default values in 
-[XeGrAdSiteCrawler class](ad_site_crawler/xegr_ad_site_crawler.py). 
+If you notice that no ad is being discovered, fine-tune the `crawl_interval` and `anchor_class_name` values that affect 
+ the [XeGrAdSiteCrawler class](ad_site_crawler/xegr_ad_site_crawler.py). 
 
 - The `crawl_interval` defines the time between each crawl and should be increased 
 if the bot is being flagged as a bot (well..). You can change this from the yaml file.
 
 - The `anchor_class_name` is the css class value that characterizes all the search results anchors (`<a .. class=`) 
-and if you this it is wrong, you can change from the top of the class definition.
+and if you think it is wrong, you can change this from the yaml file too.
 
 
 ## Deployment <a name = "deployment"></a>

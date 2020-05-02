@@ -11,6 +11,9 @@
     "crawl_interval": {
       "type": "integer"
     },
+    "anchor_class_name": {
+      "type": "string"
+    },
     "test_mode": {
       "type": "boolean"
     },
