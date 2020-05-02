@@ -135,14 +135,14 @@ def crawl_and_send_loop(lookup_url: str, check_interval: int, crawl_interval: in
             for link, email in new_ads:
                 if link not in links_checked and (email not in emails_checked or email is None):
                     if email is None:
-                        # Email applicant that he/should call manually
-                        logger.info("Link ({}) has no email. Inform Maria.".format(link))
+                        # Email applicant to inform him that he should call manually
+                        logger.info("Link ({}) has no email. Inform the applicant.".format(link))
                         email_app.send_email(subject=inform_should_call_subject,
-                                             html=inform_should_call_html.format(link),
+                                             html=inform_should_call_html.format(link=link),
                                              to=email_app.get_self_email())
                     else:
                         # Send application after 1 minute (don't be too cocky)
-                        time.sleep(2)
+                        time.sleep(60)
                         logger.info("Sending email to: {}. Ad Link: {}".format(email, link))
                         email_app.send_email(subject=application_sent_subject,
                                              html=application_sent_html.format(link),
@@ -151,7 +151,7 @@ def crawl_and_send_loop(lookup_url: str, check_interval: int, crawl_interval: in
 
                         # Inform applicant that an application has been sent successfully
                         email_app.send_email(subject=inform_success_subject,
-                                             html=inform_success_html.format(email, link),
+                                             html=inform_success_html.format(email=email, link=link),
                                              to=email_app.get_self_email())
 
                     email_info = {"link": link, "address": email, "sent_on": datetime.datetime.utcnow().isoformat()}
