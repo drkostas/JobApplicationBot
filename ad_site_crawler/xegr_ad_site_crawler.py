@@ -116,8 +116,8 @@ class XeGrAdSiteCrawler(AbstractAdSiteCrawler):
         logger.debug("Anchor captured: %s" % a_tag_captured)
         for i in a_tag_captured:
             href_raw = i[str(i).find('href'):]
-            href = href_raw[:href_raw.find(' ')]
-            logger.debug("Href captured: %s" % href)
+            href = href_raw[:href_raw.find(' ')].strip()
+            logger.debug("Href captured: %s, and sliced: %s" % (href, href[6:-1]))
             yield href[6:-1]
 
     @classmethod
