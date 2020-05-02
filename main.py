@@ -119,7 +119,7 @@ def crawl_and_send_loop(lookup_url: str, check_interval: int, crawl_interval: in
     attachments_local_paths = [os.path.join(cloud_store.local_files_folder, attachment_name)
                                for attachment_name in cloud_store.attachments_names]
     # Get the email_data, the attachments and the stop_words list from the cloudstore
-    # cloud_store.download_attachments()
+    cloud_store.download_attachments()
     application_to_send_subject, application_to_send_html = cloud_store.get_application_to_send_email_data()
     inform_should_call_subject, inform_should_call_html = cloud_store.get_inform_should_call_email_data()
     inform_success_subject, inform_success_html = cloud_store.get_inform_success_email_data()
