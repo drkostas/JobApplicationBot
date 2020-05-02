@@ -12,7 +12,7 @@ logger = logging.getLogger('JobBotDropboxCloudstore')
 class JobBotDropboxCloudstore(DropboxCloudstore):
     __slots__ = ('_handler', 'remote_files_folder', 'local_files_folder',
                  'attachments_names', '_update_attachments', '_update_stop_words',
-                 '_update_application_sent_email', '_update_inform_success_email', '_update_inform_should_call_email')
+                 '_update_application_to_send_email', '_update_inform_success_email', '_update_inform_should_call_email')
 
     _handler: Dropbox
     remote_files_folder: str
@@ -20,7 +20,7 @@ class JobBotDropboxCloudstore(DropboxCloudstore):
     attachments_names: List
     _update_attachments: bool
     _update_stop_words: bool
-    _update_application_sent_email: bool
+    _update_application_to_send_email: bool
     _update_inform_success_email: bool
     _update_inform_should_call_email: bool
 
@@ -41,16 +41,16 @@ class JobBotDropboxCloudstore(DropboxCloudstore):
             'update_attachments'] if 'update_attachments' in config else False
         self._update_stop_words = config[
             'update_stop_words'] if 'update_stop_words' in config else False
-        self._update_application_sent_email = config[
-            'update_application_sent_email'] if 'update_application_sent_email' in config else False
+        self._update_application_to_send_email = config[
+            'update_application_to_send_email'] if 'update_application_to_send_email' in config else False
         self._update_inform_success_email = config[
             'update_inform_success_email'] if 'update_inform_success_email' in config else False
         self._update_inform_should_call_email = config[
             'update_inform_should_call_email'] if 'update_inform_should_call_email' in config else False
         super().__init__(config=config)
 
-    def get_application_sent_email_data(self) -> Tuple[str, str]:
-        return self._get_email_data(type='application_sent')
+    def get_application_to_send_email_data(self) -> Tuple[str, str]:
+        return self._get_email_data(type='application_to_send')
 
     def get_inform_should_call_email_data(self) -> Tuple[str, str]:
         return self._get_email_data(type='inform_should_call')
@@ -64,7 +64,7 @@ class JobBotDropboxCloudstore(DropboxCloudstore):
 
     def _get_email_data(self, type: str) -> Tuple[str, str]:
         subject_file_path = os.path.join(self.remote_files_folder, '{type}_subject.txt'.format(type=type))
-        html_file_path = os.path.join(self.remote_files_folder, '{type}_html.html'.format(type=type))
+        html_file_path = os.path.join(self.remote_files_folder, '{type}_body.html'.format(type=type))
         subject_file = self.download_file(frompath=subject_file_path).decode("utf-8")
         html_file = self.download_file(frompath=html_file_path).decode("utf-8")
         return subject_file, html_file
@@ -75,11 +75,11 @@ class JobBotDropboxCloudstore(DropboxCloudstore):
             attachment_remote_path = os.path.join(self.remote_files_folder, attachment_name)
             self.download_file(frompath=attachment_remote_path, tofile=attachment_local_path)
 
-    def update_application_sent_email_data(self) -> None:
-        if self._update_application_sent_email:
-            self._update_email_data(type='application_sent')
+    def update_application_to_send_email_data(self) -> None:
+        if self._update_application_to_send_email:
+            self._update_email_data(type='application_to_send')
         else:
-            logger.info("The update of application_sent email data was skipped.")
+            logger.info("The update of application_to_send email data was skipped.")
 
     def update_inform_should_call_email_data(self) -> None:
         if self._update_inform_should_call_email:
@@ -105,9 +105,9 @@ class JobBotDropboxCloudstore(DropboxCloudstore):
     def _update_email_data(self, type: str) -> None:
         logger.info("Updating the %s email data.." % type)
         subject_remote_path = os.path.join(self.remote_files_folder, '{type}_subject.txt'.format(type=type))
-        html_remote_path = os.path.join(self.remote_files_folder, '{type}_html.html'.format(type=type))
+        html_remote_path = os.path.join(self.remote_files_folder, '{type}_body.html'.format(type=type))
         subject_local_path = os.path.join(self.local_files_folder, '{type}_subject.txt'.format(type=type))
-        html_local_path = os.path.join(self.local_files_folder, '{type}_html.html'.format(type=type))
+        html_local_path = os.path.join(self.local_files_folder, '{type}_body.html'.format(type=type))
         with open(subject_local_path, 'rb') as subject_file:
             self.upload_file(file_bytes=subject_file.read(), upload_path=subject_remote_path)
         with open(html_local_path, 'rb') as html_file:

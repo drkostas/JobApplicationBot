@@ -9,7 +9,7 @@ cloudstore:
       update_attachments: true
       update_stop_words: true
       update_url_search_params: true
-      update_application_sent_email: true
+      update_application_to_send_email: true
       update_inform_success_email: true
       update_inform_should_call_email: true
     type: dropbox

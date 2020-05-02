@@ -33,6 +33,7 @@ class TestConfiguration(unittest.TestCase):
         logger.info('Loading Configuration..')
         configuration = Configuration(config_src=os.path.join(self.test_data_path, 'template_conf.yml'))
         expected_json = {'tag': 'production',
+                         'crawl_interval': 2,
                          'test_mode': False,
                          "lookup_url": "www.xe.gr",
                          'datastore': [{'config':
@@ -65,6 +66,7 @@ class TestConfiguration(unittest.TestCase):
         # Compare
         logger.info('Comparing the results..')
         expected_json = {'tag': 'production',
+                         'crawl_interval': 2,
                          'test_mode': False,
                          "lookup_url": "www.xe.gr",
                          'datastore': [{'config':

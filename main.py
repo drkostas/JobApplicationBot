@@ -93,13 +93,13 @@ def show_ads_checked(ads: List[Tuple]) -> None:
 
 def upload_files_to_cloudstore(cloud_store: JobBotDropboxCloudstore):
     cloud_store.update_stop_words_data()
-    cloud_store.update_application_sent_email_data()
+    cloud_store.update_application_to_send_email_data()
     cloud_store.update_inform_should_call_email_data()
     cloud_store.update_inform_success_email_data()
     cloud_store.upload_attachments()
 
 
-def crawl_and_send_loop(lookup_url: str, check_interval: int,
+def crawl_and_send_loop(lookup_url: str, check_interval: int, crawl_interval: int,
                         data_store: JobBotMySqlDatastore,
                         cloud_store: JobBotDropboxCloudstore,
                         email_app: GmailEmailApp) -> None:
@@ -119,14 +119,15 @@ def crawl_and_send_loop(lookup_url: str, check_interval: int,
                                for attachment_name in cloud_store.attachments_names]
     # Get the email_data, the attachments and the stop_words list from the cloudstore
     cloud_store.download_attachments()
-    application_sent_subject, application_sent_html = cloud_store.get_application_sent_email_data()
+    application_to_send_subject, application_to_send_html = cloud_store.get_application_to_send_email_data()
     inform_should_call_subject, inform_should_call_html = cloud_store.get_inform_should_call_email_data()
     inform_success_subject, inform_success_html = cloud_store.get_inform_success_email_data()
 
     links_checked = [row[0] for row in data_store.get_applications_sent(columns='link')]
     logger.info("Waiting for new ads..")
     while True:
-        new_ads = list(ad_site_crawler.get_new_ads(lookup_url=lookup_url, ads_checked=links_checked))
+        new_ads = list(ad_site_crawler.get_new_ads(lookup_url=lookup_url, ads_checked=links_checked,
+                                                   crawl_interval=crawl_interval))
 
         if len(new_ads) > 0:
             links_checked = [row[0] for row in data_store.get_applications_sent(columns='link')]
@@ -134,23 +135,23 @@ def crawl_and_send_loop(lookup_url: str, check_interval: int,
             for link, email in new_ads:
                 if link not in links_checked and (email not in emails_checked or email is None):
                     if email is None:
-                        # Email applicant that he/should call manually
-                        logger.info("Link ({}) has no email. Inform Maria.".format(link))
+                        # Email applicant to inform him that he should call manually
+                        logger.info("Link ({}) has no email. Inform the applicant.".format(link))
                         email_app.send_email(subject=inform_should_call_subject,
-                                             html=inform_should_call_html.format(link),
+                                             html=inform_should_call_html.format(link=link),
                                              to=email_app.get_self_email())
                     else:
                         # Send application after 1 minute (don't be too cocky)
-                        time.sleep(2)
+                        time.sleep(60)
                         logger.info("Sending email to: {}. Ad Link: {}".format(email, link))
-                        email_app.send_email(subject=application_sent_subject,
-                                             html=application_sent_html.format(link),
+                        email_app.send_email(subject=application_to_send_subject,
+                                             html=application_to_send_html.format(link),
                                              to=email,
                                              attachments=attachments_local_paths)
 
                         # Inform applicant that an application has been sent successfully
                         email_app.send_email(subject=inform_success_subject,
-                                             html=inform_success_html.format(email, link),
+                                             html=inform_success_html.format(email=email, link=link),
                                              to=email_app.get_self_email())
 
                     email_info = {"link": link, "address": email, "sent_on": datetime.datetime.utcnow().isoformat()}
@@ -188,6 +189,7 @@ def main():
     elif args.run_mode == 'crawl_and_send':
         crawl_and_send_loop(lookup_url=configuration.lookup_url,
                             check_interval=configuration.check_interval,
+                            crawl_interval=configuration.crawl_interval,
                             data_store=JobBotMySqlDatastore(config=configuration.get_datastores()[0]),
                             cloud_store=JobBotDropboxCloudstore(config=configuration.get_cloudstores()[0]),
                             email_app=GmailEmailApp(config=configuration.get_email_apps()[0],
