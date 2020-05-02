@@ -132,7 +132,7 @@ def crawl_and_send_loop(lookup_url: str, check_interval: int, crawl_interval: in
 
         if len(new_ads) > 0:
             links_checked = [row[0] for row in data_store.get_applications_sent(columns='link')]
-            emails_checked = [row[0] for row in data_store.get_applications_sent(columns='address')]
+            emails_checked = [row[0] for row in data_store.get_applications_sent(columns='email')]
             for link, email in new_ads:
                 if link not in links_checked and (email not in emails_checked or email is None):
                     if email is None:
@@ -155,7 +155,7 @@ def crawl_and_send_loop(lookup_url: str, check_interval: int, crawl_interval: in
                                              html=inform_success_html.format(email=email, link=link),
                                              to=email_app.get_self_email())
 
-                    email_info = {"link": link, "address": email, "sent_on": datetime.datetime.utcnow().isoformat()}
+                    email_info = {"link": link, "email": email, "sent_on": datetime.datetime.utcnow().isoformat()}
                     data_store.save_sent_application(email_info)
                     logger.info("Waiting for new ads..")
 

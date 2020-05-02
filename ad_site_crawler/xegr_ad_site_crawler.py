@@ -65,8 +65,6 @@ class XeGrAdSiteCrawler(AbstractAdSiteCrawler):
                 logger.debug("It is in ads_checked, skipping..")
                 continue
             ad_page_html = self._retrieve_html_from_url(full_sub_link)
-            print("Type stop words: ", type(self._stop_words[0]))
-            print("Type ad_page_html: ", type(ad_page_html))
             if any(unidecode(word).lower() in unidecode(ad_page_html).lower() for word in self._stop_words):
                 logger.debug("It contains one of the stop words, skipping..")
                 continue
