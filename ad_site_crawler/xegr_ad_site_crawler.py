@@ -87,7 +87,7 @@ class XeGrAdSiteCrawler(AbstractAdSiteCrawler):
             html = 'None'
         if type(html) is not str:
             html = html.decode('utf-8')
-        # logger.debug("HTML retrieved from url = %s :\n%s" % (url, html))
+        logger.debug("HTML retrieved:\n%s" % (html))
         return html
 
     @staticmethod
