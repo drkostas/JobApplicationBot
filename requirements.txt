@@ -4,6 +4,6 @@ Unidecode==1.0.22
 mysql-connector-python==8.0.19
 mysql-connector==2.2.9
 dropbox==10.1.1
-PyYAML==5.3.1
+PyYAML==5.4
 jsonschema==3.2.0
 gmail==0.6.3
